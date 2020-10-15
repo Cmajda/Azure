@@ -1,0 +1,25 @@
+{
+  "mode": "Indexed",
+  "policyRule": {
+    "if": {
+      "field": "[concat('tags[', 'Tag1', ']')]",
+      "notIn": "[parameters('tagValues')]"
+    },
+    "then": {
+      "effect": "audit"
+    }
+  },
+  "parameters": {
+    "tagValues": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Environment",
+        "description": "The list of Environments"
+      },
+      "allowedValues": [
+        "Test",
+        "Ahoj"
+      ]
+    }
+  }
+}

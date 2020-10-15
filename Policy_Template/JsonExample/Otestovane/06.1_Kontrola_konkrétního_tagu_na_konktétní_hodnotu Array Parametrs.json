@@ -1,0 +1,33 @@
+{
+  "mode": "Indexed",
+  "policyRule": {
+    "if": {
+      "field": "[concat('tags[',parameters('tagname'), ']')]",
+      "notIn": "[parameters('tagValues')]"
+    },
+    "then": {
+      "effect": "audit"
+    }
+  },
+  "parameters": {
+    "tagValues": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Tag Values",
+        "description": "The list of Environments"
+      },
+      "allowedValues": [
+        "Test",
+        "Dev",
+        "Prod"
+      ]
+    },
+    "tagname": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag Name"
+      },
+      "defaultValue": "Environment"
+    }
+  }
+}

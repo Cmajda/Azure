@@ -1,0 +1,13 @@
+{
+  "mode": "Indexed",
+  "policyRule": {
+    "if": {
+      "field": "[concat('tags[', 'Tag1', ']')]",
+      "notEquals": "Test"
+    },
+    "then": {
+      "effect": "audit"
+    }
+  },
+  "parameters": {}
+}

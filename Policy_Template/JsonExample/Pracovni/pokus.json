@@ -1,0 +1,49 @@
+{
+  "mode": "All",
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName1'), ']')]",
+          "equals": "[parameters('tagValue1')]"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagValue1'), ']')]",
+          "in": "[parameters('allowedCountry')]"
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  },
+  "parameters": {
+    "tagName1": {
+      "type": "String",
+      "metadata": {
+        "displayName": "TagName",
+        "description": "prostředí"
+      }
+    },
+    "tagValue1": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Země",
+        "description": "povolené vše"
+      }
+    },
+    "allowedCountry": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Allowed Country",
+        "description": "The list of allowed Country for resources."
+      },
+      "allowedValues": ["EN", "SK", "PL", "CZ"],
+      "defaultValue": ["CZ"]
+    }
+  }
+}

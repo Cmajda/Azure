@@ -1,0 +1,28 @@
+{
+  "displayName": "Allowed locations",
+  "description": "This policy enables you to restrict the locations your organization can specify when deploying resources.",
+  "mode": "All",
+  "metadata": {
+    "version": "1.0.0",
+    "category": "NameControl"
+  },
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "not": {
+            "field": "name",
+            "like": "rg-*"
+          }
+        },
+        {
+          "field": "type",
+          "equals": "Microsoft.Resources/subscriptions/resourcegroups"
+        }
+      ]
+    },
+    "then": {
+      "effect": "deny"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+    "policyType": "Custom",
+    "mode": "All",
+    "displayName": "04_requered_name_of_rg_start_rg-",
+    "description": "Requered name of rg start_rg-* Works",
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "not": {
+              "field": "name",
+              "like": "rg-*"
+            }
+          },
+          {
+            "field": "type",
+            "equals": "Microsoft.Resources/subscriptions/resourcegroups"
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    },
+    "metadata": {
+      "version": "1.0.0",
+      "category": "NameControl"
+    },
+    "parameters": {}
+  }

@@ -1,0 +1,67 @@
+{
+  "mode": "Indexed",
+  "metadata": {},
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "[concat('tags[',parameters('TagName1'),']')]",
+          "notIn": "[parameters('TagValue1')]"
+        },
+        {
+          "field": "[concat('tags[',parameters('TagName2'),']')]",
+          "notIn": "[parameters('TagValue2')]"
+        }
+      ]
+    },
+    "then": {
+      "effect": "audit"
+    }
+  },
+  "parameters": {
+    "TagName1": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag name 1"
+      },
+      "defaultValue": "Environment"
+    },
+    "TagValue1": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Environment",
+        "description": "The list of Environments"
+      },
+      "allowedValues": [
+        "Test",
+        "Dev"
+      ],
+      "defaultValue": [
+        "Test",
+        "Dev"
+      ]
+    },
+    "TagName2": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag name 2"
+      },
+      "defaultValue": "Country"
+    },
+    "TagValue2": {
+      "type": "Array",
+      "metadata": {
+        "displayName": "Country",
+        "description": "The list of Country"
+      },
+      "allowedValues": [
+        "CZ",
+        "EN"
+      ],
+      "defaultValue": [
+        "CZ",
+        "EN"
+      ]
+    }
+  }
+}

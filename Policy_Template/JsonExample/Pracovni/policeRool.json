@@ -1,0 +1,23 @@
+{
+    "policyRule": {
+        "if": {
+            "value": "[substring(field('name'), 0, 3)]",
+            "equals": "abc"
+        },
+        "then": {
+            "effect": "audit"
+        }
+    }
+}
+
+{
+    "policyRule": {
+        "if": {
+            "value": "[if(greaterOrEquals(length(field('name')), 3), substring(field('name'), 0, 3), 'not starting with abc')]",
+            "equals": "abc"
+        },
+        "then": {
+            "effect": "audit"
+        }
+    }
+}

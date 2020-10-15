@@ -1,0 +1,46 @@
+{
+  "policyType": "Custom",
+  "mode": "All",
+  "displayName": "Audit Require a tag on resource groups started with //prd-// (custom - portal)",
+  "description": "Audit - Enforces existence of a tag on resource groups.",
+  "policyRule": {
+    "if": {
+      "allOf": [
+        {
+          "field": "type",
+          "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName'), ']')]",
+          "exists": "false"
+        },
+        {
+          "field": "[concat('tags[', parameters('tagName'), ']')]",
+          "notLike": "prd-*"
+        }
+      ]
+    },
+    "then": {
+      "effect": "audit"
+    }
+  },
+  "metadata": {
+    "category": "Tags",
+    "createdBy": "829f7728-1aea-4317-a0ba-a8799b553442",
+    "createdOn": "2020-09-02T10:01:53.6508946Z",
+    "updatedBy": "829f7728-1aea-4317-a0ba-a8799b553442",
+    "updatedOn": "2020-09-03T19:05:21.3922545Z"
+  },
+  "parameters": {
+    "tagName": {
+      "type": "String",
+      "metadata": {
+        "displayName": "Tag Name",
+        "description": "Name of the tag, such as 'environment'"
+      }
+    }
+  },
+  "id": "/subscriptions/919164d8-d1bd-4bf4-a219-b5fa9181f55b/providers/Microsoft.Authorization/policyDefinitions/aef0ba84-e8a6-4132-b983-fb6ec2857ab7",
+  "name": "aef0ba84-e8a6-4132-b983-fb6ec2857ab7",
+  "type": "Microsoft.Authorization/policyDefinitions"
+}
