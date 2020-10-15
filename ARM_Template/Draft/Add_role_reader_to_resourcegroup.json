@@ -1,0 +1,45 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "roleDefinitionID": {
+            "type": "string",
+            "metadata": {
+                "description": "Specifies the role definition ID used in the role assignment."
+            },
+            "defaultValue": "acdd72a7-3385-48ef-bd42-f606fba81ae7"
+        },
+        "principalId": {
+            "type": "array",
+            "metadata": {
+                "description": "Specifies the principal ID assigned to the role."
+            },
+            "defaultValue": [
+                "c74764b6-15fd-49d9-b9f7-2cf3f19725f1",
+                "1c8b37a7-339e-4178-b5df-ce7d81e3f616"
+            ]
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Authorization/roleAssignments",
+            "apiVersion": "2017-09-01",
+            "name": "[guid(parameters('principalId')[copyIndex()], parameters('roleDefinitionID'), resourceGroup().id)]",
+            "properties": {
+                "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]",
+                "principalId": "[parameters('principalId')[copyIndex()]]",
+                "scope": "[resourceGroup().id]"
+            },
+            "copy": {
+                "name": "roles",
+                "count": "[length(parameters('principalId'))]"
+            }
+        }
+    ],
+    "outputs": {
+        "OutputString": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Portal/usersettings/read','michal.cmajdalka@manica.cz')]"
+        }
+    }
+}

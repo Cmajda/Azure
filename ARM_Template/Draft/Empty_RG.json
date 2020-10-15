@@ -1,0 +1,88 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
+    "contentVersion": "1.0.0.1",
+    "parameters": {
+        "Application Name": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 8,
+            "metadata": { "Description": "Give it some reasonable application name. Try to be between 4 - 8 characters in length. This is important especially for Windows VMs as the name has 15 characters limit." },
+            "defaultValue": "<Application name>"
+        },
+        "Country/SITS/IO": {
+            "type": "string",
+            "metadata": { "Description": "Select a country from the list. The country based on two letter A2 ISO standard. There is also MSF IO in the list, although it is not a country ;-)" },
+            "defaultValue": "Česko",
+            "allowedValues": [ "Česko", "Francie", "Estonsko" ]
+        },
+        "Index/Suffix": {
+            "type": "string",
+            "maxLength": 2,
+            "minLength": 2,
+            "metadata": { "Description": "For cases where more instances of the same app will be necessary, for testing and other scenarios" },
+            "defaultValue": "01",
+            "allowedValues": [ "01", "02" ]
+
+        },
+
+        "location": {
+            "type": "string",
+            "defaultValue": "East Asia",
+            "allowedValues": [ "East Asia" ]
+        },
+        "Tag description": {
+            "type": "string",
+            "minLength": 21,
+            "maxLength": 512,
+            "defaultValue": "<SHORT Description>"
+        },
+        "Tag Stage": {
+            "type": "string",
+            "defaultValue": "Live",
+            "allowedValues": [ "Live", "Test", "Dev", "Sandbox" ]
+        },
+        "Tag Administrator": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "defaultValue": "<Administrator>"
+        },
+        "Tag Deployment": {
+            "type": "string",
+            "allowedValues": [ "Manual", "Arm", "Tf", "Ps", "Cli" ]
+        }
+    },
+    "variables": {
+        "rgName": "[concat('rg-',parameters('Country/SITS/IO'), '-', parameters('Application Name'),'-',parameters('Index/Suffix'))]",
+        "FullTag": {
+            "Application": "[parameters('Application Name')]",
+            "Country": "[parameters('Country/SITS/IO')]",
+            "description": "[parameters('Tag description')]",
+            "Stage": "[parameters('Tag Stage')]",
+            "Administrator": "[parameters('Tag Administrator')]",
+            "Deployment": "[parameters('Tag Deployment')]"
+
+        },
+        "objectOutput": {
+            "type": "string",
+            "value": "[if(equals('Česko', parameters('Country/SITS/IO')), 'Ano','Ne')]"
+        }
+    },
+
+    "resources": [
+        {
+            "type": "Microsoft.Resources/resourceGroups",
+            "apiVersion": "2019-08-01",
+            "location": "[parameters('location')]",
+            "name": "[variables('rgName')]",
+            "properties": {},
+            "tags": "[variables('FullTag')]"
+        }
+    ],
+    "outputs": {
+        "output1": {
+            "type": "string",
+            "value": "[variables('objectOutput').value]"
+        }
+    }
+}
