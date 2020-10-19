@@ -1,0 +1,605 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "Region": {
+            "type": "string",
+            "metadata": { "Description": "Choose the Azure region that's right for you and your customers. Not every resource is available in every region." },
+            "allowedValues": [
+                "North Europe",
+                "West Europe",
+                "West US"
+
+            ],
+            "defaultValue": "West US"
+        },
+        "Application Name": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 8,
+            "metadata": { "Description": "Give it some reasonable application name. Try to be between 4 - 8 characters in length. This is important especially for Windows VMs as the name has 15 characters limit." },
+            "defaultValue": "ARMTemp"
+        },
+        "Country/SITS/IO": {
+            "type": "string",
+            "metadata": { "Description": "Select a country from the list. The country based on two letter A2 ISO standard. There is also MSF IO in the list, although it is not a country ;-)" },
+            "allowedValues": [
+                "Czech Republic",
+                "Germany",
+                "Kuwait",
+                "United Kingdom",
+                "United States",
+                "Zimbabwe"
+            ],
+            "defaultValue": "Czech Republic"
+        },
+        "Index/Suffix": {
+            "type": "string",
+            "maxLength": 2,
+            "minLength": 2,
+            "metadata": { "Description": "For cases where more instances of the same app will be necessary, for testing and other scenarios" },
+            "defaultValue": "01",
+            "allowedValues": [ "01", "02", "03", "04" ]
+
+        },
+        "Tag description": {
+            "type": "string",
+            "minLength": 21,
+            "maxLength": 512,
+            "metadata": { "Description": "Short description of resource group. For example \"In order to test the new site.\"" },
+            "defaultValue": "Testování v rámci arm template pro vytvoření VMs"
+        },
+        "Tag Stage": {
+            "type": "string",
+            "metadata": { "description": "Select a value of the \"tag Stage\"" },
+            "allowedValues": [ "Live", "Test", "Dev", "Sandbox" ],
+            "defaultValue": "Live"
+        },
+        "Tag Customer": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "metadata": { "Description": "Name of customer for example \"MFS\"" },
+            "defaultValue": "MFS"
+        },
+        "Tag Administrator": {
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512,
+            "metadata": { "Description": "Name of administrator for example \"Jan Koudela\"" },
+            "defaultValue": "Cmajda"
+        },
+        "Tag Deployment": {
+            "type": "string",
+            "metadata": { "description": "Select a value of the \"Tag Deployment\"" },
+            "defaultValue": "Arm",
+            "allowedValues": [ "Manual", "Arm", "Tf", "Ps", "Cli" ]
+        },
+        "networkSecurityGroupRules": {
+            "type": "Array",
+            "defaultValue": [
+                {
+                    "name": "SSH",
+                    "properties": {
+                        "priority": 300,
+                        "protocol": "TCP",
+                        "access": "Allow",
+                        "direction": "Inbound",
+                        "sourceAddressPrefix": "*",
+                        "sourcePortRange": "*",
+                        "destinationAddressPrefix": "*",
+                        "destinationPortRange": "22"
+                    }
+                }
+            ]
+        },
+        "subnetName": {
+            "type": "String",
+            "defaultValue": "default"
+        },
+        "addressPrefixes": {
+            "type": "Array",
+            "defaultValue": [
+                "10.0.1.0/24"
+            ]
+        },
+        "subnets": {
+            "type": "Array",
+            "defaultValue": [
+                {
+                    "name": "default",
+                    "properties": {
+                        "addressPrefix": "10.0.1.0/24"
+                    }
+                }
+            ]
+        },
+        "publicIpAddressType": {
+            "type": "String",
+            "defaultValue": "Dynamic"
+        },
+        "publicIpAddressSku": {
+            "type": "String",
+            "defaultValue": "Basic"
+        },
+        "osDiskType": {
+            "type": "String",
+            "defaultValue": "Standard_LRS"
+        },
+        "virtualMachineSize": {
+            "type": "String",
+            "defaultValue": "Standard_B1ls"
+        },
+        "adminUsername": {
+            "type": "String",
+            "defaultValue": "admin123"
+        },
+        "adminPassword": {
+            "type": "SecureString",
+            "defaultValue": "Heslo je hrozně tajné"
+        }
+    },
+    "variables": {
+        "FullTag": {
+            "Application": "[parameters('Application Name')]",
+            "Country": "[parameters('Country/SITS/IO')]",
+            "Customer": "[parameters('Tag Customer')]",
+            "Administrator": "[parameters('Tag Administrator')]",
+            "Deployment": "[parameters('Tag Deployment')]",
+            "Description": "[parameters('Tag description')]",
+            "Stage": "[parameters('Tag Stage')]"
+        },
+        "networkInterfaceName": "[concat('nic-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'))]",
+        "networkSecurityGroupName": "[concat('nsg-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'))]",
+        "publicIpAddressName": "[concat('pip-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'))]",
+        "virtualNetworkName": "[concat('vin-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'))]",
+        "virtualMachineName": "[concat('vm',variables('CountryObject').value[parameters('Country/SITS/IO')],parameters('Application Name'),parameters('Index/Suffix'))]",
+        "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
+        "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+        "datadiskName": "[concat('dsk-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'))]",
+        "datadiskNameOS": "[concat('dsk-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'),'-OS')]",
+        "CountryObject": {
+            "type": "object",
+            "value": {
+                "Afghanistan": "af",
+                "Albania": "al",
+                "Algeria": "dz",
+                "American Samoa": "as",
+                "Andorra": "ad",
+                "Angola": "ao",
+                "Anguilla": "ai",
+                "Antarctica": "aq",
+                "Antigua and Barbuda": "ag",
+                "Argentina": "ar",
+                "Armenia": "am",
+                "Aruba": "aw",
+                "Australia": "au",
+                "Austria": "at",
+                "Azerbaijan": "az",
+                "Bahamas": "bs",
+                "Bahrain": "bh",
+                "Bangladesh": "bd",
+                "Barbados": "bb",
+                "Belarus": "by",
+                "Belgium": "be",
+                "Belize": "bz",
+                "Benin": "bj",
+                "Bermuda": "bm",
+                "Bhutan": "bt",
+                "Bolivia": "bo",
+                "Bonaire": "bq",
+                "Bosnia and Herzegovina": "ba",
+                "Botswana": "bw",
+                "Bouvet Island": "bv",
+                "Brazil": "br",
+                "British Indian Ocean Territory": "io",
+                "Brunei Darussalam": "bn",
+                "Bulgaria": "bg",
+                "Burkina Faso": "bf",
+                "Burundi": "bi",
+                "Cambodia": "kh",
+                "Cameroon": "cm",
+                "Canada": "ca",
+                "Cape Verde": "cv",
+                "Cayman Islands": "ky",
+                "Central African Republic": "cf",
+                "Chad": "td",
+                "Chile": "cl",
+                "China": "cn",
+                "Christmas Island": "cx",
+                "Cocos (Keeling) Islands": "cc",
+                "Colombia": "co",
+                "Comoros": "km",
+                "Congo": "cg",
+                "Democratic Republic of the Congo": "cd",
+                "Cook Islands": "ck",
+                "Costa Rica": "cr",
+                "Croatia": "hr",
+                "Cuba": "cu",
+                "Curacao": "cw",
+                "Cyprus": "cy",
+                "Czech Republic": "cz",
+                "Cote d'Ivoire": "ci",
+                "Denmark": "dk",
+                "Djibouti": "dj",
+                "Dominica": "dm",
+                "Dominican Republic": "do",
+                "Ecuador": "ec",
+                "Egypt": "eg",
+                "El Salvador": "sv",
+                "Equatorial Guinea": "gq",
+                "Eritrea": "er",
+                "Estonia": "ee",
+                "Ethiopia": "et",
+                "Falkland Islands (Malvinas)": "fk",
+                "Faroe Islands": "fo",
+                "Fiji": "fj",
+                "Finland": "fi",
+                "France": "fr",
+                "French Guiana": "gf",
+                "French Polynesia": "pf",
+                "French Southern Territories": "tf",
+                "Gabon": "ga",
+                "Gambia": "gm",
+                "Georgia": "ge",
+                "Germany": "de",
+                "Ghana": "gh",
+                "Gibraltar": "gi",
+                "Greece": "gr",
+                "Greenland": "gl",
+                "Grenada": "gd",
+                "Guadeloupe": "gp",
+                "Guam": "gu",
+                "Guatemala": "gt",
+                "Guernsey": "gg",
+                "Guinea": "gn",
+                "Guinea-Bissau": "gw",
+                "Guyana": "gy",
+                "Haiti": "ht",
+                "Heard Island and McDonald Islands": "hm",
+                "Holy See (Vatican City State)": "va",
+                "Honduras": "hn",
+                "Hong Kong": "hk",
+                "Hungary": "hu",
+                "Iceland": "is",
+                "India": "in",
+                "Indonesia": "id",
+                "Iran, Islamic Republic of": "ir",
+                "Iraq": "iq",
+                "Ireland": "ie",
+                "Isle of Man": "im",
+                "Israel": "il",
+                "Italy": "it",
+                "Jamaica": "jm",
+                "Japan": "jp",
+                "Jersey": "je",
+                "Jordan": "jo",
+                "Kazakhstan": "kz",
+                "Kenya": "ke",
+                "Kiribati": "ki",
+                "Korea, Democratic People's Republic of": "kp",
+                "Korea, Republic of": "kr",
+                "Kuwait": "kw",
+                "Kyrgyzstan": "kg",
+                "Lao People's Democratic Republic": "la",
+                "Latvia": "lv",
+                "Lebanon": "lb",
+                "Lesotho": "ls",
+                "Liberia": "lr",
+                "Libya": "ly",
+                "Liechtenstein": "li",
+                "Lithuania": "lt",
+                "Luxembourg": "lu",
+                "Macao": "mo",
+                "Macedonia, the Former Yugoslav Republic of": "mk",
+                "Madagascar": "mg",
+                "Malawi": "mw",
+                "Malaysia": "my",
+                "Maldives": "mv",
+                "Mali": "ml",
+                "Malta": "mt",
+                "Marshall Islands": "mh",
+                "Martinique": "mq",
+                "Mauritania": "mr",
+                "Mauritius": "mu",
+                "Mayotte": "yt",
+                "Mexico": "mx",
+                "Micronesia, Federated States of": "fm",
+                "Moldova, Republic of": "md",
+                "Monaco": "mc",
+                "Mongolia": "mn",
+                "Montenegro": "me",
+                "Montserrat": "ms",
+                "Morocco": "ma",
+                "Mozambique": "mz",
+                "MSF IO": "mi",
+                "Myanmar": "mm",
+                "Namibia": "na",
+                "Nauru": "nr",
+                "Nepal": "np",
+                "Netherlands": "nl",
+                "New Caledonia": "nc",
+                "New Zealand": "nz",
+                "Nicaragua": "ni",
+                "Niger": "ne",
+                "Nigeria": "ng",
+                "Niue": "nu",
+                "Norfolk Island": "nf",
+                "Northern Mariana Islands": "mp",
+                "Norway": "no",
+                "Oman": "om",
+                "Pakistan": "pk",
+                "Palau": "pw",
+                "Palestine, State of": "ps",
+                "Panama": "pa",
+                "Papua New Guinea": "pg",
+                "Paraguay": "py",
+                "Peru": "pe",
+                "Philippines": "ph",
+                "Pitcairn": "pn",
+                "Poland": "pl",
+                "Portugal": "pt",
+                "Puerto Rico": "pr",
+                "Qatar": "qa",
+                "Romania": "ro",
+                "Russian Federation": "ru",
+                "Rwanda": "rw",
+                "Reunion": "re",
+                "Saint Barthelemy": "bl",
+                "Saint Helena": "sh",
+                "Saint Kitts and Nevis": "kn",
+                "Saint Lucia": "lc",
+                "Saint Martin (French part)": "mf",
+                "Saint Pierre and Miquelon": "pm",
+                "Saint Vincent and the Grenadines": "vc",
+                "Samoa": "ws",
+                "San Marino": "sm",
+                "Sao Tome and Principe": "st",
+                "Saudi Arabia": "sa",
+                "Senegal": "sn",
+                "Serbia": "rs",
+                "Seychelles": "sc",
+                "Sierra Leone": "sl",
+                "Singapore": "sg",
+                "Sint Maarten (Dutch part)": "sx",
+                "SITS": "ts",
+                "Slovakia": "sk",
+                "Slovenia": "si",
+                "Solomon Islands": "sb",
+                "Somalia": "so",
+                "South Africa": "za",
+                "South Georgia and the South Sandwich Islands": "gs",
+                "South Sudan": "ss",
+                "Spain": "es",
+                "Sri Lanka": "lk",
+                "Sudan": "sd",
+                "Suriname": "sr",
+                "Svalbard and Jan Mayen": "sj",
+                "Swaziland": "sz",
+                "Sweden": "se",
+                "Switzerland": "ch",
+                "Syrian Arab Republic": "sy",
+                "Taiwan": "tw",
+                "Tajikistan": "tj",
+                "United Republic of Tanzania": "tz",
+                "Thailand": "th",
+                "Timor-Leste": "tl",
+                "Togo": "tg",
+                "Tokelau": "tk",
+                "Tonga": "to",
+                "Trinidad and Tobago": "tt",
+                "Tunisia": "tn",
+                "Turkey": "tr",
+                "Turkmenistan": "tm",
+                "Turks and Caicos Islands": "tc",
+                "Tuvalu": "tv",
+                "Uganda": "ug",
+                "Ukraine": "ua",
+                "United Arab Emirates": "ae",
+                "United Kingdom": "gb",
+                "United States": "us",
+                "United States Minor Outlying Islands": "um",
+                "Uruguay": "uy",
+                "Uzbekistan": "uz",
+                "Vanuatu": "vu",
+                "Venezuela": "ve",
+                "Viet Nam": "vn",
+                "British Virgin Islands": "vg",
+                "US Virgin Islands": "vi",
+                "Wallis and Futuna": "wf",
+                "Western Sahara": "eh",
+                "Yemen": "ye",
+                "Zambia": "zm",
+                "Zimbabwe": "zw"
+
+            }
+        },
+        "dataDisks": {
+            "type": "Array",
+            "Value": [
+                {
+                    "lun": 1,
+                    "createOption": "attach",
+                    "caching": "None",
+                    "writeAcceleratorEnabled": false,
+                    "id": null,
+                    "name": "[variables('datadiskName')]",
+                    "storageAccountType": null,
+                    "diskSizeGB": null,
+                    "diskEncryptionSet": null
+                }
+            ]
+        },
+        "dataDiskResources": {
+            "type": "Array",
+            "Value": [
+                {
+                    "name": "[variables('datadiskName')]",
+                    "sku": "Premium_LRS",
+                    "properties": {
+                        "diskSizeGB": 1024,
+                        "creationData": {
+                            "createOption": "empty"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "resources": [
+        {
+            "name": "[variables('dataDiskResources').Value[copyIndex()].name]",
+            "type": "Microsoft.Compute/disks",
+            "apiVersion": "2020-05-01",
+            "location": "[parameters('Region')]",
+            "properties": "[variables('dataDiskResources').Value[copyIndex()].properties]",
+            "sku": {
+                "name": "[variables('dataDiskResources').Value[copyIndex()].sku]"
+            },
+            "copy": {
+                "name": "managedDiskResources",
+                "count": "[length(variables('dataDiskResources').Value)]"
+            },
+            "tags": "[variables('FullTag')]"
+        },
+        {
+            "name": "[variables('networkInterfaceName')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2018-10-01",
+            "location": "[parameters('Region')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]",
+                "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
+                "[concat('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIpAddress": {
+                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', variables('publicIpAddressName'))]"
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[variables('nsgId')]"
+                }
+            },
+            "tags": "[variables('FullTag')]"
+        },
+        {
+            "name": "[variables('networkSecurityGroupName')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-02-01",
+            "location": "[parameters('Region')]",
+            "properties": {
+                "securityRules": "[parameters('networkSecurityGroupRules')]"
+            },
+            "tags": "[variables('FullTag')]"
+        },
+        {
+            "name": "[variables('publicIpAddressName')]",
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2019-02-01",
+            "location": "[parameters('Region')]",
+            "properties": {
+                "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
+            },
+            "sku": {
+                "name": "[parameters('publicIpAddressSku')]"
+            },
+            "tags": "[variables('FullTag')]"
+        },
+        {
+            "name": "[variables('virtualMachineName')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2020-06-01",
+            "location": "[parameters('Region')]",
+            "dependsOn": [
+                "managedDiskResources",
+                "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "name": "[variables('datadiskNameOS')]",
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('osDiskType')]"
+                        }
+                    },
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "18.04-LTS",
+                        "version": "latest"
+                    },
+                    "copy": [
+                        {
+                            "name": "dataDisks",
+                            "count": "[length(variables('dataDisks').Value)]",
+                            "input": {
+                                "lun": "[variables('dataDisks').Value[copyIndex('dataDisks')].lun]",
+                                "createOption": "[variables('dataDisks').Value[copyIndex('dataDisks')].createOption]",
+                                "caching": "[variables('dataDisks').Value[copyIndex('dataDisks')].caching]",
+                                "diskSizeGB": "[variables('dataDisks').Value[copyIndex('dataDisks')].diskSizeGB]",
+                                "managedDisk": {
+                                    "id": "[coalesce(variables('dataDisks').Value[copyIndex('dataDisks')].id, if(equals(variables('dataDisks').Value[copyIndex('dataDisks')].name, json('null')), json('null'), resourceId('Microsoft.Compute/disks', variables('dataDisks').Value[copyIndex('dataDisks')].name)))]",
+                                    "storageAccountType": "[variables('dataDisks').Value[copyIndex('dataDisks')].storageAccountType]"
+                                },
+                                "writeAcceleratorEnabled": "[variables('dataDisks').Value[copyIndex('dataDisks')].writeAcceleratorEnabled]"
+                            }
+                        }
+                    ]
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName'))]"
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[variables('virtualMachineName')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]"
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true
+                    }
+                }
+            },
+            "tags": "[variables('FullTag')]"
+        },
+        {
+            "name": "[variables('virtualNetworkName')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2019-09-01",
+            "location": "[parameters('Region')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": "[parameters('addressPrefixes')]"
+                },
+                "subnets": "[parameters('subnets')]"
+            },
+            "tags": "[variables('FullTag')]"
+        }
+    ],
+    "outputs": {
+        "adminUsername": {
+            "type": "string",
+            "value": "[parameters('adminUsername')]"
+        }
+    }
+}
