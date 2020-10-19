@@ -1,86 +1,374 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
-    "contentVersion": "1.0.0.0",
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
     "parameters": {
-        "Region": {
-            "value": "West US"
-        },
-        "Application Name": {
-            "value": "ARMTemp"
-        },
-        "Country/SITS/IO": {
-            "value": "Czech Republic"
-        },
-        "Index/Suffix": {
-            "value": "01"
-        },
-        "Tag description": {
-            "value": "Testování v rámci arm template pro vytvoření VMs"
-        },
-        "Tag Stage": {
-            "value": "Live"
-        },
-        "Tag Customer": {
-            "value": "MFS"
-        },
-        "Tag Administrator": {
-            "value": "Cmajda"
-        },
-        "Tag Deployment": {
-            "value": "Arm"
-        },
-        "networkSecurityGroupRules": {
-            "value": [
-                {
-                    "name": "SSH",
-                    "properties": {
-                        "priority": 300,
-                        "protocol": "TCP",
-                        "access": "Allow",
-                        "direction": "Inbound",
-                        "sourceAddressPrefix": "*",
-                        "sourcePortRange": "*",
-                        "destinationAddressPrefix": "*",
-                        "destinationPortRange": "22"
-                    }
-                }
-            ]
-        },
-        "subnetName": {
-            "value": "default"
-        },
-        "addressPrefixes": {
-            "value": [
-                "10.0.1.0/24"
-            ]
-        },
-        "subnets": {
-            "value": [
-                {
-                    "name": "default",
-                    "properties": {
-                        "addressPrefix": "10.0.1.0/24"
-                    }
-                }
-            ]
-        },
-        "publicIpAddressType": {
-            "value": "Dynamic"
-        },
-        "publicIpAddressSku": {
-            "value": "Basic"
-        },
-        "osDiskType": {
-            "value": "Standard_LRS"
-        },
-        "virtualMachineSize": {
-            "value": "Standard_B1ls"
-        },
-        "adminUsername": {
-            "value": "admin123"
-        },
-        "adminPassword": {
-            "value": "Heslo je hrozně tajné"
+        "resourceTypes": [
+            "microsoft.resources/resourcegroups"
+        ],
+        "basics": [
+            {
+                "name": "Region",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Region",
+                "defaultValue": "West US",
+                "toolTip": "Choose the Azure region that's right for you and your customers. Not every resource is available in every region.",
+                "constraints": {
+                    "required": false,
+                    "allowedValues": [
+                        {
+                            "label": "North Europe",
+                            "value": "North Europe"
+                        },
+                        {
+                            "label": "West Europe",
+                            "value": "West Europe"
+                        },
+                        {
+                            "label": "West US",
+                            "value": "West US"
+                        }
+                    ]
+                },
+                "visible": true
+            },
+            {
+                "name": "Application Name",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Application Name",
+                "defaultValue": "ARMTemp",
+                "toolTip": "Give it some reasonable application name. Try to be between 4 - 8 characters in length. This is important especially for Windows VMs as the name has 15 characters limit.",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "Country/SITS/IO",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Country/SITS/IO",
+                "defaultValue": "Czech Republic",
+                "toolTip": "Select a country from the list. The country based on two letter A2 ISO standard. There is also MSF IO in the list, although it is not a country ;-)",
+                "constraints": {
+                    "required": false,
+                    "allowedValues": [
+                        {
+                            "label": "Czech Republic",
+                            "value": "Czech Republic"
+                        },
+                        {
+                            "label": "Germany",
+                            "value": "Germany"
+                        },
+                        {
+                            "label": "Kuwait",
+                            "value": "Kuwait"
+                        },
+                        {
+                            "label": "United Kingdom",
+                            "value": "United Kingdom"
+                        },
+                        {
+                            "label": "United States",
+                            "value": "United States"
+                        },
+                        {
+                            "label": "Zimbabwe",
+                            "value": "Zimbabwe"
+                        }
+                    ]
+                },
+                "visible": true
+            },
+            {
+                "name": "Index/Suffix",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Index/Suffix",
+                "defaultValue": "01",
+                "toolTip": "For cases where more instances of the same app will be necessary, for testing and other scenarios",
+                "constraints": {
+                    "required": false,
+                    "allowedValues": [
+                        {
+                            "label": "01",
+                            "value": "01"
+                        },
+                        {
+                            "label": "02",
+                            "value": "02"
+                        },
+                        {
+                            "label": "03",
+                            "value": "03"
+                        },
+                        {
+                            "label": "04",
+                            "value": "04"
+                        }
+                    ]
+                },
+                "visible": true
+            },
+            {
+                "name": "Tag description",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Tag description",
+                "defaultValue": "Testování v rámci arm template pro vytvoření VMs",
+                "toolTip": "Short description of resource group. For example \"In order to test the new site.\"",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "Tag Stage",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Tag Stage",
+                "defaultValue": "Live",
+                "toolTip": "Select a value of the \"tag Stage\"",
+                "constraints": {
+                    "required": false,
+                    "allowedValues": [
+                        {
+                            "label": "Live",
+                            "value": "Live"
+                        },
+                        {
+                            "label": "Test",
+                            "value": "Test"
+                        },
+                        {
+                            "label": "Dev",
+                            "value": "Dev"
+                        },
+                        {
+                            "label": "Sandbox",
+                            "value": "Sandbox"
+                        }
+                    ]
+                },
+                "visible": true
+            },
+            {
+                "name": "Tag Customer",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Tag Customer",
+                "defaultValue": "MFS",
+                "toolTip": "Name of customer for example \"MFS\"",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "Tag Administrator",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Tag Administrator",
+                "defaultValue": "Cmajda",
+                "toolTip": "Name of administrator for example \"Jan Koudela\"",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "Tag Deployment",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Tag Deployment",
+                "defaultValue": "Arm",
+                "toolTip": "Select a value of the \"Tag Deployment\"",
+                "constraints": {
+                    "required": false,
+                    "allowedValues": [
+                        {
+                            "label": "Manual",
+                            "value": "Manual"
+                        },
+                        {
+                            "label": "Arm",
+                            "value": "Arm"
+                        },
+                        {
+                            "label": "Tf",
+                            "value": "Tf"
+                        },
+                        {
+                            "label": "Ps",
+                            "value": "Ps"
+                        },
+                        {
+                            "label": "Cli",
+                            "value": "Cli"
+                        }
+                    ]
+                },
+                "visible": true
+            },
+            {
+                "name": "networkSecurityGroupRules",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Network Security Group Rules",
+                "defaultValue": "[[{\"name\":\"SSH\",\"properties\":{\"priority\":300,\"protocol\":\"TCP\",\"access\":\"Allow\",\"direction\":\"Inbound\",\"sourceAddressPrefix\":\"*\",\"sourcePortRange\":\"*\",\"destinationAddressPrefix\":\"*\",\"destinationPortRange\":\"22\"}}]",
+                "toolTip": "",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "subnetName",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Subnet Name",
+                "defaultValue": "default",
+                "toolTip": "",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "addressPrefixes",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Address Prefixes",
+                "defaultValue": "[[\"10.0.1.0/24\"]",
+                "toolTip": "",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "subnets",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Subnets",
+                "defaultValue": "[[{\"name\":\"default\",\"properties\":{\"addressPrefix\":\"10.0.1.0/24\"}}]",
+                "toolTip": "",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "publicIpAddressType",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Public Ip Address Type",
+                "defaultValue": "Dynamic",
+                "toolTip": "",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "publicIpAddressSku",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Public Ip Address Sku",
+                "defaultValue": "Basic",
+                "toolTip": "",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "osDiskType",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Os Disk Type",
+                "defaultValue": "Standard_LRS",
+                "toolTip": "",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "virtualMachineSize",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Virtual Machine Size",
+                "defaultValue": "Standard_B1ls",
+                "toolTip": "",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "adminUsername",
+                "type": "Microsoft.Common.TextBox",
+                "label": "Admin Username",
+                "defaultValue": "admin123",
+                "toolTip": "",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "visible": true
+            },
+            {
+                "name": "adminPassword",
+                "type": "Microsoft.Common.PasswordBox",
+                "label": {
+                    "password": "Admin Password",
+                    "confirmPassword": "Confirm password"
+                },
+                "toolTip": "",
+                "constraints": {
+                    "required": false,
+                    "regex": "",
+                    "validationMessage": ""
+                },
+                "options": {
+                    "hideConfirmation": true
+                },
+                "visible": true
+            }
+        ],
+        "steps": [],
+        "outputs": {
+            "Region": "[basics('Region')]",
+            "Application Name": "[basics('Application Name')]",
+            "Country/SITS/IO": "[basics('Country/SITS/IO')]",
+            "Index/Suffix": "[basics('Index/Suffix')]",
+            "Tag description": "[basics('Tag description')]",
+            "Tag Stage": "[basics('Tag Stage')]",
+            "Tag Customer": "[basics('Tag Customer')]",
+            "Tag Administrator": "[basics('Tag Administrator')]",
+            "Tag Deployment": "[basics('Tag Deployment')]",
+            "networkSecurityGroupRules": "[basics('networkSecurityGroupRules')]",
+            "subnetName": "[basics('subnetName')]",
+            "addressPrefixes": "[basics('addressPrefixes')]",
+            "subnets": "[basics('subnets')]",
+            "publicIpAddressType": "[basics('publicIpAddressType')]",
+            "publicIpAddressSku": "[basics('publicIpAddressSku')]",
+            "osDiskType": "[basics('osDiskType')]",
+            "virtualMachineSize": "[basics('virtualMachineSize')]",
+            "adminUsername": "[basics('adminUsername')]",
+            "adminPassword": "[basics('adminPassword')]"
         }
     }
 }
