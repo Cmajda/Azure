@@ -2,16 +2,9 @@
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.1",
     "parameters": {
-        "Application Name": {
+        "CountryString": {
             "type": "string",
-            "minLength": 4,
-            "maxLength": 8,
-            "metadata": { "Description": "Give it some reasonable application name. Try to be between 4 - 8 characters in length. This is important especially for Windows VMs as the name has 15 characters limit." },
-            "defaultValue": "<Application name>"
-        },
-        "Country/SITS/IO": {
-            "type": "string",
-            "metadata": { "Description": "Select a country from the list. The country based on two letter A2 ISO standard. There is also MSF IO in the list, although it is not a country ;-)" },
+            "metadata": { "Description": "Select a country from the list." },
             "allowedValues": [
                 "Afghanistan",
                 "Albania",
@@ -264,92 +257,9 @@
                 "Zambia",
                 "Zimbabwe"
             ]
-        },
-        "Index/Suffix": {
-            "type": "string",
-            "maxLength": 2,
-            "minLength": 2,
-            "metadata": { "Description": "For cases where more instances of the same app will be necessary, for testing and other scenarios" },
-            "defaultValue": "01",
-            "allowedValues": [ "01", "02", "03", "04" ]
-
-        },
-        "Region": {
-            "type": "string",
-            "metadata": { "Description": "Choose the Azure region that's right for you and your customers. Not every resource is available in every region." },
-            "allowedValues": [
-                "Brazil South",
-                "Canada Central",
-                "Canada East",
-                "Central India",
-                "Central US",
-                "East Asia",
-                "East US",
-                "East US 2",
-                "Germany Central",
-                "Germany Northeast",
-                "Japan East",
-                "Japan West",
-                "Korea Central",
-                "Korea South",
-                "North Central US",
-                "North Europe",
-                "South Central US",
-                "South East Asia",
-                "South India",
-                "UK South",
-                "UK West",
-                "West Central US",
-                "West Europe",
-                "West India",
-                "West US",
-                "West US 2"
-            ]
-        },
-        "Tag description": {
-            "type": "string",
-            "minLength": 21,
-            "maxLength": 512,
-            "metadata": { "Description": "Short description of resource group. For example \"In order to test the new site.\"" },
-            "defaultValue": "<SHORT Description>"
-        },
-        "Tag Stage": {
-            "type": "string",
-            "metadata": { "description": "Select a value of the \"tag Stage\"" },
-            "allowedValues": [ "Live", "Test", "Dev", "Sandbox" ]
-        },
-        "Tag Customer": {
-            "type": "string",
-            "minLength": 3,
-            "maxLength": 512,
-            "metadata": { "Description": "Name of customer for example \"MFS\"" },
-            "defaultValue": "<Name of customer>"
-        },
-        "Tag Administrator": {
-            "type": "string",
-            "minLength": 3,
-            "maxLength": 512,
-            "metadata": { "Description": "Name of administrator for example \"Jan Koudela\"" },
-            "defaultValue": "<Name of administrator>"
-        },
-        "Tag Deployment": {
-            "type": "string",
-            "metadata": { "description": "Select a value of the \"Tag Deployment\"" },
-            "defaultValue": "Arm",
-            "allowedValues": [ "Manual", "Arm", "Tf", "Ps", "Cli" ]
         }
     },
     "variables": {
-        "rgName": "[concat('rg-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'))]",
-        "FullTag": {
-            "Application": "[parameters('Application Name')]",
-            "Country": "[parameters('Country/SITS/IO')]",
-            "Customer": "[parameters('Tag Customer')]",
-            "Administrator": "[parameters('Tag Administrator')]",
-            "Deployment": "[parameters('Tag Deployment')]",
-            "Description": "[parameters('Tag description')]",
-            "Stage": "[parameters('Tag Stage')]"
-        },
         "CountryObject": {
             "type": "object",
             "value": {
@@ -606,26 +516,17 @@
 
             }
         },
-        "Output-Country/SITS/IO": {
+        "OutputString": {
             "type": "object",
-            "value": "[variables('CountryObject').value[parameters('Country/SITS/IO')]]"
+            "value": "[variables('CountryObject').value[parameters('CountryString')]]"
         }
     },
 
-    "resources": [
-        {
-            "type": "Microsoft.Resources/resourceGroups",
-            "apiVersion": "2019-08-01",
-            "location": "[parameters('Region')]",
-            "name": "[variables('rgName')]",
-            "properties": {},
-            "tags": "[variables('FullTag')]"
-        }
-    ],
+    "resources": [],
     "outputs": {
-        "output1": {
+        "OutputString": {
             "type": "string",
-            "value": "[variables('Output-Country/SITS/IO').value]"
+            "value": "[variables('OutputString').value]"
         }
     }
 }
