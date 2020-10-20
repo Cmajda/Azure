@@ -1,0 +1,67 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "group": "build",
+            "label": "Validate ARM template",
+            "type": "shell",
+            "command": "cmd < validate-arm.azcli",
+            "options": {
+                "cwd": "${workspaceFolder}/scripts"
+            },
+            "problemMatcher": []
+        },
+        {
+            "group": "build",
+            "label": "Deploy ARM template to DEV",
+            "type": "shell",
+            "command": "cmd < deploy-dev.azcli",
+            "options": {
+                "cwd": "${workspaceFolder}/scripts"
+            },
+            "problemMatcher": []
+        },
+        {
+            "group": "build",
+            "label": "Deploy ARM template to TEST",
+            "type": "shell",
+            "command": "cmd < deploy-test.azcli",
+            "options": {
+                "cwd": "${workspaceFolder}/scripts"
+            },
+            "problemMatcher": []
+        },
+        {
+            "group": "build",
+            "label": "Build API app",
+            "type": "shell",
+            "command": "dotnet build",
+            "options": {
+                "cwd": "${workspaceFolder}/src/api"
+            },
+            "problemMatcher": []
+        },
+        {
+            "group": "build",
+            "label": "Run API app",
+            "type": "shell",
+            "command": "dotnet run",
+            "options": {
+                "cwd": "${workspaceFolder}/src/api"
+            },
+            "problemMatcher": []
+        },
+        {
+            "group": "build",
+            "label": "Publish API app",
+            "type": "shell",
+            "command": "dotnet publish",
+            "options": {
+                "cwd": "${workspaceFolder}/src/api"
+            },
+            "problemMatcher": []
+        }
+    ]
+}

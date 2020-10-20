@@ -3,6 +3,10 @@
     "handler": "Microsoft.Azure.CreateUIDef",
     "version": "0.1.2-preview",
     "parameters": {
+        "config": {
+            "isWizard": true,
+            "basics": {}
+        },
         "resourceTypes": [
             "microsoft.resources/resourcegroups"
         ],
@@ -310,33 +314,23 @@
                 "elements": [
                     {
                         "name": "osDiskType",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Os Disk Type",
-                        "defaultValue": "Standard LRS",
-                        "toolTip": "",
+                        "type": "Microsoft.Storage.MultiStorageAccountCombo",
+                        "label": {
+                            "prefix": "Storage account name prefix",
+                            "type": "Storage account type"
+                        },
+                        "defaultValue": {
+                            "prefix": "autogenerate",
+                            "type": "Standard_LRS"
+                        },
                         "constraints": {
-                            "required": true,
-                            "regex": "",
-                            "validationMessage": "Validační zpráva",
-                            "allowedValues": [
-                                {
-                                    "label": "Standard LRS",
-                                    "value": "Standard_LRS"
-                                },
-                                {
-                                    "label": "Premium LRS",
-                                    "value": "Premium_LRS"
-                                },
-                                {
-                                    "label": "StandardSSD LRS",
-                                    "value": "StandardSSD_LRS"
-                                },
-                                {
-                                    "label": "UltraSSD LRS",
-                                    "value": "UltraSSD_LRS"
-                                }
+                            "allowedTypes": [
+                                "Premium_LRS",
+                                "Standard_LRS",
+                                "Standard_GRS"
                             ]
                         },
+                        "count": 2,
                         "visible": true
                     },
                     {

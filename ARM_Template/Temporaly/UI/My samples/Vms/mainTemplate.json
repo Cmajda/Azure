@@ -453,7 +453,7 @@
             "name": "[variables('dataDiskResources').Value[copyIndex()].name]",
             "type": "Microsoft.Compute/disks",
             "apiVersion": "2020-05-01",
-            "location": "[parameters('Region')]",
+            "location": "[resourceGroup().location]",
             "properties": "[variables('dataDiskResources').Value[copyIndex()].properties]",
             "sku": {
                 "name": "[variables('dataDiskResources').Value[copyIndex()].sku]"
@@ -468,7 +468,7 @@
             "name": "[variables('networkInterfaceName')]",
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2018-10-01",
-            "location": "[parameters('Region')]",
+            "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]",
                 "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]",
@@ -499,7 +499,7 @@
             "name": "[variables('networkSecurityGroupName')]",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-02-01",
-            "location": "[parameters('Region')]",
+            "location": "[resourceGroup().location]",
             "properties": {
                 "securityRules": "[parameters('networkSecurityGroupRules')]"
             },
@@ -509,7 +509,7 @@
             "name": "[variables('publicIpAddressName')]",
             "type": "Microsoft.Network/publicIpAddresses",
             "apiVersion": "2019-02-01",
-            "location": "[parameters('Region')]",
+            "location": "[resourceGroup().location]",
             "properties": {
                 "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
             },
@@ -522,7 +522,7 @@
             "name": "[variables('virtualMachineName')]",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2020-06-01",
-            "location": "[parameters('Region')]",
+            "location": "[resourceGroup().location]",
             "dependsOn": [
                 "managedDiskResources",
                 "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName'))]"
@@ -587,7 +587,7 @@
             "name": "[variables('virtualNetworkName')]",
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2019-09-01",
-            "location": "[parameters('Region')]",
+            "location": "[resourceGroup().location]",
             "properties": {
                 "addressSpace": {
                     "addressPrefixes": "[parameters('addressPrefixes')]"
