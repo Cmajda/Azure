@@ -1,0 +1,76 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "basics": [],
+        "steps": [
+            {
+                "name": "deploymentDetails",
+                "label": "Deployment Details",
+                "subLabel": {
+                    "preValidation": "Required",
+                    "postValidation": "Done"
+                },
+                "bladeTitle": "Deployment Details",
+                "elements": [
+                    {
+                        "name": "virtualMachine",
+                        "type": "Microsoft.Common.Section",
+                        "elements": [
+                            {
+                                "name": "vmName",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "VM Name",
+                                "toolTip": "Name of your virtual machine",
+                                "constraints": {
+                                    "required": true
+                                }
+                            }
+                        ],
+                        "visible": true
+                    },
+                    {
+                        "name": "vnet",
+                        "type": "Microsoft.Network.VirtualNetworkCombo",
+                        "label": {
+                            "virtualNetwork": "Virtual Network",
+                            "subnets": "Subnets"
+                        },
+                        "defaultValue": {
+                            "name": "vmx-vnet",
+                            "addressPrefixSize": "/16"
+                        },
+                        "constraints": {
+                            "minAddressPrefixSize": "/24"
+                        },
+                        "subnets": {
+                            "subnet1": {
+                                "label": "Subnet",
+                                "defaultValue": {
+                                    "name": "vmx-subnet",
+                                    "addressPrefixSize": "/24"
+                                },
+                                "constraints": {
+                                    "minAddressPrefixSize": "/29",
+                                    "minAddressCount": 8,
+                                    "requireContiguousAddresses": true
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "outputs": {
+            "location": "[location()]",
+            "vmName": "[steps('deploymentDetails').virtualMachine.vmName]",
+            "virtualNetworkName": "[steps('deploymentDetails').vnet.name]",
+            "virtualNetworkNewOrExisting": "[steps('deploymentDetails').vnet.newOrExisting]",
+            "virtualNetworkAddressPrefix": "[first(steps('deploymentDetails').vnet.addressPrefixes)]",
+            "virtualNetworkResourceGroup": "[steps('deploymentDetails').vnet.resourceGroup]",
+            "subnetName": "[steps('deploymentDetails').vnet.subnets.subnet1.name]",
+            "subnetAddressPrefix": "[steps('deploymentDetails').vnet.subnets.subnet1.addressPrefix]"
+        }
+    }
+}

@@ -1,0 +1,137 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmName": {
+            "type": "string",
+            "metadata": {
+                "title": "VM Name",
+                "description": "This is the name of the your VM"
+            },
+            "defaultValue": "nazevpc"
+        },
+
+
+        "virtualNetworkName": {
+            "type": "string",
+            "metadata": {
+                "description": "New or Existing VNet Name"
+            },
+            "defaultValue": "neu-vnet"
+        },
+        "virtualNetworkNewOrExisting": {
+            "type": "string",
+            "metadata": {
+                "description": "Boolean indicating whether the VNet is new or existing"
+            },
+            "allowedValues": [ "existing", "new" ],
+            "defaultValue": "existing"
+        },
+        "virtualNetworkAddressPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "VNet address prefix"
+            },
+            "defaultValue": "10.1.0.0/16"
+        },
+        "virtualNetworkResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "Resource group of the VNet"
+            },
+            "defaultValue": "network-rg"
+        },
+
+        "subnetName": {
+            "type": "string",
+            "metadata": {
+                "description": "New or Existing subnet Name"
+            },
+            "defaultValue": "default"
+        },
+        "subnetAddressPrefix": {
+            "type": "string",
+            "metadata": {
+                "description": "Subnet address prefix"
+            },
+            "defaultValue": "10.1.0.0/24"
+        }
+    },
+    "variables": {
+        "publicIPAddressName": "[concat(uniqueString(resourceGroup().id),'IP')]",
+        "nicName": "[concat(parameters('vmName'),'Nic')]",
+        "vnetId": {
+            "new": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
+            "existing": "[resourceId(parameters('virtualNetworkResourceGroup'),'Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]"
+        },
+        "subnetId": "[concat(variables('vnetId')[parameters('virtualNetworkNewOrExisting')],'/subnets/',parameters('subnetName'))]",
+        "publicIPAddressType": "Dynamic"
+    },
+    "resources": [
+        {
+            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'new')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2017-09-01",
+            "name": "[parameters('virtualNetworkName')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('virtualNetworkAddressPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('subnetName')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetAddressPrefix')]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('publicIPAddressName')]",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIPAllocationMethod": "[variables('publicIPAddressType')]"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[variables('nicName')]",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+                            },
+                            "subnet": {
+                                "id": "[variables('subnetId')]"
+                            }
+                        }
+                    }
+                ],
+                "enableIPForwarding": true
+            },
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+            ]
+        }
+
+    ],
+    "outputs": {
+        "output1": {
+            "type": "string",
+            "value": "Verze_1.0.0."
+        }
+    }
+}
