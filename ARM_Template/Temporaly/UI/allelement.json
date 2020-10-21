@@ -1,0 +1,470 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "basics": [
+            {}
+        ],
+        "steps": [
+            {
+                "name": "storageConfig",
+                "label": "Storage settings",
+                "elements": [
+                    {
+                        "name": "storageAccounts",
+                        "type": "Microsoft.Storage.MultiStorageAccountCombo",
+                        "label": {
+                            "prefix": "Storage account name prefix",
+                            "type": "Storage account type"
+                        },
+                        "defaultValue": {
+                            "prefix": "stracct",
+                            "type": "Standard_LRS"
+                        },
+                        "constraints": {
+                            "allowedTypes": [
+                                "Premium_LRS",
+                                "Standard_LRS",
+                                "Standard_GRS"
+                            ]
+                        },
+                        "count": 2
+                    }
+                ]
+            },
+            {
+                "name": "tags",
+                "label": "Tags",
+                "elements": [
+                    {
+                        "name": "tagsByResource",
+                        "type": "Microsoft.Common.TagsByResource",
+                        "resources": [
+                            "Microsoft.Storage/storageAccounts",
+                            "Microsoft.Compute/virtualMachines"
+                        ]
+                    },
+                    {
+                        "name": "legalAccept",
+                        "type": "Microsoft.Common.CheckBox",
+                        "label": "I agree to the terms and conditions.",
+                        "constraints": {
+                            "required": true,
+                            "validationMessage": "Please acknowledge the legal conditions."
+                        }
+                    },
+                    {
+                        "name": "dropDown1",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Example drop down",
+                        "placeholder": "",
+                        "defaultValue": "Value two",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Value one",
+                                    "value": "one"
+                                },
+                                {
+                                    "label": "Value two",
+                                    "value": "two"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "people",
+                        "type": "Microsoft.Common.EditableGrid",
+                        "ariaLabel": "Enter information per person",
+                        "label": "People",
+                        "constraints": {
+                            "width": "Full",
+                            "rows": {
+                                "count": {
+                                    "min": 1,
+                                    "max": 10
+                                }
+                            },
+                            "columns": [
+                                {
+                                    "id": "colName",
+                                    "header": "Name",
+                                    "width": "1fr",
+                                    "element": {
+                                        "type": "Microsoft.Common.TextBox",
+                                        "placeholder": "Full name",
+                                        "constraints": {
+                                            "required": true,
+                                            "validations": [
+                                                {
+                                                    "regex": "^[a-z0-9A-Z]{1,30}$",
+                                                    "message": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "colGender",
+                                    "header": "Gender",
+                                    "width": "1fr",
+                                    "element": {
+                                        "name": "dropDown1",
+                                        "type": "Microsoft.Common.DropDown",
+                                        "placeholder": "Select a gender...",
+                                        "constraints": {
+                                            "allowedValues": [
+                                                {
+                                                    "label": "Female",
+                                                    "value": "female"
+                                                },
+                                                {
+                                                    "label": "Male",
+                                                    "value": "male"
+                                                },
+                                                {
+                                                    "label": "Other",
+                                                    "value": "other"
+                                                }
+                                            ],
+                                            "required": true
+                                        }
+                                    }
+                                },
+                                {
+                                    "id": "colContactPreference",
+                                    "header": "Contact preference",
+                                    "width": "1fr",
+                                    "element": {
+                                        "type": "Microsoft.Common.OptionsGroup",
+                                        "constraints": {
+                                            "allowedValues": [
+                                                {
+                                                    "label": "Email",
+                                                    "value": "email"
+                                                },
+                                                {
+                                                    "label": "Text",
+                                                    "value": "text"
+                                                }
+                                            ],
+                                            "required": true
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "fileUpload1",
+                        "type": "Microsoft.Common.FileUpload",
+                        "label": "Some file upload",
+                        "toolTip": "",
+                        "constraints": {
+                            "required": true,
+                            "accept": ".doc,.docx,.xml,application/msword"
+                        },
+                        "options": {
+                            "multiple": false,
+                            "uploadMode": "file",
+                            "openMode": "text",
+                            "encoding": "UTF-8"
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "None",
+                            "text": "Nullam eros mi, mollis in sollicitudin non, tincidunt sed enim. Sed et felis metus, rhoncus ornare nibh. Ut at magna leo.",
+                            "uri": "https://www.microsoft.com"
+                        }
+                    },
+                    {
+                        "name": "optionsGroup1",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Some options group",
+                        "defaultValue": "Value two",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Value one",
+                                    "value": "one"
+                                },
+                                {
+                                    "label": "Value two",
+                                    "value": "two"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "passwordBox1",
+                        "type": "Microsoft.Common.PasswordBox",
+                        "label": {
+                            "password": "Password",
+                            "confirmPassword": "Confirm password"
+                        },
+                        "toolTip": "",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-zA-Z0-9]{8,}$",
+                            "validationMessage": "Password must be at least 8 characters long, contain only numbers and letters"
+                        },
+                        "options": {
+                            "hideConfirmation": false
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "section1",
+                        "type": "Microsoft.Common.Section",
+                        "label": "Example section",
+                        "elements": [
+                            {
+                                "name": "text1",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Example text box 1"
+                            },
+                            {
+                                "name": "text2",
+                                "type": "Microsoft.Common.TextBox",
+                                "label": "Example text box 2"
+                            }
+                        ],
+                        "visible": true
+                    },
+                    {
+                        "name": "tags",
+                        "type": "Microsoft.Common.TagsByResource",
+                        "resources": [
+                            "Microsoft.Storage/storageAccounts",
+                            "Microsoft.Compute/virtualMachines"
+                        ]
+                    },
+                    {
+                        "name": "textBlock1",
+                        "type": "Microsoft.Common.TextBlock",
+                        "visible": true,
+                        "options": {
+                            "text": "Please provide the configuration values for your application.",
+                            "link": {
+                                "label": "Learn more",
+                                "uri": "https://www.microsoft.com"
+                            }
+                        }
+                    },
+                    {
+                        "name": "textBox1",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Example text box 1",
+                        "placeholder": "",
+                        "defaultValue": "my text value",
+                        "toolTip": "Use only allowed characters",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z]{1,30}$",
+                            "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "credentialsCombo1",
+                        "type": "Microsoft.Compute.CredentialsCombo",
+                        "label": {
+                            "password": "Password",
+                            "confirmPassword": "Confirm password"
+                        },
+                        "toolTip": {
+                            "password": ""
+                        },
+                        "constraints": {
+                            "required": true,
+                            "customPasswordRegex": "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{12,}$",
+                            "customValidationMessage": "The password must be alphanumeric, contain at least 12 characters, and have at least 1 letter and 1 number."
+                        },
+                        "options": {
+                            "hideConfirmation": false
+                        },
+                        "osPlatform": "Windows",
+                        "visible": true
+                    },
+                    {
+                        "name": "vmSizeSelector1",
+                        "type": "Microsoft.Compute.SizeSelector",
+                        "label": "Size",
+                        "toolTip": "",
+                        "recommendedSizes": [
+                            "Standard_D1",
+                            "Standard_D2",
+                            "Standard_D3"
+                        ],
+                        "constraints": {
+                            "allowedSizes": [],
+                            "excludedSizes": [],
+                            "numAvailabilityZonesRequired": 3,
+                            "zone": "3"
+                        },
+                        "options": {
+                            "hideDiskTypeFilter": false
+                        },
+                        "osPlatform": "Windows",
+                        "imageReference": {
+                            "publisher": "MicrosoftWindowsServer",
+                            "offer": "WindowsServer",
+                            "sku": "2012-R2-Datacenter"
+                        },
+                        "count": 2,
+                        "visible": true
+                    },
+                    {
+                        "name": "userNameTextBox1",
+                        "type": "Microsoft.Compute.UserNameTextBox",
+                        "label": "User name",
+                        "defaultValue": "",
+                        "toolTip": "",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z]{1,30}$",
+                            "validationMessage": "Only alphanumeric characters are allowed, and the value must be 1-30 characters long."
+                        },
+                        "osPlatform": "Windows",
+                        "visible": true
+                    },
+                    {
+                        "name": "publicIpAddressCombo1",
+                        "type": "Microsoft.Network.PublicIpAddressCombo",
+                        "label": {
+                            "publicIpAddress": "Public IP address",
+                            "domainNameLabel": "Domain name label"
+                        },
+                        "toolTip": {
+                            "publicIpAddress": "",
+                            "domainNameLabel": ""
+                        },
+                        "defaultValue": {
+                            "publicIpAddressName": "ip01",
+                            "domainNameLabel": "mydomain"
+                        },
+                        "constraints": {
+                            "required": {
+                                "domainNameLabel": true
+                            }
+                        },
+                        "options": {
+                            "hideNone": false,
+                            "hideDomainNameLabel": false,
+                            "hideExisting": false,
+                            "zone": 3
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "vnetCombo1",
+                        "type": "Microsoft.Network.VirtualNetworkCombo",
+                        "label": {
+                            "virtualNetwork": "Virtual network",
+                            "subnets": "Subnets"
+                        },
+                        "toolTip": {
+                            "virtualNetwork": "",
+                            "subnets": ""
+                        },
+                        "defaultValue": {
+                            "name": "vnet01",
+                            "addressPrefixSize": "/16"
+                        },
+                        "constraints": {
+                            "minAddressPrefixSize": "/16"
+                        },
+                        "options": {
+                            "hideExisting": false
+                        },
+                        "subnets": {
+                            "subnet1": {
+                                "label": "First subnet",
+                                "defaultValue": {
+                                    "name": "subnet-1",
+                                    "addressPrefixSize": "/24"
+                                },
+                                "constraints": {
+                                    "minAddressPrefixSize": "/24",
+                                    "minAddressCount": 12,
+                                    "requireContiguousAddresses": true
+                                }
+                            },
+                            "subnet2": {
+                                "label": "Second subnet",
+                                "defaultValue": {
+                                    "name": "subnet-2",
+                                    "addressPrefixSize": "/26"
+                                },
+                                "constraints": {
+                                    "minAddressPrefixSize": "/26",
+                                    "minAddressCount": 8,
+                                    "requireContiguousAddresses": true
+                                }
+                            }
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "multiStorageAccountCombo1",
+                        "type": "Microsoft.Storage.MultiStorageAccountCombo",
+                        "label": {
+                            "prefix": "Storage account prefix",
+                            "type": "Storage account type"
+                        },
+                        "toolTip": {
+                            "prefix": "",
+                            "type": ""
+                        },
+                        "defaultValue": {
+                            "prefix": "sa",
+                            "type": "Premium_LRS"
+                        },
+                        "constraints": {
+                            "allowedTypes": [],
+                            "excludedTypes": []
+                        },
+                        "count": 2,
+                        "visible": true
+                    },
+                    {
+                        "name": "storageAccountSelector1",
+                        "type": "Microsoft.Storage.StorageAccountSelector",
+                        "label": "Storage account",
+                        "toolTip": "",
+                        "defaultValue": {
+                            "name": "storageaccount01",
+                            "type": "Premium_LRS"
+                        },
+                        "constraints": {
+                            "allowedTypes": [],
+                            "excludedTypes": []
+                        },
+                        "options": {
+                            "hideExisting": false
+                        },
+                        "visible": true
+                    }
+                ]
+            }
+        ],
+        "outputs": {
+            "storageAccountNamePrefix": "[steps('storageConfig').storageAccounts.prefix]",
+            "storageAccountType": "[steps('storageConfig').storageAccounts.type]",
+            "location": "[location()]",
+            "tagsByResource": "[steps('tags').tagsByResource]"
+        }
+    }
+}
