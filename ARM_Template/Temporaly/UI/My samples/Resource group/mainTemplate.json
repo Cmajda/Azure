@@ -2,11 +2,11 @@
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.1",
     "parameters": {
-        "Application Name": {
+        "ApplicationName": {
             "type": "string",
             "defaultValue": "armtemplate"
         },
-        "Country/SITS/IO": {
+        "CountrySITSIO": {
             "type": "string",
             "defaultValue": "Czech Republic",
             "allowedValues": [
@@ -262,50 +262,63 @@
                 "Zimbabwe"
             ]
         },
-        "RG Location": {
+        "RGLocation": {
             "type": "string",
             "defaultValue": "North Europe",
             "allowedValues": [ "North Europe", "West Europe" ]
         },
-        "Tag description": {
+        "Tagdescription": {
             "type": "string",
             "minLength": 21,
             "maxLength": 512,
             "defaultValue": "Testovací skupina pro arm template - obsah může být kdykoliv vymazán"
         },
-        "Tag Stage": {
+        "TagStage": {
             "type": "string",
             "defaultValue": "Test",
             "allowedValues": [ "Live", "Test", "Dev", "Sandbox" ]
         },
-        "Tag Customer": {
+        "TagCustomer": {
             "type": "string",
             "minLength": 3,
             "maxLength": 512,
             "defaultValue": "Cmajda"
         },
-        "Tag Administrator": {
+        "TagAdministrator": {
             "type": "string",
             "minLength": 3,
             "maxLength": 512,
             "defaultValue": "Cmajda"
         },
-        "Tag Deployment": {
+        "TagDeployment": {
             "type": "string",
             "allowedValues": [ "Manual", "Arm", "Tf", "Ps", "Cli" ],
             "defaultValue": "Arm"
+        },
+        "StorageKind": {
+            "type": "string",
+            "allowedValues": [ "StorageV2" ],
+            "defaultValue": "StorageV2"
+        },
+        "StorageSku": {
+            "type": "string",
+            "allowedValues": [ "Premium_LRS" ],
+            "defaultValue": "Premium_LRS"
         }
     },
     "variables": {
-        "rgName": "[concat('rg-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'))]",
+        "rgName": "[concat('rg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'))]",
+        "storageName": "[concat('st',variables('CountryObject').value[parameters('CountrySITSIO')], parameters('ApplicationName'), 'logs')]",
+        "keyValueName": "kvtest12577s1f451d",
+
         "FullTag": {
-            "Application": "[parameters('Application Name')]",
-            "Country": "[parameters('Country/SITS/IO')]",
-            "description": "[parameters('Tag description')]",
-            "Stage": "[parameters('Tag Stage')]",
-            "customer": "[parameters('Tag Customer')]",
-            "Administrator": "[parameters('Tag Administrator')]",
-            "Deployment": "[parameters('Tag Deployment')]"
+            "Application": "[parameters('ApplicationName')]",
+            "Country": "[parameters('CountrySITSIO')]",
+            "description": "[parameters('Tagdescription')]",
+            "Stage": "[parameters('TagStage')]",
+            "customer": "[parameters('TagCustomer')]",
+            "Administrator": "[parameters('TagAdministrator')]",
+            "Deployment": "[parameters('TagDeployment')]"
 
         },
         "CountryObject": {
@@ -566,7 +579,7 @@
         },
         "OutputString": {
             "type": "object",
-            "value": "[variables('CountryObject').value[parameters('Country/SITS/IO')]]"
+            "value": "[variables('CountryObject').value[parameters('CountrySITSIO')]]"
         }
 
     },
@@ -575,11 +588,67 @@
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2019-08-01",
-            "location": "[parameters('RG Location')]",
+            "location": "[parameters('RGLocation')]",
             "name": "[variables('rgName')]",
             "properties": {},
             "tags": "[variables('FullTag')]"
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "name": "storageDeployment",
+            "resourceGroup": "[variables('rgName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('rgName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+                            "type": "Microsoft.Storage/storageAccounts",
+                            "apiVersion": "2017-10-01",
+                            "name": "[variables('storageName')]",
+                            "location": "[parameters('rgLocation')]",
+                            "kind": "[parameters('StorageKind')]",
+                            "sku": {
+                                "name": "[parameters('StorageSku')]"
+                            },
+                            "tags": "[variables('FullTag')]"
+                        },
+                        {
+                            "type": "Microsoft.KeyVault/vaults",
+                            "name": "[variables('keyValueName')]",
+                            "location": "[parameters('RGLocation')]",
+                            "apiVersion": "2019-09-01",
+                            "tags": {
+                                "displayName": "KeyVault"
+                            },
+                            "properties": {
+                                "enabledForDeployment": false,
+                                "enabledForTemplateDeployment": false,
+                                "enabledForDiskEncryption": false,
+                                "tenantId": "f447d363-0a98-4b77-9742-580636496cc6",
+                                "accessPolicies": [],
+                                "sku": {
+                                    "name": "Standard",
+                                    "family": "A"
+                                },
+                                "networkAcls": {
+                                    "defaultAction": "Allow",
+                                    "bypass": "AzureServices"
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
         }
+
     ],
     "outputs": {
         "OutputString": {
