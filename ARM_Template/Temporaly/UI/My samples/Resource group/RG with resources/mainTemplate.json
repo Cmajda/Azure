@@ -302,6 +302,9 @@
             "type": "string",
             "allowedValues": [ "Premium_LRS" ],
             "defaultValue": "Premium_LRS"
+        },
+        "YesNoNewStorageAccount": {
+            "type": "string"
         }
     },
     "variables": {
@@ -650,6 +653,14 @@
         "OutputString": {
             "type": "string",
             "value": "[variables('OutputString').value]"
+        },
+        "Location": {
+            "type": "string",
+            "value": "[parameters('RGLocation')]"
+        },
+        "YesNoNewStorageAccount": {
+            "type": "string",
+            "value": "[parameters('YesNoNewStorageAccount')]"
         }
     }
 }
