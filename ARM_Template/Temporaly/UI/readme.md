@@ -30,6 +30,10 @@
 
 <a href="https://portal.azure.com/?feature.customportal=false#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FCmajda%2FArm-Template%2Fmain%2Fdraft%2Fui%2FVirtualNetwork%2Fmaintemplate.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FCmajda%2FArm-Template%2Fmain%2Fdraft%2Fui%2FVirtualNetwork%2FcreateUiDefinition.json"><img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure"></a>
 
+- ### 03 Resource Group with storage account and key vault
+
+<a href="https://portal.azure.com/?feature.customportal=false#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FCmajda%2FAzure%2Fmaster%2FARM_Template%2FTemporaly%2FUI%2FMy%2520samples%2FResource%2520group%2FRG%2520with%2520resources%2FmainTemplate.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FCmajda%2FAzure%2Fmaster%2FARM_Template%2FTemporaly%2FUI%2FMy%2520samples%2FResource%2520group%2FRG%2520with%2520resources%2FcreteUiDefinitions.json"><img src="https://aka.ms/deploytoazurebutton" alt="Deploy to Azure"></a>
+
 
  
 # Microsoft examples
