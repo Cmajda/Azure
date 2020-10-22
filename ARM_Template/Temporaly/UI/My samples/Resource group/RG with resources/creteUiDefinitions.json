@@ -8,7 +8,7 @@
         "config": {
             "isWizard": true,
             "basics": {
-                "description": "## Nějaký text<br>Podpora **markdown**, více [zde](https://docs.microsoft.com/en-us/azure/azure-resource-manager/managed-applications/create-uidefinition-overview#config).",
+                "description": "## ARM template for <img src=https://d15l9woddkztht.cloudfront.net/logos/msf---mdecins-sans-frontires-doctors-without-borders-4b30fcdc-8c7c-4a62-940f-793443f5f6aa.svg width=\"60\">Support **markdown**. Info about config [zde](https://docs.microsoft.com/en-us/azure/azure-resource-manager/managed-applications/create-uidefinition-overview#config).",
                 "subscription": {
                     "constraints": {
                         "validations": []
@@ -22,8 +22,8 @@
                     "allowExisting": true
                 },
                 "location": {
-                    "label": "Custom label for location",
-                    "toolTip": "provide a useful tooltip",
+                    "label": "Location",
+                    "toolTip": "Location of all resources",
                     "resourceTypes": [
                         "Microsoft.Compute/virtualMachines",
                         "Microsoft.Storage/storageAccounts",
@@ -67,13 +67,14 @@
                 "type": "Microsoft.Common.TextBlock",
                 "visible": true,
                 "options": {
-                    "text": "Please provide the configuration values for your application.",
+                    "text": " I (a) agree to the applicable legal terms...",
                     "link": {
                         "label": "Learn more",
                         "uri": "https://www.microsoft.com"
                     }
                 }
             },
+
             {
                 "name": "legalAccept",
                 "type": "Microsoft.Common.CheckBox",
