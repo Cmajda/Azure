@@ -8,7 +8,7 @@
         "config": {
             "isWizard": true,
             "basics": {
-                "description": "Customized description with **markdown**, see [more](https://www.microsoft.com).",
+                "description": "## Nějaký text<br>Podpora **markdown**, více [zde](https://docs.microsoft.com/en-us/azure/azure-resource-manager/managed-applications/create-uidefinition-overview#config).",
                 "subscription": {
                     "constraints": {
                         "validations": []
@@ -31,9 +31,9 @@
                     ],
                     "allowedValues": [
                         "northeurope",
-                        "westus2"
+                        "westeurope"
                     ],
-                    "visible": false
+                    "visible": true
                 }
             }
         },
@@ -42,7 +42,7 @@
         ],
         "basics": [
             {
-                "name": "RG Location",
+                "name": "location",
                 "type": "Microsoft.Common.DropDown",
                 "label": "RG Location",
                 "defaultValue": "North Europe",
@@ -60,7 +60,28 @@
                         }
                     ]
                 },
-                "visible": true
+                "visible": false
+            },
+            {
+                "name": "text1",
+                "type": "Microsoft.Common.TextBlock",
+                "visible": true,
+                "options": {
+                    "text": "Please provide the configuration values for your application.",
+                    "link": {
+                        "label": "Learn more",
+                        "uri": "https://www.microsoft.com"
+                    }
+                }
+            },
+            {
+                "name": "legalAccept",
+                "type": "Microsoft.Common.CheckBox",
+                "label": "I agree to the terms and conditions.",
+                "constraints": {
+                    "required": true,
+                    "validationMessage": "Please acknowledge the legal conditions."
+                }
             }
         ],
         "steps": [
@@ -1202,6 +1223,33 @@
                 "label": "Settings Storage account",
                 "elements": [
                     {
+                        "name": "YesNoNewStorageAccount",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Create storage account",
+                        "defaultValue": "No",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                },
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "Use exist storage account",
+                                    "value": "exist"
+                                }
+
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    },
+
+                    {
                         "name": "StorageKind",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Storage Kind",
@@ -1216,7 +1264,7 @@
                                 }
                             ]
                         },
-                        "visible": true
+                        "visible": "[bool(if(equals('Yes', steps('TabStorageAccount').YesNoNewStorageAccount), 'true', 'false'))]"
                     },
                     {
                         "name": "StorageSku",
@@ -1233,12 +1281,26 @@
                                 }
                             ]
                         },
-                        "visible": true
+                        "visible": "[bool(if(equals('Yes', steps('TabStorageAccount').YesNoNewStorageAccount), 'true', 'false'))]"
+                    },
+                    {
+                        "name": "storageSelector",
+                        "type": "Microsoft.Solutions.ResourceSelector",
+                        "label": "Select storage accounts",
+                        "resourceType": "Microsoft.Storage/storageAccounts",
+                        "options": {
+                            "filter": {
+                                "subscription": "onBasics",
+                                "location": "onBasics"
+                            }
+                        },
+                        "visible": "[bool(if(equals('exist', steps('TabStorageAccount').YesNoNewStorageAccount), 'true', 'false'))]"
                     }
                 ]
             }
         ],
         "outputs": {
+            "Location": "[location()]",
             "RGLocation": "[location()]",
             "ApplicationName": "[steps('TabNameTags').ApplicationName]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
@@ -1248,7 +1310,10 @@
             "TagAdministrator": "[steps('TabNameTags').TagAdministrator]",
             "TagDeployment": "[steps('TabNameTags').TagDeployment]",
             "StorageKind": "[steps('TabStorageAccount').StorageKind]",
-            "StorageSku": "[steps('TabStorageAccount').StorageSku]"
+            "StorageSku": "[steps('TabStorageAccount').StorageSku]",
+            "YesNoNewStorageAccount": "[steps('TabStorageAccount').YesNoNewStorageAccount]",
+            "SelectedaccountStorage": "[steps('TabStorageAccount').storageSelector]"
+
         }
     }
 }
