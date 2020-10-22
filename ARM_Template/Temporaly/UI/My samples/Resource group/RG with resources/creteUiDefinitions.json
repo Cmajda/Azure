@@ -3,32 +3,44 @@
     "handler": "Microsoft.Azure.CreateUIDef",
     "version": "0.1.2-preview",
     "parameters": {
+
+
+        "config": {
+            "isWizard": true,
+            "basics": {
+                "description": "Customized description with **markdown**, see [more](https://www.microsoft.com).",
+                "subscription": {
+                    "constraints": {
+                        "validations": []
+                    },
+                    "resourceProviders": []
+                },
+                "resourceGroup": {
+                    "constraints": {
+                        "validations": []
+                    },
+                    "allowExisting": true
+                },
+                "location": {
+                    "label": "Custom label for location",
+                    "toolTip": "provide a useful tooltip",
+                    "resourceTypes": [
+                        "Microsoft.Compute/virtualMachines",
+                        "Microsoft.Storage/storageAccounts",
+                        "Microsoft.KeyVault/vaults"
+                    ],
+                    "allowedValues": [
+                        "northeurope",
+                        "westus2"
+                    ],
+                    "visible": true
+                }
+            }
+        },
         "resourceTypes": [
             "microsoft.resources/resourcegroups"
         ],
-        "basics": [
-            {
-                "name": "RGLocation",
-                "type": "Microsoft.Common.DropDown",
-                "label": "RG Location",
-                "defaultValue": "North Europe",
-                "toolTip": "",
-                "constraints": {
-                    "required": false,
-                    "allowedValues": [
-                        {
-                            "label": "North Europe",
-                            "value": "North Europe"
-                        },
-                        {
-                            "label": "West Europe",
-                            "value": "West Europe"
-                        }
-                    ]
-                },
-                "visible": true
-            }
-        ],
+        "basics": [],
         "steps": [
             {
                 "name": "TabNameTags",
@@ -1206,7 +1218,6 @@
         ],
         "outputs": {
             "location": "[location()]",
-            "RGLocation": "[basics('RGLocation')]",
             "ApplicationName": "[steps('TabNameTags').ApplicationName]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
             "Tagdescription": "[steps('TabNameTags').Tagdescription]",
