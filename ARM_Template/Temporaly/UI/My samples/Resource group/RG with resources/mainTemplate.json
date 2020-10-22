@@ -305,7 +305,14 @@
         },
         "YesNoNewStorageAccount": {
             "type": "string"
+        },
+        "YesNoNewKeyVault": {
+            "type": "string"
         }
+
+
+
+
     },
     "variables": {
         "rgName": "[concat('rg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'))]",

@@ -1297,7 +1297,45 @@
                         "visible": "[bool(if(equals('exist', steps('TabStorageAccount').YesNoNewStorageAccount), 'true', 'false'))]"
                     }
                 ]
+            },
+            {
+                "name": "TabKeyVault",
+                "label": "Settings Key vault",
+                "elements": [
+
+                    {
+                        "name": "YesNoNewKeyVault",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Create Key Vault",
+                        "defaultValue": "No",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                },
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "Use exist storage account",
+                                    "value": "exist"
+                                }
+
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    }
+                ]
             }
+
+
+
+
+
         ],
         "outputs": {
             "Location": "[location()]",
@@ -1312,7 +1350,9 @@
             "StorageKind": "[steps('TabStorageAccount').StorageKind]",
             "StorageSku": "[steps('TabStorageAccount').StorageSku]",
             "YesNoNewStorageAccount": "[steps('TabStorageAccount').YesNoNewStorageAccount]",
-            "SelectedaccountStorage": "[steps('TabStorageAccount').storageSelector]"
+            "SelectedaccountStorage": "[steps('TabStorageAccount').storageSelector]",
+            "YesNoNewKeyVault": "[steps('TabKeyVault').YesNoNewKeyVault]"
+
 
         }
     }
