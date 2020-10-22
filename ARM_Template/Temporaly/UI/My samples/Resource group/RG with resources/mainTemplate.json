@@ -2,9 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.1",
     "parameters": {
-        "location": {
-            "type": "string"
-        },
         "ApplicationName": {
             "type": "string",
             "defaultValue": "armtemplate"
@@ -264,6 +261,11 @@
                 "Zambia",
                 "Zimbabwe"
             ]
+        },
+        "RGLocation": {
+            "type": "string",
+            "defaultValue": "North Europe",
+            "allowedValues": [ "North Europe", "West Europe" ]
         },
         "Tagdescription": {
             "type": "string",
@@ -586,7 +588,7 @@
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2019-08-01",
-            "location": "[parameters('location')]",
+            "location": "[resourceGroup().location]",
             "name": "[variables('rgName')]",
             "properties": {},
             "tags": "[variables('FullTag')]"
@@ -611,7 +613,7 @@
                             "type": "Microsoft.Storage/storageAccounts",
                             "apiVersion": "2017-10-01",
                             "name": "[variables('storageName')]",
-                            "location": "[parameters('location')]",
+                            "location": "[resourceGroup().location]",
                             "kind": "[parameters('StorageKind')]",
                             "sku": {
                                 "name": "[parameters('StorageSku')]"
@@ -621,7 +623,7 @@
                         {
                             "type": "Microsoft.KeyVault/vaults",
                             "name": "[variables('keyValueName')]",
-                            "location": "[parameters('location')]",
+                            "location": "[resourceGroup().location]",
                             "apiVersion": "2019-09-01",
                             "tags": "[variables('FullTag')]",
                             "properties": {
