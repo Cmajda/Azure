@@ -1241,16 +1241,16 @@
 
         ],
         "outputs": {
-            "ApplicationName": "[steps('ApplicationName')]",
-            "CountrySITSIO": "[steps('CountrySITSIO')]",
-            "RGLocation": "[basics('RGLocation')]",
-            "Tagdescription": "[steps('Tagdescription')]",
-            "TagStage": "[steps('TagStage')]",
-            "TagCustomer": "[steps('TagCustomer')]",
-            "TagAdministrator": "[steps('TagAdministrator')]",
-            "TagDeployment": "[steps('TagDeployment')]",
-            "StorageKind": "[steps('StorageKind')]",
-            "StorageSku": "[steps('StorageSku')]"
+            "ApplicationName": "[steps('tabNamesTags').ApplicationName]",
+            "CountrySITSIO": "[steps('tabNamesTags').CountrySITSIO]",
+            "location": "[location()]",
+            "Tagdescription": "[steps('tabNamesTags').Tagdescription]",
+            "TagStage": "[steps('tabNamesTags').TagStage]",
+            "TagCustomer": "[steps('tabNamesTags').TagCustomer]",
+            "TagAdministrator": "[steps('tabNamesTags').TagAdministrator]",
+            "TagDeployment": "[steps('tabNamesTags').TagDeployment]",
+            "StorageKind": "[steps('tabStorageAccount').StorageKind]",
+            "StorageSku": "[steps('tabStorageAccount').StorageSku]"
         }
     }
 }

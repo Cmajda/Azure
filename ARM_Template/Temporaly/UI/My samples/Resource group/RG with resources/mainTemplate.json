@@ -625,9 +625,7 @@
                             "name": "[variables('keyValueName')]",
                             "location": "[parameters('RGLocation')]",
                             "apiVersion": "2019-09-01",
-                            "tags": {
-                                "displayName": "KeyVault"
-                            },
+                            "tags": "[variables('FullTag')]",
                             "properties": {
                                 "enabledForDeployment": false,
                                 "enabledForTemplateDeployment": false,
