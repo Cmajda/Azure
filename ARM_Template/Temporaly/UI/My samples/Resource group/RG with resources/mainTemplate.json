@@ -630,6 +630,7 @@
                             "tags": "[variables('FullTag')]"
                         },
                         {
+                            "condition": "[equals(parameters('YesNoNewKeyVault'),'Yes')]",
                             "type": "Microsoft.KeyVault/vaults",
                             "name": "[variables('keyValueName')]",
                             "location": "[parameters('RGLocation')]",
