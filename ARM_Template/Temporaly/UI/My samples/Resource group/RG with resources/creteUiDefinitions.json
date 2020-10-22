@@ -33,14 +33,36 @@
                         "northeurope",
                         "westus2"
                     ],
-                    "visible": true
+                    "visible": false
                 }
             }
         },
         "resourceTypes": [
             "microsoft.resources/resourcegroups"
         ],
-        "basics": [],
+        "basics": [
+            {
+                "name": "RG Location",
+                "type": "Microsoft.Common.DropDown",
+                "label": "RG Location",
+                "defaultValue": "North Europe",
+                "toolTip": "",
+                "constraints": {
+                    "required": false,
+                    "allowedValues": [
+                        {
+                            "label": "North Europe",
+                            "value": "North Europe"
+                        },
+                        {
+                            "label": "West Europe",
+                            "value": "West Europe"
+                        }
+                    ]
+                },
+                "visible": true
+            }
+        ],
         "steps": [
             {
                 "name": "TabNameTags",
@@ -1217,7 +1239,7 @@
             }
         ],
         "outputs": {
-            "location": "[location()]",
+            "RGLocation": "[location()]",
             "ApplicationName": "[steps('TabNameTags').ApplicationName]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
             "Tagdescription": "[steps('TabNameTags').Tagdescription]",
