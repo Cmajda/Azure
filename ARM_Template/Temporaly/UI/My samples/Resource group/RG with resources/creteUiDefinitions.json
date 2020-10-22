@@ -1055,107 +1055,6 @@
                 "visible": true
             },
             {
-                "name": "Tagdescription",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Tagdescription",
-                "defaultValue": "Testovací skupina pro arm template - obsah může být kdykoliv vymazán",
-                "toolTip": "",
-                "constraints": {
-                    "required": false,
-                    "regex": "",
-                    "validationMessage": ""
-                },
-                "visible": true
-            },
-            {
-                "name": "TagStage",
-                "type": "Microsoft.Common.DropDown",
-                "label": "Tag Stage",
-                "defaultValue": "Test",
-                "toolTip": "",
-                "constraints": {
-                    "required": false,
-                    "allowedValues": [
-                        {
-                            "label": "Live",
-                            "value": "Live"
-                        },
-                        {
-                            "label": "Test",
-                            "value": "Test"
-                        },
-                        {
-                            "label": "Dev",
-                            "value": "Dev"
-                        },
-                        {
-                            "label": "Sandbox",
-                            "value": "Sandbox"
-                        }
-                    ]
-                },
-                "visible": true
-            },
-            {
-                "name": "TagCustomer",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Tag Customer",
-                "defaultValue": "Cmajda",
-                "toolTip": "",
-                "constraints": {
-                    "required": false,
-                    "regex": "",
-                    "validationMessage": ""
-                },
-                "visible": true
-            },
-            {
-                "name": "TagAdministrator",
-                "type": "Microsoft.Common.TextBox",
-                "label": "Tag Administrator",
-                "defaultValue": "Cmajda",
-                "toolTip": "",
-                "constraints": {
-                    "required": false,
-                    "regex": "",
-                    "validationMessage": ""
-                },
-                "visible": true
-            },
-            {
-                "name": "TagDeployment",
-                "type": "Microsoft.Common.DropDown",
-                "label": "Tag Deployment",
-                "defaultValue": "Arm",
-                "toolTip": "",
-                "constraints": {
-                    "required": false,
-                    "allowedValues": [
-                        {
-                            "label": "Manual",
-                            "value": "Manual"
-                        },
-                        {
-                            "label": "Arm",
-                            "value": "Arm"
-                        },
-                        {
-                            "label": "Tf",
-                            "value": "Tf"
-                        },
-                        {
-                            "label": "Ps",
-                            "value": "Ps"
-                        },
-                        {
-                            "label": "Cli",
-                            "value": "Cli"
-                        }
-                    ]
-                },
-                "visible": true
-            },
-            {
                 "name": "StorageKind",
                 "type": "Microsoft.Common.DropDown",
                 "label": "Storage Kind",
@@ -1190,16 +1089,124 @@
                 "visible": true
             }
         ],
-        "steps": [],
+        "steps": [
+            {
+                "name": "TabNameTags",
+                "label": "Names and Tags",
+                "elements": [
+                    {
+                        "name": "Tagdescription",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Tagdescription",
+                        "defaultValue": "Testovací skupina pro arm template - obsah může být kdykoliv vymazán",
+                        "toolTip": "",
+                        "constraints": {
+                            "required": false,
+                            "regex": "",
+                            "validationMessage": ""
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "TagStage",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Tag Stage",
+                        "defaultValue": "Test",
+                        "toolTip": "",
+                        "constraints": {
+                            "required": false,
+                            "allowedValues": [
+                                {
+                                    "label": "Live",
+                                    "value": "Live"
+                                },
+                                {
+                                    "label": "Test",
+                                    "value": "Test"
+                                },
+                                {
+                                    "label": "Dev",
+                                    "value": "Dev"
+                                },
+                                {
+                                    "label": "Sandbox",
+                                    "value": "Sandbox"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "TagCustomer",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Tag Customer",
+                        "defaultValue": "Cmajda",
+                        "toolTip": "",
+                        "constraints": {
+                            "required": false,
+                            "regex": "",
+                            "validationMessage": ""
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "TagAdministrator",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Tag Administrator",
+                        "defaultValue": "Cmajda",
+                        "toolTip": "",
+                        "constraints": {
+                            "required": false,
+                            "regex": "",
+                            "validationMessage": ""
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "TagDeployment",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Tag Deployment",
+                        "defaultValue": "Arm",
+                        "toolTip": "",
+                        "constraints": {
+                            "required": false,
+                            "allowedValues": [
+                                {
+                                    "label": "Manual",
+                                    "value": "Manual"
+                                },
+                                {
+                                    "label": "Arm",
+                                    "value": "Arm"
+                                },
+                                {
+                                    "label": "Tf",
+                                    "value": "Tf"
+                                },
+                                {
+                                    "label": "Ps",
+                                    "value": "Ps"
+                                },
+                                {
+                                    "label": "Cli",
+                                    "value": "Cli"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    }
+                ]
+            }
+        ],
         "outputs": {
             "ApplicationName": "[basics('ApplicationName')]",
             "CountrySITSIO": "[basics('CountrySITSIO')]",
             "RGLocation": "[basics('RGLocation')]",
-            "Tagdescription": "[basics('Tagdescription')]",
-            "TagStage": "[basics('TagStage')]",
-            "TagCustomer": "[basics('TagCustomer')]",
-            "TagAdministrator": "[basics('TagAdministrator')]",
-            "TagDeployment": "[basics('TagDeployment')]",
+            "Tagdescription": "[steps('TabNameTags').Tagdescription]",
+            "TagStage": "[steps('TabNameTags').TagStage]",
+            "TagCustomer": "[steps('TabNameTags').TagCustomer]",
+            "TagAdministrator": "[steps('TabNameTags').TagAdministrator]",
+            "TagDeployment": "[steps('TabNameTags').TagDeployment]",
             "StorageKind": "[basics('StorageKind')]",
             "StorageSku": "[basics('StorageSku')]"
         }
