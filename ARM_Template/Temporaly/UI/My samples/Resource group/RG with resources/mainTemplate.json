@@ -309,7 +309,7 @@
     "variables": {
         "rgName": "[concat('rg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'))]",
         "storageName": "[concat('st',variables('CountryObject').value[parameters('CountrySITSIO')], parameters('ApplicationName'), 'logs')]",
-        "keyValueName": "kvtest12577s1f451d",
+        "keyValueName": "[concat('rg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'))]",
 
         "FullTag": {
             "Application": "[parameters('ApplicationName')]",
