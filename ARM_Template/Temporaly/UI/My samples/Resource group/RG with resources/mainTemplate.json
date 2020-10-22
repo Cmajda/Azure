@@ -611,6 +611,7 @@
                     "variables": {},
                     "resources": [
                         {
+                            "condition": "[equals(parameters('YesNoNewStorageAccount'),'Yes')]",
                             "type": "Microsoft.Storage/storageAccounts",
                             "apiVersion": "2017-10-01",
                             "name": "[variables('storageName')]",
