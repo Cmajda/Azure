@@ -1281,7 +1281,6 @@
         ],
         "outputs": {
             "location": "[location()]",
-            "RGLocation": "[location()]",
             "ApplicationName": "[steps('TabNameTags').ApplicationName]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
             "Tagdescription": "[steps('TabNameTags').Tagdescription]",

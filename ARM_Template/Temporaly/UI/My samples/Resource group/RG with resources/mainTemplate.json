@@ -318,6 +318,7 @@
         "rgName": "[concat('rg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'))]",
         "storageName": "[concat('st',variables('CountryObject').value[parameters('CountrySITSIO')], parameters('ApplicationName'), 'logs')]",
         "keyValueName": "[concat('kv-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'))]",
+        "location": "[subscription().subscriptionId]",
 
         "FullTag": {
             "Application": "[parameters('ApplicationName')]",
@@ -670,6 +671,11 @@
         "YesNoNewStorageAccount": {
             "type": "string",
             "value": "[parameters('YesNoNewStorageAccount')]"
+        },
+        "OutputSubstId": {
+            "type": "string",
+            "value": "[variables('location')]"
         }
+
     }
 }
