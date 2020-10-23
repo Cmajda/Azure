@@ -82,11 +82,11 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Application Name",
                         "defaultValue": "armtemplate",
-                        "toolTip": "",
+                        "toolTip": "Description for ApplicationName",
                         "constraints": {
-                            "required": false,
-                            "regex": "",
-                            "validationMessage": ""
+                            "required": true,
+                            "regex": "^.[A-Za-z0-9]{3,7}$",
+                            "validationMessage": "Name must be between 4-8 characters in length. Special characters are not allowed."
                         },
                         "visible": true
                     },
@@ -95,9 +95,9 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Country SITSIO",
                         "defaultValue": "Czech Republic",
-                        "toolTip": "",
+                        "toolTip": "Description for Country",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "allowedValues": [
                                 {
                                     "label": "Afghanistan",
@@ -1104,13 +1104,13 @@
                         "visible": true
                     },
                     {
-                        "name": "Tagdescription",
+                        "name": "TagCustomer",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Tagdescription",
-                        "defaultValue": "Testovací skupina pro arm template - obsah může být kdykoliv vymazán",
-                        "toolTip": "",
+                        "label": "Tag Customer",
+                        "defaultValue": "Cmajda",
+                        "toolTip": "Description for TagCustomer",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "",
                             "validationMessage": ""
                         },
@@ -1121,9 +1121,9 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Tag Stage",
                         "defaultValue": "Test",
-                        "toolTip": "",
+                        "toolTip": "Description for TagStage",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "allowedValues": [
                                 {
                                     "label": "Live",
@@ -1146,24 +1146,11 @@
                         "visible": true
                     },
                     {
-                        "name": "TagCustomer",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Tag Customer",
-                        "defaultValue": "Cmajda",
-                        "toolTip": "",
-                        "constraints": {
-                            "required": false,
-                            "regex": "",
-                            "validationMessage": ""
-                        },
-                        "visible": true
-                    },
-                    {
                         "name": "TagAdministrator",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Tag Administrator",
                         "defaultValue": "Cmajda",
-                        "toolTip": "",
+                        "toolTip": "Description for TagAdministrator",
                         "constraints": {
                             "required": false,
                             "regex": "",
@@ -1176,7 +1163,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Tag Deployment",
                         "defaultValue": "Arm",
-                        "toolTip": "",
+                        "toolTip": "Description for TagDeployment",
                         "constraints": {
                             "required": false,
                             "allowedValues": [
@@ -1203,7 +1190,22 @@
                             ]
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "Tagdescription",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Tag description",
+                        "defaultValue": "Testovací skupina pro arm template - obsah může být kdykoliv vymazán",
+                        "toolTip": "Description for Tagdescription",
+                        "constraints": {
+                            "required": false,
+                            "regex": "^.{20,511}$",
+                            "validationMessage": "Minimum length is 21."
+                        },
+                        "visible": true
                     }
+
+
                 ]
             },
             {
@@ -1234,9 +1236,9 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Storage Kind",
                         "defaultValue": "StorageV2",
-                        "toolTip": "",
+                        "toolTip": "Description for StorageKind",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "allowedValues": [
                                 {
                                     "label": "StorageV2",
@@ -1251,9 +1253,9 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Storage Sku",
                         "defaultValue": "Premium_LRS",
-                        "toolTip": "",
+                        "toolTip": "Description for StorageSku",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "allowedValues": [
                                 {
                                     "label": "Premium_LRS",

@@ -4,12 +4,10 @@
 
     "parameters": {
         "ApplicationName": {
-            "type": "string",
-            "defaultValue": "armtemplate"
+            "type": "string"
         },
         "CountrySITSIO": {
             "type": "string",
-            "defaultValue": "Czech Republic",
             "allowedValues": [
                 "Afghanistan",
                 "Albania",
@@ -269,40 +267,33 @@
         "Tagdescription": {
             "type": "string",
             "minLength": 21,
-            "maxLength": 512,
-            "defaultValue": "Testovací skupina pro arm template - obsah může být kdykoliv vymazán"
+            "maxLength": 512
         },
         "TagStage": {
             "type": "string",
-            "defaultValue": "Test",
             "allowedValues": [ "Live", "Test", "Dev", "Sandbox" ]
         },
         "TagCustomer": {
             "type": "string",
             "minLength": 3,
-            "maxLength": 512,
-            "defaultValue": "Cmajda"
+            "maxLength": 512
         },
         "TagAdministrator": {
             "type": "string",
             "minLength": 3,
-            "maxLength": 512,
-            "defaultValue": "Cmajda"
+            "maxLength": 512
         },
         "TagDeployment": {
             "type": "string",
-            "allowedValues": [ "Manual", "Arm", "Tf", "Ps", "Cli" ],
-            "defaultValue": "Arm"
+            "allowedValues": [ "Manual", "Arm", "Tf", "Ps", "Cli" ]
         },
         "StorageKind": {
             "type": "string",
-            "allowedValues": [ "StorageV2" ],
-            "defaultValue": "StorageV2"
+            "allowedValues": [ "StorageV2" ]
         },
         "StorageSku": {
             "type": "string",
-            "allowedValues": [ "Premium_LRS" ],
-            "defaultValue": "Premium_LRS"
+            "allowedValues": [ "Premium_LRS" ]
         },
         "YesNoNewStorageAccount": {
             "type": "string"
@@ -688,7 +679,7 @@
             "condition": "[equals(parameters('TagStage'),'Live')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2019-10-01",
-            "name": "applyLock",
+            "name": "ApplyLockRgDeployment",
             "resourceGroup": "[variables('rgName')]",
             "dependsOn": [
                 "[variables('rgName')]"
