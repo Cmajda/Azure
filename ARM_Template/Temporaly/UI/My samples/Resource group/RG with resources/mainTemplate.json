@@ -263,8 +263,7 @@
             ]
         },
         "location": {
-            "type": "string",
-            "defaultValue": "[subscription().displayName]"
+            "type": "string"
         },
         "Tagdescription": {
             "type": "string",
