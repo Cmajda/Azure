@@ -61,28 +61,6 @@
                     ]
                 },
                 "visible": false
-            },
-            {
-                "name": "text1",
-                "type": "Microsoft.Common.TextBlock",
-                "visible": true,
-                "options": {
-                    "text": " I (a) agree to the applicable legal terms...",
-                    "link": {
-                        "label": "Learn more",
-                        "uri": "https://www.microsoft.com"
-                    }
-                }
-            },
-
-            {
-                "name": "legalAccept",
-                "type": "Microsoft.Common.CheckBox",
-                "label": "I agree to the terms and conditions.",
-                "constraints": {
-                    "required": true,
-                    "validationMessage": "Please acknowledge the legal conditions."
-                }
             }
         ],
         "steps": [
@@ -90,6 +68,15 @@
                 "name": "TabNameTags",
                 "label": "Names and Tags",
                 "elements": [
+                    {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "Info text"
+                        }
+                    },
                     {
                         "name": "ApplicationName",
                         "type": "Microsoft.Common.TextBox",
@@ -1227,21 +1214,13 @@
                         "name": "YesNoNewStorageAccount",
                         "type": "Microsoft.Common.OptionsGroup",
                         "label": "Create storage account",
-                        "defaultValue": "No",
+                        "defaultValue": "Yes",
                         "toolTip": "",
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "No",
-                                    "value": "No"
-                                },
-                                {
                                     "label": "Yes",
                                     "value": "Yes"
-                                },
-                                {
-                                    "label": "Use exist storage account",
-                                    "value": "exist"
                                 }
 
                             ],
@@ -1298,45 +1277,7 @@
                         "visible": "[bool(if(equals('exist', steps('TabStorageAccount').YesNoNewStorageAccount), 'true', 'false'))]"
                     }
                 ]
-            },
-            {
-                "name": "TabKeyVault",
-                "label": "Settings Key vault",
-                "elements": [
-
-                    {
-                        "name": "YesNoNewKeyVault",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Create Key Vault",
-                        "defaultValue": "No",
-                        "toolTip": "",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "No",
-                                    "value": "No"
-                                },
-                                {
-                                    "label": "Yes",
-                                    "value": "Yes"
-                                },
-                                {
-                                    "label": "Use exist storage account",
-                                    "value": "exist"
-                                }
-
-                            ],
-                            "required": true
-                        },
-                        "visible": true
-                    }
-                ]
             }
-
-
-
-
-
         ],
         "outputs": {
             "location": "[location()]",
@@ -1352,7 +1293,7 @@
             "StorageSku": "[steps('TabStorageAccount').StorageSku]",
             "YesNoNewStorageAccount": "[steps('TabStorageAccount').YesNoNewStorageAccount]",
             "SelectedaccountStorage": "[steps('TabStorageAccount').storageSelector]",
-            "YesNoNewKeyVault": "[steps('TabKeyVault').YesNoNewKeyVault]"
+            "YesNoNewKeyVault": "Yes"
 
 
         }
