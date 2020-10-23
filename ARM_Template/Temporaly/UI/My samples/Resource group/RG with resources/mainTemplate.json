@@ -262,7 +262,7 @@
                 "Zimbabwe"
             ]
         },
-        "RGLocation": {
+        "location": {
             "type": "string",
             "defaultValue": "[subscription().location]"
         },
@@ -597,7 +597,7 @@
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2019-08-01",
-            "location": "[parameters('RGLocation')]",
+            "location": "[parameters('location')]",
             "name": "[variables('rgName')]",
             "properties": {},
             "tags": "[variables('FullTag')]"
@@ -623,7 +623,7 @@
                             "type": "Microsoft.Storage/storageAccounts",
                             "apiVersion": "2017-10-01",
                             "name": "[variables('storageName')]",
-                            "location": "[parameters('RGLocation')]",
+                            "location": "[parameters('location')]",
                             "kind": "[parameters('StorageKind')]",
                             "sku": {
                                 "name": "[parameters('StorageSku')]"
@@ -634,7 +634,7 @@
                             "condition": "[equals(parameters('YesNoNewKeyVault'),'Yes')]",
                             "type": "Microsoft.KeyVault/vaults",
                             "name": "[variables('keyValueName')]",
-                            "location": "[parameters('RGLocation')]",
+                            "location": "[parameters('location')]",
                             "apiVersion": "2019-09-01",
                             "tags": "[variables('FullTag')]",
                             "properties": {
@@ -666,7 +666,7 @@
         },
         "Location": {
             "type": "string",
-            "value": "[parameters('RGLocation')]"
+            "value": "[parameters('location')]"
         },
         "YesNoNewStorageAccount": {
             "type": "string",

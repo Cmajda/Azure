@@ -41,7 +41,7 @@
                 "name": "location",
                 "type": "Microsoft.Common.DropDown",
                 "label": "RG Location",
-                "defaultValue": "[subscription().subscriptionId]",
+                "defaultValue": "[subscription().location]",
                 "toolTip": "",
                 "constraints": {
                     "required": false,
