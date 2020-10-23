@@ -675,6 +675,10 @@
         "OutputSubstId": {
             "type": "string",
             "value": "[variables('location')]"
+        },
+        "Nevimneco": {
+            "type": "string",
+            "value": "verze : 1.0.0"
         }
 
     }
