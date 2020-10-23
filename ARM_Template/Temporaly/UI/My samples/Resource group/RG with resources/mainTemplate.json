@@ -602,9 +602,7 @@
             "apiVersion": "2019-08-01",
             "location": "[parameters('location')]",
             "name": "[variables('rgName')]",
-            "properties": {
-                "mode": "Complete"
-            },
+            "properties": {},
             "tags": "[variables('FullTag')]"
         },
         {
@@ -634,7 +632,27 @@
                                 "name": "[parameters('StorageSku')]"
                             },
                             "tags": "[variables('FullTag')]"
-                        },
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "name": "KeyVaultDeployment",
+            "resourceGroup": "[variables('rgName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('rgName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
                         {
                             "condition": "[equals(parameters('YesNoNewKeyVault'),'Yes')]",
                             "type": "Microsoft.KeyVault/vaults",
@@ -643,10 +661,10 @@
                             "apiVersion": "2019-09-01",
                             "tags": "[variables('FullTag')]",
                             "properties": {
-                                "enabledForDeployment": false,
-                                "enabledForTemplateDeployment": false,
-                                "enabledForDiskEncryption": false,
-                                "tenantId": "f447d363-0a98-4b77-9742-580636496cc6",
+                                "enabledForDeployment": true,
+                                "enabledForTemplateDeployment": true,
+                                "enabledForDiskEncryption": true,
+                                "tenantId": "[subscription().tenantId]",
                                 "accessPolicies": [],
                                 "sku": {
                                     "name": "Standard",
@@ -662,6 +680,7 @@
                 }
             }
         }
+
 
     ],
     "outputs": {
