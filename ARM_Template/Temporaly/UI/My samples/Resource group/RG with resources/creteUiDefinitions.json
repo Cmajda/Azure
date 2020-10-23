@@ -29,10 +29,6 @@
                         "Microsoft.Storage/storageAccounts",
                         "Microsoft.KeyVault/vaults"
                     ],
-                    "allowedValues": [
-                        "northeurope",
-                        "westeurope"
-                    ],
                     "visible": true
                 }
             }
@@ -45,20 +41,11 @@
                 "name": "location",
                 "type": "Microsoft.Common.DropDown",
                 "label": "RG Location",
-                "defaultValue": "North Europe",
+                "defaultValue": "[subscription().subscriptionId]",
                 "toolTip": "",
                 "constraints": {
                     "required": false,
-                    "allowedValues": [
-                        {
-                            "label": "North Europe",
-                            "value": "North Europe"
-                        },
-                        {
-                            "label": "West Europe",
-                            "value": "West Europe"
-                        }
-                    ]
+                    "allowedValues": []
                 },
                 "visible": false
             },
@@ -1339,8 +1326,8 @@
 
         ],
         "outputs": {
-            "Location": "[location()]",
-            "RGLocation": "[location()]",
+            "Location": "[subscription().subscriptionId]",
+            "RGLocation": "[subscription().subscriptionId]",
             "ApplicationName": "[steps('TabNameTags').ApplicationName]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
             "Tagdescription": "[steps('TabNameTags').Tagdescription]",
