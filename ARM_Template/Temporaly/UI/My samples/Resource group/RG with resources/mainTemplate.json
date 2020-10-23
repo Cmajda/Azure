@@ -264,7 +264,7 @@
         },
         "location": {
             "type": "string",
-            "defaultValue": "[subscription().location]"
+            "defaultValue": "[subscription().displayName]"
         },
         "Tagdescription": {
             "type": "string",

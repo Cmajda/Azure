@@ -41,7 +41,7 @@
                 "name": "location",
                 "type": "Microsoft.Common.DropDown",
                 "label": "RG Location",
-                "defaultValue": "[subscription().location]",
+                "defaultValue": "[subscription().displayName]",
                 "toolTip": "",
                 "constraints": {
                     "required": false,
@@ -1326,8 +1326,8 @@
 
         ],
         "outputs": {
-            "Location": "[subscription().location]",
-            "RGLocation": "[subscription().location]",
+            "Location": "[subscription().displayName]",
+            "RGLocation": "[subscription().displayName]",
             "ApplicationName": "[steps('TabNameTags').ApplicationName]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
             "Tagdescription": "[steps('TabNameTags').Tagdescription]",
