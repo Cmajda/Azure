@@ -263,7 +263,8 @@
             ]
         },
         "RGLocation": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "[subscription().subscriptionId]"
         },
         "Tagdescription": {
             "type": "string",
