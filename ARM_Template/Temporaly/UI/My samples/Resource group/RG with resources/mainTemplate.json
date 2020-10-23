@@ -319,7 +319,10 @@
         "rgName": "[concat('rg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'))]",
         "storageName": "[concat('st',variables('CountryObject').value[parameters('CountrySITSIO')], parameters('ApplicationName'), 'logs')]",
         "keyValueName": "[concat('kv-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'))]",
-        "location": "[subscription()]",
+        "id": "[subscription().id]",
+        "subscriptionId": "[subscription().subscriptionId]",
+        "tenantId": "[subscription().tenantId]",
+        "displayName": "[subscription().displayName]",
 
         "FullTag": {
             "Application": "[parameters('ApplicationName')]",
@@ -696,13 +699,21 @@
             "type": "string",
             "value": "[parameters('YesNoNewStorageAccount')]"
         },
-        "OutputSubstId": {
+        "id": {
             "type": "string",
-            "value": "[variables('location')]"
+            "value": "[variables('id')]"
         },
-        "Nevimneco": {
+        "subscriptionId": {
             "type": "string",
-            "value": "verze : 1.0.0"
+            "value": "[variables('subscriptionId')]"
+        },
+        "tenantId": {
+            "type": "string",
+            "value": "[variables('tenantId')]"
+        },
+        "displayName": {
+            "type": "string",
+            "value": "[variables('displayName')]"
         }
 
     }
