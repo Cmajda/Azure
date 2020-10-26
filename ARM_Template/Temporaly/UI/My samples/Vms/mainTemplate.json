@@ -2,19 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-
-        "Region": {
-            "type": "string",
-            "metadata": { "Description": "Choose the Azure region that's right for you and your customers. Not every resource is available in every region." },
-            "allowedValues": [
-                "North Europe",
-                "West Europe",
-                "West US"
-
-            ],
-            "defaultValue": "West US"
-        },
-        "Application Name": {
+        "ApplicationName": {
             "type": "string",
             "minLength": 4,
             "maxLength": 8,
@@ -43,34 +31,34 @@
             "allowedValues": [ "01", "02", "03", "04" ]
 
         },
-        "Tag description": {
+        "Tagdescription": {
             "type": "string",
             "minLength": 21,
             "maxLength": 512,
             "metadata": { "Description": "Short description of resource group. For example \"In order to test the new site.\"" },
             "defaultValue": "Testování v rámci arm template pro vytvoření VMs"
         },
-        "Tag Stage": {
+        "TagStage": {
             "type": "string",
             "metadata": { "description": "Select a value of the \"tag Stage\"" },
             "allowedValues": [ "Live", "Test", "Dev", "Sandbox" ],
             "defaultValue": "Live"
         },
-        "Tag Customer": {
+        "TagCustomer": {
             "type": "string",
             "minLength": 3,
             "maxLength": 512,
             "metadata": { "Description": "Name of customer for example \"MFS\"" },
             "defaultValue": "MFS"
         },
-        "Tag Administrator": {
+        "TagAdministrator": {
             "type": "string",
             "minLength": 3,
             "maxLength": 512,
             "metadata": { "Description": "Name of administrator for example \"Jan Koudela\"" },
             "defaultValue": "Cmajda"
         },
-        "Tag Deployment": {
+        "TagDeployment": {
             "type": "string",
             "metadata": { "description": "Select a value of the \"Tag Deployment\"" },
             "defaultValue": "Arm",
@@ -142,24 +130,24 @@
     },
     "variables": {
         "FullTag": {
-            "Application": "[parameters('Application Name')]",
+            "Application": "[parameters('ApplicationName')]",
             "Country": "[parameters('Country/SITS/IO')]",
-            "Customer": "[parameters('Tag Customer')]",
-            "Administrator": "[parameters('Tag Administrator')]",
-            "Deployment": "[parameters('Tag Deployment')]",
-            "Description": "[parameters('Tag description')]",
-            "Stage": "[parameters('Tag Stage')]"
+            "Customer": "[parameters('TagCustomer')]",
+            "Administrator": "[parameters('TagAdministrator')]",
+            "Deployment": "[parameters('TagDeployment')]",
+            "Description": "[parameters('Tagdescription')]",
+            "Stage": "[parameters('TagStage')]"
         },
-        "networkInterfaceName": "[concat('nic-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'))]",
-        "networkSecurityGroupName": "[concat('nsg-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'))]",
-        "publicIpAddressName": "[concat('pip-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'))]",
-        "virtualNetworkName": "[concat('vin-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'))]",
-        "virtualMachineName": "[concat('vm',variables('CountryObject').value[parameters('Country/SITS/IO')],parameters('Application Name'),parameters('Index/Suffix'))]",
+        "networkInterfaceName": "[concat('nic-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('ApplicationName'),'-',parameters('Index/Suffix'))]",
+        "networkSecurityGroupName": "[concat('nsg-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('ApplicationName'),'-',parameters('Index/Suffix'))]",
+        "publicIpAddressName": "[concat('pip-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('ApplicationName'),'-',parameters('Index/Suffix'))]",
+        "virtualNetworkName": "[concat('vin-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('ApplicationName'),'-',parameters('Index/Suffix'))]",
+        "virtualMachineName": "[concat('vm',variables('CountryObject').value[parameters('Country/SITS/IO')],parameters('ApplicationName'),parameters('Index/Suffix'))]",
         "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
         "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', variables('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
-        "datadiskName": "[concat('dsk-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'))]",
-        "datadiskNameOS": "[concat('dsk-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('Application Name'),'-',parameters('Index/Suffix'),'-OS')]",
+        "datadiskName": "[concat('dsk-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('ApplicationName'),'-',parameters('Index/Suffix'))]",
+        "datadiskNameOS": "[concat('dsk-',variables('CountryObject').value[parameters('Country/SITS/IO')], '-', parameters('ApplicationName'),'-',parameters('Index/Suffix'),'-OS')]",
         "CountryObject": {
             "type": "object",
             "value": {
@@ -600,7 +588,7 @@
     "outputs": {
         "adminUsername": {
             "type": "string",
-            "value": "[parameters('Application Name')]"
+            "value": "[parameters('ApplicationName')]"
         }
     }
 }
