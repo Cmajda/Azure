@@ -1149,10 +1149,10 @@
                         "name": "TagAdministrator",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Tag Administrator",
-                        "defaultValue": "none",
+                        "defaultValue": "",
                         "toolTip": "Name of the administrator responsible for the solution.",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "",
                             "validationMessage": ""
                         },
@@ -1162,10 +1162,10 @@
                         "name": "TagDeployment",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Tag Deployment",
-                        "defaultValue": "Manual",
+                        "defaultValue": "",
                         "toolTip": "The method used for deployment",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "allowedValues": [
                                 {
                                     "label": "Manual",
@@ -1195,12 +1195,12 @@
                         "name": "Tagdescription",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Tag Description",
-                        "defaultValue": "none",
+                        "defaultValue": "",
                         "toolTip": "The method used for deployment",
                         "constraints": {
-                            "required": false,
-                            "regex": "",
-                            "validationMessage": ""
+                            "required": true,
+                            "regex": "^.[A-Za-z0-9]{20,250}$",
+                            "validationMessage": "The description must be between 21-251 characters in length."
                         },
                         "visible": true
                     }
