@@ -264,7 +264,7 @@
         "location": {
             "type": "string"
         },
-        "Tagdescription": {
+        "Tagdescription2": {
             "type": "string"
         },
         "TagStage": {
@@ -314,7 +314,7 @@
         "FullTag": {
             "Application": "[parameters('ApplicationName')]",
             "Country": "[parameters('CountrySITSIO')]",
-            "description": "[parameters('Tagdescription')]",
+            "description": "[parameters('Tagdescription2')]",
             "Stage": "[parameters('TagStage')]",
             "customer": "[parameters('TagCustomer')]",
             "Administrator": "[parameters('TagAdministrator')]",
