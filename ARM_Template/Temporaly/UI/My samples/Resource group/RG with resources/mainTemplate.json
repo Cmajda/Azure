@@ -265,9 +265,7 @@
             "type": "string"
         },
         "Tagdescription": {
-            "type": "string",
-            "minLength": 21,
-            "maxLength": 512
+            "type": "string"
         },
         "TagStage": {
             "type": "string",
@@ -279,9 +277,7 @@
             "maxLength": 512
         },
         "TagAdministrator": {
-            "type": "string",
-            "minLength": 3,
-            "maxLength": 512
+            "type": "string"
         },
         "TagDeployment": {
             "type": "string",
