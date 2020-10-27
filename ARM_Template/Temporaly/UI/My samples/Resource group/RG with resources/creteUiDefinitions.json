@@ -1162,7 +1162,7 @@
                         "name": "TagDeployment",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Tag Deployment",
-                        "defaultValue": "N/A",
+                        "defaultValue": "",
                         "toolTip": "The method used for deployment",
                         "constraints": {
                             "required": false,
@@ -1186,6 +1186,10 @@
                                 {
                                     "label": "Cli",
                                     "value": "Cli"
+                                },
+                                {
+                                    "label": "",
+                                    "value": null
                                 }
                             ]
                         },
