@@ -1195,12 +1195,12 @@
                         "name": "Tagdescription",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Tag Description",
-                        "defaultValue": "N/A",
+                        "defaultValue": "",
                         "toolTip": "A description of the application, what is for and how it is used.",
                         "constraints": {
                             "required": false,
-                            "regex": "^.{20,511}$",
-                            "validationMessage": "Minimum length is 21."
+                            "regex": "",
+                            "validationMessage": ""
                         },
                         "visible": true
                     }
