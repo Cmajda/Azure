@@ -6,6 +6,12 @@
         "ApplicationName": {
             "type": "string"
         },
+        "IndexSuffix": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
         "CountrySITSIO": {
             "type": "string",
             "allowedValues": [
@@ -304,7 +310,7 @@
 
     },
     "variables": {
-        "rgName": "[concat('rg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'))]",
+        "rgName": "[concat('rg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "storageName": "[concat('st',variables('CountryObject').value[parameters('CountrySITSIO')], parameters('ApplicationName'), 'logs')]",
         "keyValueName": "[concat('kv-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'))]",
         "id": "[subscription().id]",

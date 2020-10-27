@@ -91,10 +91,23 @@
                         "visible": true
                     },
                     {
+                        "name": "IndexSuffix",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Index/Suffix",
+                        "defaultValue": "",
+                        "toolTip": "Please enter the Index or Suffix. It has to be between 2 and 4 letters.",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^.[A-Za-z0-9]{1,3}$",
+                            "validationMessage": "Value must be between 2-4 characters in length. Special characters are not allowed."
+                        },
+                        "visible": true
+                    },
+                    {
                         "name": "CountrySITSIO",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Country",
-                        "defaultValue": "Czech Republic",
+                        "defaultValue": "SITS",
                         "toolTip": "The country for which the solution is provided. MSF IO and SITS is within the list as well.",
                         "constraints": {
                             "required": true,
@@ -1162,7 +1175,7 @@
                         "name": "TagDeployment",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Tag Deployment",
-                        "defaultValue": "",
+                        "defaultValue": "NOTSET",
                         "toolTip": "The method used for deployment",
                         "constraints": {
                             "required": true,
@@ -1294,6 +1307,7 @@
         "outputs": {
             "location": "[location()]",
             "ApplicationName": "[toLower(steps('TabNameTags').ApplicationName)]",
+            "IndexSuffix": "[steps('TabNameTags').IndexSuffix]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
             "TagStage": "[steps('TabNameTags').TagStage]",
             "TagCustomer": "[steps('TabNameTags').TagCustomer]",
