@@ -311,8 +311,8 @@
     },
     "variables": {
         "rgName": "[concat('rg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
-        "storageName": "[concat('st',variables('CountryObject').value[parameters('CountrySITSIO')], parameters('ApplicationName'), 'logs')]",
-        "keyValueName": "[concat('kv-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'))]",
+        "storageName": "[concat('st',variables('CountryObject').value[parameters('CountrySITSIO')], parameters('ApplicationName'),parameters('IndexSuffix'),'logs')]",
+        "keyValueName": "[concat('kv-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "id": "[subscription().id]",
         "subscriptionId": "[subscription().subscriptionId]",
         "tenantId": "[subscription().tenantId]",
