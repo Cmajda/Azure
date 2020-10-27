@@ -1293,7 +1293,7 @@
         ],
         "outputs": {
             "location": "[location()]",
-            "ApplicationName": "[steps('TabNameTags').ApplicationName]",
+            "ApplicationName": "[toLower(steps('TabNameTags').ApplicationName)]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
             "TagStage": "[steps('TabNameTags').TagStage]",
             "TagCustomer": "[steps('TabNameTags').TagCustomer]",
