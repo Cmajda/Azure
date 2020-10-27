@@ -264,8 +264,10 @@
         "location": {
             "type": "string"
         },
-        "Tagdescription2": {
-            "type": "string"
+        "Tagdescription": {
+            "type": "string",
+            "minLength": 21,
+            "maxLength": 512
         },
         "TagStage": {
             "type": "string",
@@ -277,7 +279,9 @@
             "maxLength": 512
         },
         "TagAdministrator": {
-            "type": "string"
+            "type": "string",
+            "minLength": 3,
+            "maxLength": 512
         },
         "TagDeployment": {
             "type": "string",
@@ -314,7 +318,7 @@
         "FullTag": {
             "Application": "[parameters('ApplicationName')]",
             "Country": "[parameters('CountrySITSIO')]",
-            "description": "[parameters('Tagdescription2')]",
+            "description": "[parameters('Tagdescription')]",
             "Stage": "[parameters('TagStage')]",
             "customer": "[parameters('TagCustomer')]",
             "Administrator": "[parameters('TagAdministrator')]",
