@@ -1192,7 +1192,7 @@
                         "visible": true
                     },
                     {
-                        "name": "Tagdescription2",
+                        "name": "Tagdescription",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Tag Description",
                         "defaultValue": "",
@@ -1292,7 +1292,7 @@
             "location": "[location()]",
             "ApplicationName": "[steps('TabNameTags').ApplicationName]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
-            "Tagdescription2": "[steps('TabNameTags').Tagdescription2]",
+            "Tagdescription": "[steps('TabNameTags').Tagdescription]",
             "TagStage": "[steps('TabNameTags').TagStage]",
             "TagCustomer": "[steps('TabNameTags').TagCustomer]",
             "TagAdministrator": "[steps('TabNameTags').TagAdministrator]",
