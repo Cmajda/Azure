@@ -24,6 +24,7 @@
                 "location": {
                     "label": "Location",
                     "toolTip": "Location of the Resource Groups and basic resources.",
+                    "defaultValue": "North Europe",
                     "resourceTypes": [
                         "Microsoft.Compute/virtualMachines",
                         "Microsoft.Storage/storageAccounts",
