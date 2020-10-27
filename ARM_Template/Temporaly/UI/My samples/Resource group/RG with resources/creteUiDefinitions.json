@@ -1295,7 +1295,7 @@
             "location": "[location()]",
             "ApplicationName": "[steps('TabNameTags').ApplicationName]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
-            "Tagdescription": "[if(equals('', steps('TabNameTags').Tagdescription), 'null', 'null']",
+            "Tagdescription": "[if(equals('', steps('TabNameTags').Tagdescription), 'null', 'null')]",
             "TagStage": "[steps('TabNameTags').TagStage]",
             "TagCustomer": "[steps('TabNameTags').TagCustomer]",
             "TagAdministrator": "[steps('TabNameTags').TagAdministrator]",
