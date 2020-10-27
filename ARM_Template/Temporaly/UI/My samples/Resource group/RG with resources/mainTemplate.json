@@ -282,8 +282,7 @@
             "maxLength": 512
         },
         "TagDeployment": {
-            "type": "string",
-            "allowedValues": [ "Manual", "Arm", "Tf", "Ps", "Cli" ]
+            "type": "string"
         },
         "StorageKind": {
             "type": "string",
