@@ -93,7 +93,7 @@
                     {
                         "name": "CountrySITSIO",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Country SITSIO",
+                        "label": "Country",
                         "defaultValue": "Czech Republic",
                         "toolTip": "The country for which the solution is provided. MSF IO and SITS is within the list as well.",
                         "constraints": {
@@ -1196,7 +1196,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Tag Description",
                         "defaultValue": "",
-                        "toolTip": "The method used for deployment",
+                        "toolTip": "A description of the application, what is for and how it is used.",
                         "constraints": {
                             "required": true,
                             "regex": "^.[A-Za-z0-9]{20,250}$",
