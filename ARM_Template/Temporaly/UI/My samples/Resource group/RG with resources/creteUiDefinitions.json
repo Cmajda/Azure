@@ -1149,7 +1149,7 @@
                         "name": "TagAdministrator",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Tag Administrator",
-                        "defaultValue": "",
+                        "defaultValue": "none",
                         "toolTip": "Name of the administrator responsible for the solution.",
                         "constraints": {
                             "required": false,
@@ -1162,7 +1162,7 @@
                         "name": "TagDeployment",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Tag Deployment",
-                        "defaultValue": "",
+                        "defaultValue": "Manual",
                         "toolTip": "The method used for deployment",
                         "constraints": {
                             "required": false,
@@ -1186,10 +1186,6 @@
                                 {
                                     "label": "Cli",
                                     "value": "Cli"
-                                },
-                                {
-                                    "label": "",
-                                    "value": null
                                 }
                             ]
                         },
@@ -1199,7 +1195,7 @@
                         "name": "Tagdescription",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Tag Description",
-                        "defaultValue": ".ksjdfh.skdhf.ksjdhfksjdhfkjsdhfksjdhfkjsdhfkjsdhf",
+                        "defaultValue": "none",
                         "toolTip": "The method used for deployment",
                         "constraints": {
                             "required": false,
@@ -1299,11 +1295,11 @@
             "location": "[location()]",
             "ApplicationName": "[steps('TabNameTags').ApplicationName]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
-            "Tagdescription": "[if(equals('', steps('TabNameTags').Tagdescription), 'null', 'null')]",
             "TagStage": "[steps('TabNameTags').TagStage]",
             "TagCustomer": "[steps('TabNameTags').TagCustomer]",
-            "TagAdministrator": "[if(equals('', steps('TabNameTags').TagAdministrator), 'null', 'null')]",
-            "TagDeployment": "[if(equals('', steps('TabNameTags').TagDeployment), 'null', 'null')]",
+            "TagAdministrator": "[steps('TabNameTags').TagAdministrator]",
+            "TagDeployment": "[steps('TabNameTags').TagDeployment]",
+            "Tagdescription": "[steps('TabNameTags').Tagdescription]",
             "StorageKind": "[steps('TabStorageAccount').StorageKind]",
             "StorageSku": "[steps('TabStorageAccount').StorageSku]",
             "YesNoNewStorageAccount": "[steps('TabStorageAccount').YesNoNewStorageAccount]",
