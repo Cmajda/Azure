@@ -1213,8 +1213,8 @@
                         "toolTip": "A description of the application, what is for and how it is used.",
                         "constraints": {
                             "required": true,
-                            "regex": "^.[A-Za-z0-9]{20,250}$",
-                            "validationMessage": "The description must be between 21-251 characters in length."
+                            "regex": "^.{20,511}$",
+                            "validationMessage": "The description must be between 21-512 characters in length."
                         },
                         "visible": true
                     }
