@@ -8,7 +8,7 @@
         "config": {
             "isWizard": true,
             "basics": {
-                "description": "## ARM template for <img src=https://d15l9woddkztht.cloudfront.net/logos/msf---mdecins-sans-frontires-doctors-without-borders-4b30fcdc-8c7c-4a62-940f-793443f5f6aa.svg width=\"60\">Support **markdown**. Info about config [zde](https://docs.microsoft.com/en-us/azure/azure-resource-manager/managed-applications/create-uidefinition-overview#config).",
+                "description": "<img src=https://d15l9woddkztht.cloudfront.net/logos/msf---mdecins-sans-frontires-doctors-without-borders-4b30fcdc-8c7c-4a62-940f-793443f5f6aa.svg width=\"100\"><br>Template for creating an Azure Resource Group for hosting a solution. It creates Resource Groups, diagnostic Storage Account and Azure Key Vault. It also generates all the required tags and names.",
                 "subscription": {
                     "constraints": {
                         "validations": []
@@ -23,7 +23,7 @@
                 },
                 "location": {
                     "label": "Location",
-                    "toolTip": "Location of all resources",
+                    "toolTip": "Location of the Resource Groups and basic resources.",
                     "resourceTypes": [
                         "Microsoft.Compute/virtualMachines",
                         "Microsoft.Storage/storageAccounts",
@@ -44,7 +44,7 @@
             {
                 "name": "location",
                 "type": "Microsoft.Common.DropDown",
-                "label": "RG Location",
+                "label": "Location",
                 "defaultValue": "North Europe",
                 "toolTip": "",
                 "constraints": {
@@ -74,15 +74,15 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "Info text"
+                            "text": "Enter all necessary details about the application."
                         }
                     },
                     {
                         "name": "ApplicationName",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Application Name",
-                        "defaultValue": "armtemplate",
-                        "toolTip": "Description for ApplicationName",
+                        "defaultValue": "",
+                        "toolTip": "Please enter the application name. It has to be between 4 and 8 letters.",
                         "constraints": {
                             "required": true,
                             "regex": "^.[A-Za-z0-9]{3,7}$",
@@ -95,7 +95,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Country SITSIO",
                         "defaultValue": "Czech Republic",
-                        "toolTip": "Description for Country",
+                        "toolTip": "The country for which the solution is provided. MSF IO and SITS is within the list as well.",
                         "constraints": {
                             "required": true,
                             "allowedValues": [
@@ -1107,8 +1107,8 @@
                         "name": "TagCustomer",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Tag Customer",
-                        "defaultValue": "Cmajda",
-                        "toolTip": "Description for TagCustomer",
+                        "defaultValue": "",
+                        "toolTip": "Name of the customer asking for the application. This should be your main contact for current and future communication.",
                         "constraints": {
                             "required": true,
                             "regex": "",
@@ -1120,8 +1120,8 @@
                         "name": "TagStage",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Tag Stage",
-                        "defaultValue": "Test",
-                        "toolTip": "Description for TagStage",
+                        "defaultValue": "Select stage",
+                        "toolTip": "The stage of the solution.",
                         "constraints": {
                             "required": true,
                             "allowedValues": [
@@ -1149,8 +1149,8 @@
                         "name": "TagAdministrator",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Tag Administrator",
-                        "defaultValue": "Cmajda",
-                        "toolTip": "Description for TagAdministrator",
+                        "defaultValue": "",
+                        "toolTip": "Name of the administrator responsible for the solution.",
                         "constraints": {
                             "required": false,
                             "regex": "",
@@ -1162,8 +1162,8 @@
                         "name": "TagDeployment",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Tag Deployment",
-                        "defaultValue": "Arm",
-                        "toolTip": "Description for TagDeployment",
+                        "defaultValue": "N/A",
+                        "toolTip": "The method used for deployment",
                         "constraints": {
                             "required": false,
                             "allowedValues": [
@@ -1194,9 +1194,9 @@
                     {
                         "name": "Tagdescription",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Tag description",
-                        "defaultValue": "Testovací skupina pro arm template - obsah může být kdykoliv vymazán",
-                        "toolTip": "Description for Tagdescription",
+                        "label": "Tag Description",
+                        "defaultValue": "",
+                        "toolTip": "A description of the application, what is for and how it is used.",
                         "constraints": {
                             "required": false,
                             "regex": "^.{20,511}$",
@@ -1212,6 +1212,15 @@
                 "name": "TabStorageAccount",
                 "label": "Settings Storage account",
                 "elements": [
+                    {
+                        "name": "InfoBox2",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "A Storage Account for storing diagnostics and log data will provisioned for you. This account is not intended for application data. Create additional Storage Accounts as needed later."
+                        }
+                    },
                     {
                         "name": "YesNoNewStorageAccount",
                         "type": "Microsoft.Common.OptionsGroup",
@@ -1236,7 +1245,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Storage Kind",
                         "defaultValue": "StorageV2",
-                        "toolTip": "Description for StorageKind",
+                        "toolTip": "The default are just fine. Change it only in case you need some special features.",
                         "constraints": {
                             "required": true,
                             "allowedValues": [
@@ -1253,7 +1262,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Storage Sku",
                         "defaultValue": "Premium_LRS",
-                        "toolTip": "Description for StorageSku",
+                        "toolTip": "The default are just fine. Change it only in case you need some special features.",
                         "constraints": {
                             "required": true,
                             "allowedValues": [
