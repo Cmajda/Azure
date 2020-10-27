@@ -1190,6 +1190,19 @@
                             ]
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "Tagdescription",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Tag Description",
+                        "defaultValue": ".ksjdfh.skdhf.ksjdhfksjdhfkjsdhfksjdhfkjsdhfkjsdhf",
+                        "toolTip": "The method used for deployment",
+                        "constraints": {
+                            "required": false,
+                            "regex": "",
+                            "validationMessage": ""
+                        },
+                        "visible": true
                     }
 
 
@@ -1282,7 +1295,7 @@
             "location": "[location()]",
             "ApplicationName": "[steps('TabNameTags').ApplicationName]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
-
+            "Tagdescription": "[steps('TabNameTags').Tagdescription]",
             "TagStage": "[steps('TabNameTags').TagStage]",
             "TagCustomer": "[steps('TabNameTags').TagCustomer]",
             "TagAdministrator": "[steps('TabNameTags').TagAdministrator]",
