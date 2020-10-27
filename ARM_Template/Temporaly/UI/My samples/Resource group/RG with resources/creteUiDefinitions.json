@@ -1195,7 +1195,7 @@
                         "name": "Tagdescription",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Tag Description",
-                        "defaultValue": "",
+                        "defaultValue": "N/A",
                         "toolTip": "A description of the application, what is for and how it is used.",
                         "constraints": {
                             "required": false,
