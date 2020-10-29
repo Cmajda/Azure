@@ -1342,6 +1342,7 @@
                     {
                         "name": "virtualMachineSize",
                         "type": "Microsoft.Compute.SizeSelector",
+                        "defaultValue": "Standard_D2as_v4",
                         "label": "Vm Size",
                         "toolTip": "",
                         "recommendedSizes": [
