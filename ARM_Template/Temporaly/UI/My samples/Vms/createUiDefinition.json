@@ -42,42 +42,992 @@
         "basics": [],
         "steps": [
             {
-                "name": "tags",
+                "name": "TabNameTags",
                 "label": "Names and Tags",
                 "elements": [
+                    {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "Enter all necessary details about the application."
+                        }
+                    },
                     {
                         "name": "ApplicationName",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Application Name",
-                        "defaultValue": "ARMTemp",
-                        "toolTip": "Give it some reasonable application name. Try to be between 4 - 8 characters in length. This is important especially for Windows VMs as the name has 15 characters limit.",
+                        "defaultValue": "",
+                        "toolTip": "Please enter the application name. It has to be between 4 and 8 letters.",
                         "constraints": {
-                            "required": false,
-                            "regex": "",
-                            "validationMessage": ""
+                            "required": true,
+                            "regex": "^.[A-Za-z0-9]{3,7}$",
+                            "validationMessage": "Name must be between 4-8 characters in length. Special characters are not allowed."
                         },
                         "visible": true
                     },
                     {
-                        "name": "Country/SITS/IO",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Country/SITS/IO",
-                        "defaultValue": "Czech Republic",
-                        "toolTip": "Select a country from the list. The country based on two letter A2 ISO standard. There is also MSF IO in the list, although it is not a country ;-)",
+                        "name": "IndexSuffix",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Index/Suffix",
+                        "defaultValue": "",
+                        "toolTip": "Please enter the Index or Suffix. It has to be between 2 and 4 letters.",
                         "constraints": {
-                            "required": false,
+                            "required": true,
+                            "regex": "^.[A-Za-z0-9]{1,3}$",
+                            "validationMessage": "Value must be between 2-4 characters in length. Special characters are not allowed."
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "CountrySITSIO",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Country",
+                        "defaultValue": "SITS",
+                        "toolTip": "The country for which the solution is provided. MSF IO and SITS is within the list as well.",
+                        "constraints": {
+                            "required": true,
                             "allowedValues": [
+                                {
+                                    "label": "Afghanistan",
+                                    "value": "Afghanistan"
+                                },
+                                {
+                                    "label": "Albania",
+                                    "value": "Albania"
+                                },
+                                {
+                                    "label": "Algeria",
+                                    "value": "Algeria"
+                                },
+                                {
+                                    "label": "American Samoa",
+                                    "value": "American Samoa"
+                                },
+                                {
+                                    "label": "Andorra",
+                                    "value": "Andorra"
+                                },
+                                {
+                                    "label": "Angola",
+                                    "value": "Angola"
+                                },
+                                {
+                                    "label": "Anguilla",
+                                    "value": "Anguilla"
+                                },
+                                {
+                                    "label": "Antarctica",
+                                    "value": "Antarctica"
+                                },
+                                {
+                                    "label": "Antigua and Barbuda",
+                                    "value": "Antigua and Barbuda"
+                                },
+                                {
+                                    "label": "Argentina",
+                                    "value": "Argentina"
+                                },
+                                {
+                                    "label": "Armenia",
+                                    "value": "Armenia"
+                                },
+                                {
+                                    "label": "Aruba",
+                                    "value": "Aruba"
+                                },
+                                {
+                                    "label": "Australia",
+                                    "value": "Australia"
+                                },
+                                {
+                                    "label": "Austria",
+                                    "value": "Austria"
+                                },
+                                {
+                                    "label": "Azerbaijan",
+                                    "value": "Azerbaijan"
+                                },
+                                {
+                                    "label": "Bahamas",
+                                    "value": "Bahamas"
+                                },
+                                {
+                                    "label": "Bahrain",
+                                    "value": "Bahrain"
+                                },
+                                {
+                                    "label": "Bangladesh",
+                                    "value": "Bangladesh"
+                                },
+                                {
+                                    "label": "Barbados",
+                                    "value": "Barbados"
+                                },
+                                {
+                                    "label": "Belarus",
+                                    "value": "Belarus"
+                                },
+                                {
+                                    "label": "Belgium",
+                                    "value": "Belgium"
+                                },
+                                {
+                                    "label": "Belize",
+                                    "value": "Belize"
+                                },
+                                {
+                                    "label": "Benin",
+                                    "value": "Benin"
+                                },
+                                {
+                                    "label": "Bermuda",
+                                    "value": "Bermuda"
+                                },
+                                {
+                                    "label": "Bhutan",
+                                    "value": "Bhutan"
+                                },
+                                {
+                                    "label": "Bolivia",
+                                    "value": "Bolivia"
+                                },
+                                {
+                                    "label": "Bonaire",
+                                    "value": "Bonaire"
+                                },
+                                {
+                                    "label": "Bosnia and Herzegovina",
+                                    "value": "Bosnia and Herzegovina"
+                                },
+                                {
+                                    "label": "Botswana",
+                                    "value": "Botswana"
+                                },
+                                {
+                                    "label": "Bouvet Island",
+                                    "value": "Bouvet Island"
+                                },
+                                {
+                                    "label": "Brazil",
+                                    "value": "Brazil"
+                                },
+                                {
+                                    "label": "British Indian Ocean Territory",
+                                    "value": "British Indian Ocean Territory"
+                                },
+                                {
+                                    "label": "Brunei Darussalam",
+                                    "value": "Brunei Darussalam"
+                                },
+                                {
+                                    "label": "Bulgaria",
+                                    "value": "Bulgaria"
+                                },
+                                {
+                                    "label": "Burkina Faso",
+                                    "value": "Burkina Faso"
+                                },
+                                {
+                                    "label": "Burundi",
+                                    "value": "Burundi"
+                                },
+                                {
+                                    "label": "Cambodia",
+                                    "value": "Cambodia"
+                                },
+                                {
+                                    "label": "Cameroon",
+                                    "value": "Cameroon"
+                                },
+                                {
+                                    "label": "Canada",
+                                    "value": "Canada"
+                                },
+                                {
+                                    "label": "Cape Verde",
+                                    "value": "Cape Verde"
+                                },
+                                {
+                                    "label": "Cayman Islands",
+                                    "value": "Cayman Islands"
+                                },
+                                {
+                                    "label": "Central African Republic",
+                                    "value": "Central African Republic"
+                                },
+                                {
+                                    "label": "Chad",
+                                    "value": "Chad"
+                                },
+                                {
+                                    "label": "Chile",
+                                    "value": "Chile"
+                                },
+                                {
+                                    "label": "China",
+                                    "value": "China"
+                                },
+                                {
+                                    "label": "Christmas Island",
+                                    "value": "Christmas Island"
+                                },
+                                {
+                                    "label": "Cocos (Keeling) Islands",
+                                    "value": "Cocos (Keeling) Islands"
+                                },
+                                {
+                                    "label": "Colombia",
+                                    "value": "Colombia"
+                                },
+                                {
+                                    "label": "Comoros",
+                                    "value": "Comoros"
+                                },
+                                {
+                                    "label": "Congo",
+                                    "value": "Congo"
+                                },
+                                {
+                                    "label": "Democratic Republic of the Congo",
+                                    "value": "Democratic Republic of the Congo"
+                                },
+                                {
+                                    "label": "Cook Islands",
+                                    "value": "Cook Islands"
+                                },
+                                {
+                                    "label": "Costa Rica",
+                                    "value": "Costa Rica"
+                                },
+                                {
+                                    "label": "Croatia",
+                                    "value": "Croatia"
+                                },
+                                {
+                                    "label": "Cuba",
+                                    "value": "Cuba"
+                                },
+                                {
+                                    "label": "Curacao",
+                                    "value": "Curacao"
+                                },
+                                {
+                                    "label": "Cyprus",
+                                    "value": "Cyprus"
+                                },
                                 {
                                     "label": "Czech Republic",
                                     "value": "Czech Republic"
+                                },
+                                {
+                                    "label": "Cote d'Ivoire",
+                                    "value": "Cote d'Ivoire"
+                                },
+                                {
+                                    "label": "Denmark",
+                                    "value": "Denmark"
+                                },
+                                {
+                                    "label": "Djibouti",
+                                    "value": "Djibouti"
+                                },
+                                {
+                                    "label": "Dominica",
+                                    "value": "Dominica"
+                                },
+                                {
+                                    "label": "Dominican Republic",
+                                    "value": "Dominican Republic"
+                                },
+                                {
+                                    "label": "Ecuador",
+                                    "value": "Ecuador"
+                                },
+                                {
+                                    "label": "Egypt",
+                                    "value": "Egypt"
+                                },
+                                {
+                                    "label": "El Salvador",
+                                    "value": "El Salvador"
+                                },
+                                {
+                                    "label": "Equatorial Guinea",
+                                    "value": "Equatorial Guinea"
+                                },
+                                {
+                                    "label": "Eritrea",
+                                    "value": "Eritrea"
+                                },
+                                {
+                                    "label": "Estonia",
+                                    "value": "Estonia"
+                                },
+                                {
+                                    "label": "Ethiopia",
+                                    "value": "Ethiopia"
+                                },
+                                {
+                                    "label": "Falkland Islands (Malvinas)",
+                                    "value": "Falkland Islands (Malvinas)"
+                                },
+                                {
+                                    "label": "Faroe Islands",
+                                    "value": "Faroe Islands"
+                                },
+                                {
+                                    "label": "Fiji",
+                                    "value": "Fiji"
+                                },
+                                {
+                                    "label": "Finland",
+                                    "value": "Finland"
+                                },
+                                {
+                                    "label": "France",
+                                    "value": "France"
+                                },
+                                {
+                                    "label": "French Guiana",
+                                    "value": "French Guiana"
+                                },
+                                {
+                                    "label": "French Polynesia",
+                                    "value": "French Polynesia"
+                                },
+                                {
+                                    "label": "French Southern Territories",
+                                    "value": "French Southern Territories"
+                                },
+                                {
+                                    "label": "Gabon",
+                                    "value": "Gabon"
+                                },
+                                {
+                                    "label": "Gambia",
+                                    "value": "Gambia"
+                                },
+                                {
+                                    "label": "Georgia",
+                                    "value": "Georgia"
                                 },
                                 {
                                     "label": "Germany",
                                     "value": "Germany"
                                 },
                                 {
+                                    "label": "Ghana",
+                                    "value": "Ghana"
+                                },
+                                {
+                                    "label": "Gibraltar",
+                                    "value": "Gibraltar"
+                                },
+                                {
+                                    "label": "Greece",
+                                    "value": "Greece"
+                                },
+                                {
+                                    "label": "Greenland",
+                                    "value": "Greenland"
+                                },
+                                {
+                                    "label": "Grenada",
+                                    "value": "Grenada"
+                                },
+                                {
+                                    "label": "Guadeloupe",
+                                    "value": "Guadeloupe"
+                                },
+                                {
+                                    "label": "Guam",
+                                    "value": "Guam"
+                                },
+                                {
+                                    "label": "Guatemala",
+                                    "value": "Guatemala"
+                                },
+                                {
+                                    "label": "Guernsey",
+                                    "value": "Guernsey"
+                                },
+                                {
+                                    "label": "Guinea",
+                                    "value": "Guinea"
+                                },
+                                {
+                                    "label": "Guinea-Bissau",
+                                    "value": "Guinea-Bissau"
+                                },
+                                {
+                                    "label": "Guyana",
+                                    "value": "Guyana"
+                                },
+                                {
+                                    "label": "Haiti",
+                                    "value": "Haiti"
+                                },
+                                {
+                                    "label": "Heard Island and McDonald Islands",
+                                    "value": "Heard Island and McDonald Islands"
+                                },
+                                {
+                                    "label": "Holy See (Vatican City State)",
+                                    "value": "Holy See (Vatican City State)"
+                                },
+                                {
+                                    "label": "Honduras",
+                                    "value": "Honduras"
+                                },
+                                {
+                                    "label": "Hong Kong",
+                                    "value": "Hong Kong"
+                                },
+                                {
+                                    "label": "Hungary",
+                                    "value": "Hungary"
+                                },
+                                {
+                                    "label": "Iceland",
+                                    "value": "Iceland"
+                                },
+                                {
+                                    "label": "India",
+                                    "value": "India"
+                                },
+                                {
+                                    "label": "Indonesia",
+                                    "value": "Indonesia"
+                                },
+                                {
+                                    "label": "Iran, Islamic Republic of",
+                                    "value": "Iran, Islamic Republic of"
+                                },
+                                {
+                                    "label": "Iraq",
+                                    "value": "Iraq"
+                                },
+                                {
+                                    "label": "Ireland",
+                                    "value": "Ireland"
+                                },
+                                {
+                                    "label": "Isle of Man",
+                                    "value": "Isle of Man"
+                                },
+                                {
+                                    "label": "Israel",
+                                    "value": "Israel"
+                                },
+                                {
+                                    "label": "Italy",
+                                    "value": "Italy"
+                                },
+                                {
+                                    "label": "Jamaica",
+                                    "value": "Jamaica"
+                                },
+                                {
+                                    "label": "Japan",
+                                    "value": "Japan"
+                                },
+                                {
+                                    "label": "Jersey",
+                                    "value": "Jersey"
+                                },
+                                {
+                                    "label": "Jordan",
+                                    "value": "Jordan"
+                                },
+                                {
+                                    "label": "Kazakhstan",
+                                    "value": "Kazakhstan"
+                                },
+                                {
+                                    "label": "Kenya",
+                                    "value": "Kenya"
+                                },
+                                {
+                                    "label": "Kiribati",
+                                    "value": "Kiribati"
+                                },
+                                {
+                                    "label": "Korea, Democratic People's Republic of",
+                                    "value": "Korea, Democratic People's Republic of"
+                                },
+                                {
+                                    "label": "Korea, Republic of",
+                                    "value": "Korea, Republic of"
+                                },
+                                {
                                     "label": "Kuwait",
                                     "value": "Kuwait"
+                                },
+                                {
+                                    "label": "Kyrgyzstan",
+                                    "value": "Kyrgyzstan"
+                                },
+                                {
+                                    "label": "Lao People's Democratic Republic",
+                                    "value": "Lao People's Democratic Republic"
+                                },
+                                {
+                                    "label": "Latvia",
+                                    "value": "Latvia"
+                                },
+                                {
+                                    "label": "Lebanon",
+                                    "value": "Lebanon"
+                                },
+                                {
+                                    "label": "Lesotho",
+                                    "value": "Lesotho"
+                                },
+                                {
+                                    "label": "Liberia",
+                                    "value": "Liberia"
+                                },
+                                {
+                                    "label": "Libya",
+                                    "value": "Libya"
+                                },
+                                {
+                                    "label": "Liechtenstein",
+                                    "value": "Liechtenstein"
+                                },
+                                {
+                                    "label": "Lithuania",
+                                    "value": "Lithuania"
+                                },
+                                {
+                                    "label": "Luxembourg",
+                                    "value": "Luxembourg"
+                                },
+                                {
+                                    "label": "Macao",
+                                    "value": "Macao"
+                                },
+                                {
+                                    "label": "Macedonia, the Former Yugoslav Republic of",
+                                    "value": "Macedonia, the Former Yugoslav Republic of"
+                                },
+                                {
+                                    "label": "Madagascar",
+                                    "value": "Madagascar"
+                                },
+                                {
+                                    "label": "Malawi",
+                                    "value": "Malawi"
+                                },
+                                {
+                                    "label": "Malaysia",
+                                    "value": "Malaysia"
+                                },
+                                {
+                                    "label": "Maldives",
+                                    "value": "Maldives"
+                                },
+                                {
+                                    "label": "Mali",
+                                    "value": "Mali"
+                                },
+                                {
+                                    "label": "Malta",
+                                    "value": "Malta"
+                                },
+                                {
+                                    "label": "Marshall Islands",
+                                    "value": "Marshall Islands"
+                                },
+                                {
+                                    "label": "Martinique",
+                                    "value": "Martinique"
+                                },
+                                {
+                                    "label": "Mauritania",
+                                    "value": "Mauritania"
+                                },
+                                {
+                                    "label": "Mauritius",
+                                    "value": "Mauritius"
+                                },
+                                {
+                                    "label": "Mayotte",
+                                    "value": "Mayotte"
+                                },
+                                {
+                                    "label": "Mexico",
+                                    "value": "Mexico"
+                                },
+                                {
+                                    "label": "Micronesia, Federated States of",
+                                    "value": "Micronesia, Federated States of"
+                                },
+                                {
+                                    "label": "Moldova, Republic of",
+                                    "value": "Moldova, Republic of"
+                                },
+                                {
+                                    "label": "Monaco",
+                                    "value": "Monaco"
+                                },
+                                {
+                                    "label": "Mongolia",
+                                    "value": "Mongolia"
+                                },
+                                {
+                                    "label": "Montenegro",
+                                    "value": "Montenegro"
+                                },
+                                {
+                                    "label": "Montserrat",
+                                    "value": "Montserrat"
+                                },
+                                {
+                                    "label": "Morocco",
+                                    "value": "Morocco"
+                                },
+                                {
+                                    "label": "Mozambique",
+                                    "value": "Mozambique"
+                                },
+                                {
+                                    "label": "MSF IO",
+                                    "value": "MSF IO"
+                                },
+                                {
+                                    "label": "Myanmar",
+                                    "value": "Myanmar"
+                                },
+                                {
+                                    "label": "Namibia",
+                                    "value": "Namibia"
+                                },
+                                {
+                                    "label": "Nauru",
+                                    "value": "Nauru"
+                                },
+                                {
+                                    "label": "Nepal",
+                                    "value": "Nepal"
+                                },
+                                {
+                                    "label": "Netherlands",
+                                    "value": "Netherlands"
+                                },
+                                {
+                                    "label": "New Caledonia",
+                                    "value": "New Caledonia"
+                                },
+                                {
+                                    "label": "New Zealand",
+                                    "value": "New Zealand"
+                                },
+                                {
+                                    "label": "Nicaragua",
+                                    "value": "Nicaragua"
+                                },
+                                {
+                                    "label": "Niger",
+                                    "value": "Niger"
+                                },
+                                {
+                                    "label": "Nigeria",
+                                    "value": "Nigeria"
+                                },
+                                {
+                                    "label": "Niue",
+                                    "value": "Niue"
+                                },
+                                {
+                                    "label": "Norfolk Island",
+                                    "value": "Norfolk Island"
+                                },
+                                {
+                                    "label": "Northern Mariana Islands",
+                                    "value": "Northern Mariana Islands"
+                                },
+                                {
+                                    "label": "Norway",
+                                    "value": "Norway"
+                                },
+                                {
+                                    "label": "Oman",
+                                    "value": "Oman"
+                                },
+                                {
+                                    "label": "Pakistan",
+                                    "value": "Pakistan"
+                                },
+                                {
+                                    "label": "Palau",
+                                    "value": "Palau"
+                                },
+                                {
+                                    "label": "Palestine, State of",
+                                    "value": "Palestine, State of"
+                                },
+                                {
+                                    "label": "Panama",
+                                    "value": "Panama"
+                                },
+                                {
+                                    "label": "Papua New Guinea",
+                                    "value": "Papua New Guinea"
+                                },
+                                {
+                                    "label": "Paraguay",
+                                    "value": "Paraguay"
+                                },
+                                {
+                                    "label": "Peru",
+                                    "value": "Peru"
+                                },
+                                {
+                                    "label": "Philippines",
+                                    "value": "Philippines"
+                                },
+                                {
+                                    "label": "Pitcairn",
+                                    "value": "Pitcairn"
+                                },
+                                {
+                                    "label": "Poland",
+                                    "value": "Poland"
+                                },
+                                {
+                                    "label": "Portugal",
+                                    "value": "Portugal"
+                                },
+                                {
+                                    "label": "Puerto Rico",
+                                    "value": "Puerto Rico"
+                                },
+                                {
+                                    "label": "Qatar",
+                                    "value": "Qatar"
+                                },
+                                {
+                                    "label": "Romania",
+                                    "value": "Romania"
+                                },
+                                {
+                                    "label": "Russian Federation",
+                                    "value": "Russian Federation"
+                                },
+                                {
+                                    "label": "Rwanda",
+                                    "value": "Rwanda"
+                                },
+                                {
+                                    "label": "Reunion",
+                                    "value": "Reunion"
+                                },
+                                {
+                                    "label": "Saint Barthelemy",
+                                    "value": "Saint Barthelemy"
+                                },
+                                {
+                                    "label": "Saint Helena",
+                                    "value": "Saint Helena"
+                                },
+                                {
+                                    "label": "Saint Kitts and Nevis",
+                                    "value": "Saint Kitts and Nevis"
+                                },
+                                {
+                                    "label": "Saint Lucia",
+                                    "value": "Saint Lucia"
+                                },
+                                {
+                                    "label": "Saint Martin (French part)",
+                                    "value": "Saint Martin (French part)"
+                                },
+                                {
+                                    "label": "Saint Pierre and Miquelon",
+                                    "value": "Saint Pierre and Miquelon"
+                                },
+                                {
+                                    "label": "Saint Vincent and the Grenadines",
+                                    "value": "Saint Vincent and the Grenadines"
+                                },
+                                {
+                                    "label": "Samoa",
+                                    "value": "Samoa"
+                                },
+                                {
+                                    "label": "San Marino",
+                                    "value": "San Marino"
+                                },
+                                {
+                                    "label": "Sao Tome and Principe",
+                                    "value": "Sao Tome and Principe"
+                                },
+                                {
+                                    "label": "Saudi Arabia",
+                                    "value": "Saudi Arabia"
+                                },
+                                {
+                                    "label": "Senegal",
+                                    "value": "Senegal"
+                                },
+                                {
+                                    "label": "Serbia",
+                                    "value": "Serbia"
+                                },
+                                {
+                                    "label": "Seychelles",
+                                    "value": "Seychelles"
+                                },
+                                {
+                                    "label": "Sierra Leone",
+                                    "value": "Sierra Leone"
+                                },
+                                {
+                                    "label": "Singapore",
+                                    "value": "Singapore"
+                                },
+                                {
+                                    "label": "Sint Maarten (Dutch part)",
+                                    "value": "Sint Maarten (Dutch part)"
+                                },
+                                {
+                                    "label": "SITS",
+                                    "value": "SITS"
+                                },
+                                {
+                                    "label": "Slovakia",
+                                    "value": "Slovakia"
+                                },
+                                {
+                                    "label": "Slovenia",
+                                    "value": "Slovenia"
+                                },
+                                {
+                                    "label": "Solomon Islands",
+                                    "value": "Solomon Islands"
+                                },
+                                {
+                                    "label": "Somalia",
+                                    "value": "Somalia"
+                                },
+                                {
+                                    "label": "South Africa",
+                                    "value": "South Africa"
+                                },
+                                {
+                                    "label": "South Georgia and the South Sandwich Islands",
+                                    "value": "South Georgia and the South Sandwich Islands"
+                                },
+                                {
+                                    "label": "South Sudan",
+                                    "value": "South Sudan"
+                                },
+                                {
+                                    "label": "Spain",
+                                    "value": "Spain"
+                                },
+                                {
+                                    "label": "Sri Lanka",
+                                    "value": "Sri Lanka"
+                                },
+                                {
+                                    "label": "Sudan",
+                                    "value": "Sudan"
+                                },
+                                {
+                                    "label": "Suriname",
+                                    "value": "Suriname"
+                                },
+                                {
+                                    "label": "Svalbard and Jan Mayen",
+                                    "value": "Svalbard and Jan Mayen"
+                                },
+                                {
+                                    "label": "Swaziland",
+                                    "value": "Swaziland"
+                                },
+                                {
+                                    "label": "Sweden",
+                                    "value": "Sweden"
+                                },
+                                {
+                                    "label": "Switzerland",
+                                    "value": "Switzerland"
+                                },
+                                {
+                                    "label": "Syrian Arab Republic",
+                                    "value": "Syrian Arab Republic"
+                                },
+                                {
+                                    "label": "Taiwan",
+                                    "value": "Taiwan"
+                                },
+                                {
+                                    "label": "Tajikistan",
+                                    "value": "Tajikistan"
+                                },
+                                {
+                                    "label": "United Republic of Tanzania",
+                                    "value": "United Republic of Tanzania"
+                                },
+                                {
+                                    "label": "Thailand",
+                                    "value": "Thailand"
+                                },
+                                {
+                                    "label": "Timor-Leste",
+                                    "value": "Timor-Leste"
+                                },
+                                {
+                                    "label": "Togo",
+                                    "value": "Togo"
+                                },
+                                {
+                                    "label": "Tokelau",
+                                    "value": "Tokelau"
+                                },
+                                {
+                                    "label": "Tonga",
+                                    "value": "Tonga"
+                                },
+                                {
+                                    "label": "Trinidad and Tobago",
+                                    "value": "Trinidad and Tobago"
+                                },
+                                {
+                                    "label": "Tunisia",
+                                    "value": "Tunisia"
+                                },
+                                {
+                                    "label": "Turkey",
+                                    "value": "Turkey"
+                                },
+                                {
+                                    "label": "Turkmenistan",
+                                    "value": "Turkmenistan"
+                                },
+                                {
+                                    "label": "Turks and Caicos Islands",
+                                    "value": "Turks and Caicos Islands"
+                                },
+                                {
+                                    "label": "Tuvalu",
+                                    "value": "Tuvalu"
+                                },
+                                {
+                                    "label": "Uganda",
+                                    "value": "Uganda"
+                                },
+                                {
+                                    "label": "Ukraine",
+                                    "value": "Ukraine"
+                                },
+                                {
+                                    "label": "United Arab Emirates",
+                                    "value": "United Arab Emirates"
                                 },
                                 {
                                     "label": "United Kingdom",
@@ -88,6 +1038,54 @@
                                     "value": "United States"
                                 },
                                 {
+                                    "label": "United States Minor Outlying Islands",
+                                    "value": "United States Minor Outlying Islands"
+                                },
+                                {
+                                    "label": "Uruguay",
+                                    "value": "Uruguay"
+                                },
+                                {
+                                    "label": "Uzbekistan",
+                                    "value": "Uzbekistan"
+                                },
+                                {
+                                    "label": "Vanuatu",
+                                    "value": "Vanuatu"
+                                },
+                                {
+                                    "label": "Venezuela",
+                                    "value": "Venezuela"
+                                },
+                                {
+                                    "label": "Viet Nam",
+                                    "value": "Viet Nam"
+                                },
+                                {
+                                    "label": "British Virgin Islands",
+                                    "value": "British Virgin Islands"
+                                },
+                                {
+                                    "label": "US Virgin Islands",
+                                    "value": "US Virgin Islands"
+                                },
+                                {
+                                    "label": "Wallis and Futuna",
+                                    "value": "Wallis and Futuna"
+                                },
+                                {
+                                    "label": "Western Sahara",
+                                    "value": "Western Sahara"
+                                },
+                                {
+                                    "label": "Yemen",
+                                    "value": "Yemen"
+                                },
+                                {
+                                    "label": "Zambia",
+                                    "value": "Zambia"
+                                },
+                                {
                                     "label": "Zimbabwe",
                                     "value": "Zimbabwe"
                                 }
@@ -96,42 +1094,13 @@
                         "visible": true
                     },
                     {
-                        "name": "Index/Suffix",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Index/Suffix",
-                        "defaultValue": "01",
-                        "toolTip": "For cases where more instances of the same app will be necessary, for testing and other scenarios",
-                        "constraints": {
-                            "required": false,
-                            "allowedValues": [
-                                {
-                                    "label": "01",
-                                    "value": "01"
-                                },
-                                {
-                                    "label": "02",
-                                    "value": "02"
-                                },
-                                {
-                                    "label": "03",
-                                    "value": "03"
-                                },
-                                {
-                                    "label": "04",
-                                    "value": "04"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "Tagdescription",
+                        "name": "TagCustomer",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Tag description",
-                        "defaultValue": "Testování v rámci arm template pro vytvoření VMs",
-                        "toolTip": "Short description of resource group. For example \"In order to test the new site.\"",
+                        "label": "Tag Customer",
+                        "defaultValue": "",
+                        "toolTip": "Name of the customer asking for the application. This should be your main contact for current and future communication.",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "",
                             "validationMessage": ""
                         },
@@ -141,10 +1110,10 @@
                         "name": "TagStage",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Tag Stage",
-                        "defaultValue": "Live",
-                        "toolTip": "Select a value of the \"tag Stage\"",
+                        "defaultValue": "Select stage",
+                        "toolTip": "The stage of the solution.",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "allowedValues": [
                                 {
                                     "label": "Live",
@@ -167,26 +1136,13 @@
                         "visible": true
                     },
                     {
-                        "name": "TagCustomer",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Tag Customer",
-                        "defaultValue": "MFS",
-                        "toolTip": "Name of customer for example \"MFS\"",
-                        "constraints": {
-                            "required": false,
-                            "regex": "",
-                            "validationMessage": ""
-                        },
-                        "visible": true
-                    },
-                    {
                         "name": "TagAdministrator",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Tag Administrator",
-                        "defaultValue": "Cmajda",
-                        "toolTip": "Name of administrator for example \"Jan Koudela\"",
+                        "defaultValue": "",
+                        "toolTip": "Name of the administrator responsible for the solution.",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "",
                             "validationMessage": ""
                         },
@@ -196,10 +1152,10 @@
                         "name": "TagDeployment",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Tag Deployment",
-                        "defaultValue": "Arm",
-                        "toolTip": "Select a value of the \"Tag Deployment\"",
+                        "defaultValue": "NOTSET",
+                        "toolTip": "The method used for deployment",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "allowedValues": [
                                 {
                                     "label": "Manual",
@@ -224,7 +1180,23 @@
                             ]
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "Tagdescription",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Tag Description",
+                        "defaultValue": "",
+                        "toolTip": "A description of the application, what is for and how it is used.",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^.{20,511}$",
+                            "validationMessage": "The description must be between 21-512 characters in length."
+                        },
+                        "visible": true
                     }
+
+
+
                 ]
             },
             {
@@ -238,7 +1210,7 @@
                         "defaultValue": "[[{\"name\":\"SSH\",\"properties\":{\"priority\":300,\"protocol\":\"TCP\",\"access\":\"Allow\",\"direction\":\"Inbound\",\"sourceAddressPrefix\":\"*\",\"sourcePortRange\":\"*\",\"destinationAddressPrefix\":\"*\",\"destinationPortRange\":\"22\"}}]",
                         "toolTip": "",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "",
                             "validationMessage": ""
                         },
@@ -251,7 +1223,7 @@
                         "defaultValue": "default",
                         "toolTip": "",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "",
                             "validationMessage": ""
                         },
@@ -264,7 +1236,7 @@
                         "defaultValue": "[[\"10.0.1.0/24\"]",
                         "toolTip": "",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "",
                             "validationMessage": ""
                         },
@@ -277,7 +1249,7 @@
                         "defaultValue": "[[{\"name\":\"default\",\"properties\":{\"addressPrefix\":\"10.0.1.0/24\"}}]",
                         "toolTip": "",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "",
                             "validationMessage": ""
                         },
@@ -290,7 +1262,7 @@
                         "defaultValue": "Dynamic",
                         "toolTip": "",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "",
                             "validationMessage": ""
                         },
@@ -303,7 +1275,7 @@
                         "defaultValue": "Basic",
                         "toolTip": "",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "",
                             "validationMessage": ""
                         },
@@ -319,11 +1291,11 @@
                         "name": "osDiskType",
                         "type": "Microsoft.Storage.MultiStorageAccountCombo",
                         "label": {
-                            "prefix": "[concat(steps(tags).applicationname)]",
+                            "prefix": "Storage account name prefix",
                             "type": "Storage account type"
                         },
                         "defaultValue": {
-                            "prefix": "autogenerate",
+                            "prefix": "[toLower(concat('dsk',steps('TabNameTags').ApplicationName,steps('TabNameTags').CountrySITSIO))]",
                             "type": "Standard_LRS"
                         },
                         "constraints": {
@@ -343,7 +1315,7 @@
                         "defaultValue": "Standard_B1ls",
                         "toolTip": "",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "",
                             "validationMessage": ""
                         },
@@ -356,7 +1328,7 @@
                         "defaultValue": "admin123",
                         "toolTip": "",
                         "constraints": {
-                            "required": false,
+                            "required": true,
                             "regex": "",
                             "validationMessage": ""
                         },
@@ -387,7 +1359,7 @@
             }
         ],
         "outputs": {
-            "Application Name": "[steps('tags').ApplicationName]"
+            "Application Name": "[steps('TabNameTags').ApplicationName]"
         }
     }
 }
