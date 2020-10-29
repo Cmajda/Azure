@@ -1396,6 +1396,7 @@
         ],
         "outputs": {
             "location": "[location()]",
+            "ApplicationName": "[steps('TabNameTags').ApplicationName]",
             "virtualNetworkName": "[steps('Network').virtualNetworkName.name]",
             "virtualNetworkNewOrExisting": "[steps('Network').virtualNetworkName.newOrExisting]",
             "virtualNetworkAddressPrefix": "[first(steps('Network').virtualNetworkName.addressPrefixes)]",
