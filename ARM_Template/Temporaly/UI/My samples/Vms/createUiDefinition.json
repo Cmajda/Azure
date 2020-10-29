@@ -1400,8 +1400,7 @@
             "virtualNetworkNewOrExisting": "[steps('Network').virtualNetworkName.newOrExisting]",
             "virtualNetworkAddressPrefix": "[first(steps('Network').virtualNetworkName.addressPrefixes)]",
             "virtualNetworkResourceGroup": "[steps('Network').virtualNetworkName.resourceGroup]",
-            "subnetName": "[steps('Network').virtualNetworkName.subnets.subnet1.name]",
-            "subnetAddressPrefix": "[steps('Network').virtualNetworkName.subnets.subnet1.addressPrefix]"
+            "subnetName": "[steps('Network').virtualNetworkName.subnets.subnet1.name]"
         }
     }
 }
