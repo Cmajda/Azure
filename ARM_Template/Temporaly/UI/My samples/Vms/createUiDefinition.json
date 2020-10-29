@@ -1426,7 +1426,7 @@
             "osDiskType": "[steps('VirtualMachine').osDiskType]",
             "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
             "adminUsername": "[steps('VirtualMachine').adminUsername]",
-            "adminPassword": "[steps('VirtualMachine').adminPassword]"
+            "adminPassword": "[steps('VirtualMachine').password]"
 
 
 
