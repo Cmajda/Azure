@@ -4,7 +4,7 @@
     "version": "0.1.2-preview",
     "parameters": {
         "config": {
-            "isWizard": true,
+            "isWizard": false,
             "basics": {
                 "description": "Customized description with **markdown**, see [more](https://www.microsoft.com).",
                 "subscription": {
@@ -1293,38 +1293,60 @@
                 "name": "VirtualMachine",
                 "label": "Tab Virtual machine",
                 "elements": [
+
+
                     {
                         "name": "osDiskType",
-                        "type": "Microsoft.Storage.MultiStorageAccountCombo",
-                        "label": {
-                            "prefix": "Storage account name prefix",
-                            "type": "Storage account type"
-                        },
-                        "defaultValue": {
-                            "prefix": "[toLower(concat('dsk',steps('TabNameTags').ApplicationName,steps('TabNameTags').CountrySITSIO))]",
-                            "type": "Standard_LRS"
-                        },
-                        "constraints": {
-                            "allowedTypes": [
-                                "Premium_LRS",
-                                "Standard_LRS",
-                                "Standard_GRS"
-                            ]
-                        },
-                        "count": 2,
-                        "visible": true
-                    },
-                    {
-                        "name": "virtualMachineSize",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Virtual Machine Size",
-                        "defaultValue": "Standard_B1ls",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Example drop down",
+                        "placeholder": "",
+                        "defaultValue": "Value two",
                         "toolTip": "",
                         "constraints": {
-                            "required": true,
-                            "regex": "",
-                            "validationMessage": ""
+                            "allowedValues": [
+                                {
+                                    "label": "Standard SSD",
+                                    "value": "StandardSSD_LRS"
+                                },
+                                {
+                                    "label": "Premium SSD",
+                                    "value": "Premium_LRS"
+                                }
+                            ],
+                            "required": true
                         },
+                        "visible": true
+                    },
+
+
+                    {
+                        "name": "virtualMachineSize",
+                        "type": "Microsoft.Compute.SizeSelector",
+                        "label": "Vm Size",
+                        "toolTip": "",
+                        "recommendedSizes": [
+                            "Standard_D2",
+                            "Standard_D4"
+                        ],
+                        "constraints": {
+                            "allowedSizes": [
+                                "Standard_D4as_v4",
+                                "Standard_D2as_v4"
+                            ],
+                            "excludedSizes": [],
+                            "numAvailabilityZonesRequired": 3,
+                            "zone": "3"
+                        },
+                        "options": {
+                            "hideDiskTypeFilter": false
+                        },
+                        "osPlatform": "Windows",
+                        "imageReference": {
+                            "publisher": "MicrosoftWindowsServer",
+                            "offer": "WindowsServer",
+                            "sku": "2012-R2-Datacenter"
+                        },
+                        "count": 2,
                         "visible": true
                     },
                     {
