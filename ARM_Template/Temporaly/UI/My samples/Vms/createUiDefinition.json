@@ -1236,19 +1236,6 @@
                         "visible": true
                     },
                     {
-                        "name": "subnetName",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Subnet Name",
-                        "defaultValue": "default",
-                        "toolTip": "",
-                        "constraints": {
-                            "required": true,
-                            "regex": "",
-                            "validationMessage": ""
-                        },
-                        "visible": true
-                    },
-                    {
                         "name": "addressPrefixes",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Address Prefixes",
