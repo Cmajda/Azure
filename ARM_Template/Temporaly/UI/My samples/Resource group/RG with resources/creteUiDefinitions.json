@@ -39,7 +39,9 @@
             }
         },
         "resourceTypes": [
-            "microsoft.resources/resourcegroups"
+            "Microsoft.Compute/virtualMachines",
+            "Microsoft.Storage/storageAccounts",
+            "Microsoft.KeyVault/vaults"
         ],
         "basics": [
             {
