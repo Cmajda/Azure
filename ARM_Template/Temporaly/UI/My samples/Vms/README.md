@@ -53,6 +53,6 @@ Opportunity to choose  Kind Storage and SKU.
   
 # Deploy to Azure
 
-  [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/?feature.customportal=false#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FCmajda%2FAzure%2Fmaster%2FARM_Template%2FTemporaly%2FUI%2FMy%2520samples%2FResource%2520group%2FRG%2520with%2520resources%2FmainTemplate.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FCmajda%2FAzure%2Fmaster%2FARM_Template%2FTemporaly%2FUI%2FMy%2520samples%2FResource%2520group%2FRG%2520with%2520resources%2FcreteUiDefinitions.json)
+  [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/?feature.customportal=false#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FCmajda%2FAzure%2Fmaster%2FARM_Template%2FTemporaly%2FUI%2FMy%2520samples%2FVms%2FmainTemplate.json/createUIDefinitionUri/https%3A%2F%2Fraw.githubusercontent.com%2FCmajda%2FAzure%2Fmaster%2FARM_Template%2FTemporaly%2FUI%2FMy%2520samples%2FVms%2FcreateUiDefinition.json)
 
 
