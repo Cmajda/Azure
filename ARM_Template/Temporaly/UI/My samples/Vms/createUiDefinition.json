@@ -22,23 +22,13 @@
                 "location": {
                     "label": "Custom label for location",
                     "toolTip": "provide a useful tooltip",
-                    "resourceTypes": [
-                        "Microsoft.Compute/virtualMachines"
-                    ],
+                    "resourceTypes": [],
                     "allowedValues": [],
-                    "visible": false
+                    "visible": true
                 }
             }
         },
-        "resourceTypes": [
-            "microsoft.compute/disks",
-            "microsoft.network/networkinterfaces",
-            "microsoft.network/networksecuritygroups",
-            "microsoft.network/publicipaddresses",
-            "microsoft.compute/virtualmachines",
-            "microsoft.network/virtualnetworks",
-            "microsoft.resources/resourcegroups"
-        ],
+        "resourceTypes": [],
         "basics": [],
         "steps": [
             {
@@ -1204,6 +1194,35 @@
                 "label": "Tab network",
                 "elements": [
                     {
+                        "name": "virtualNetworkName",
+                        "type": "Microsoft.Network.VirtualNetworkCombo",
+                        "label": {
+                            "virtualNetwork": "Virtual Network",
+                            "subnets": "Subnets"
+                        },
+                        "defaultValue": {
+                            "name": "vmx-vnet",
+                            "addressPrefixSize": "/16"
+                        },
+                        "constraints": {
+                            "minAddressPrefixSize": "/24"
+                        },
+                        "subnets": {
+                            "subnet1": {
+                                "label": "Subnet",
+                                "defaultValue": {
+                                    "name": "vmx-subnet",
+                                    "addressPrefixSize": "/24"
+                                },
+                                "constraints": {
+                                    "minAddressPrefixSize": "/29",
+                                    "minAddressCount": 8,
+                                    "requireContiguousAddresses": true
+                                }
+                            }
+                        }
+                    },
+                    {
                         "name": "networkSecurityGroupRules",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Network Security Group Rules",
@@ -1359,7 +1378,13 @@
             }
         ],
         "outputs": {
-            "Application Name": "[steps('TabNameTags').ApplicationName]"
+            "location": "[location()]",
+            "virtualNetworkName": "[steps('Network').virtualNetworkName.name]",
+            "virtualNetworkNewOrExisting": "[steps('Network').virtualNetworkName.newOrExisting]",
+            "virtualNetworkAddressPrefix": "[first(steps('Network').virtualNetworkName.addressPrefixes)]",
+            "virtualNetworkResourceGroup": "[steps('Network').virtualNetworkName.resourceGroup]",
+            "subnetName": "[steps('Network').virtualNetworkName.subnets.subnet1.name]",
+            "subnetAddressPrefix": "[steps('Network').virtualNetworkName.subnets.subnet1.addressPrefix]"
         }
     }
 }
