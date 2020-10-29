@@ -1415,7 +1415,7 @@
             "TagStage": "[steps('TabNameTags').TagStage]",
             "TagAdministrator": "[steps('TabNameTags').TagAdministrator]",
             "TagDeployment": "[steps('TabNameTags').TagDeployment]",
-            "TagDescription": "[steps('TabNameTags').Tagdescription]",
+            "Tagdescription": "[steps('TabNameTags').Tagdescription]",
             "virtualNetworkName": "[steps('Network').virtualNetworkName.name]",
             "publicIpAddressType": "[steps('Network').publicIpAddressType]",
             "publicIpAddressSku": "[steps('Network').publicIpAddressSku]",
