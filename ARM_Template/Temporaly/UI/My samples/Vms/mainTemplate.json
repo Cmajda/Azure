@@ -99,12 +99,6 @@
             "type": "String",
             "defaultValue": "default"
         },
-        "addressPrefixes": {
-            "type": "Array",
-            "defaultValue": [
-                "10.0.1.0/24"
-            ]
-        },
         "publicIpAddressType": {
             "type": "String",
             "defaultValue": "Dynamic"
@@ -573,20 +567,6 @@
                         "enabled": true
                     }
                 }
-            },
-            "tags": "[variables('FullTag')]"
-        },
-        {
-            "condition": "[equals(parameters('virtualNetworkName'),'new')]",
-            "name": "[parameters('virtualNetworkName')]",
-            "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2019-09-01",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "addressSpace": {
-                    "addressPrefixes": "[parameters('addressPrefixes')]"
-                },
-                "subnets": "[parameters('subnets')]"
             },
             "tags": "[variables('FullTag')]"
         }
