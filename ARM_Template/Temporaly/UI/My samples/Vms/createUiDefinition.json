@@ -1263,7 +1263,7 @@
                     },
                     {
                         "name": "publicIpAddressType",
-                        "type": "Microsoft.Common.TextBox",
+                        "type": "Microsoft.Common.DropDown",
                         "label": "Public Ip Address Type",
                         "defaultValue": "Static",
                         "toolTip": "",
@@ -1272,15 +1272,21 @@
                             "regex": "",
                             "validationMessage": "",
                             "allowedValues": [
-                                "Static",
-                                "Dynamic"
+                                {
+                                    "label": "Static",
+                                    "value": "Static"
+                                },
+                                {
+                                    "label": "Dynamic",
+                                    "value": "Dynamic"
+                                }
                             ]
                         },
                         "visible": true
                     },
                     {
                         "name": "publicIpAddressSku",
-                        "type": "Microsoft.Common.TextBox",
+                        "type": "Microsoft.Common.DropDown",
                         "label": "Public Ip Address Sku",
                         "defaultValue": "Basic",
                         "toolTip": "",
@@ -1289,8 +1295,14 @@
                             "regex": "",
                             "validationMessage": "",
                             "allowedValues": [
-                                "Basic",
-                                "Standard"
+                                {
+                                    "label": "Basic",
+                                    "value": "Basic"
+                                },
+                                {
+                                    "label": "Standard",
+                                    "value": "Standard"
+                                }
                             ]
                         },
                         "visible": true
@@ -1397,11 +1409,27 @@
         "outputs": {
             "location": "[location()]",
             "ApplicationName": "[steps('TabNameTags').ApplicationName]",
+            "IndexSuffix": "[steps('TabNameTags').IndexSuffix]",
+            "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
+            "TagCustomer": "[steps('TabNameTags').TagCustomer]",
+            "TagStage": "[steps('TabNameTags').TagStage]",
+            "TagAdministrator": "[steps('TabNameTags').TagAdministrator]",
+            "TagDeployment": "[steps('TabNameTags').TagDeployment]",
+            "TagDescription": "[steps('TabNameTags').Tagdescription]",
             "virtualNetworkName": "[steps('Network').virtualNetworkName.name]",
+            "publicIpAddressType": "[steps('Network').publicIpAddressType]",
+            "publicIpAddressSku": "[steps('Network').publicIpAddressSku]",
             "virtualNetworkNewOrExisting": "[steps('Network').virtualNetworkName.newOrExisting]",
             "virtualNetworkAddressPrefix": "[first(steps('Network').virtualNetworkName.addressPrefixes)]",
             "virtualNetworkResourceGroup": "[steps('Network').virtualNetworkName.resourceGroup]",
-            "subnetName": "[steps('Network').virtualNetworkName.subnets.subnet1.name]"
+            "subnetName": "[steps('Network').virtualNetworkName.subnets.subnet1.name]",
+            "osDiskType": "[steps('VirtualMachine').osDiskType]",
+            "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
+            "adminUsername": "[steps('VirtualMachine').adminUsername]",
+            "adminPassword": "[steps('VirtualMachine').adminPassword]"
+
+
+
         }
     }
 }
