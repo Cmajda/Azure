@@ -64,6 +64,12 @@
             "defaultValue": "Arm",
             "allowedValues": [ "Manual", "Arm", "Tf", "Ps", "Cli" ]
         },
+        "virtualNetworkName": {
+            "type": "string",
+            "metadata": {
+                "description": "vnet"
+            }
+        },
         "networkSecurityGroupRules": {
             "type": "Array",
             "defaultValue": [
