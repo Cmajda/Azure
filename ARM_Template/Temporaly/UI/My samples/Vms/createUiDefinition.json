@@ -1265,12 +1265,16 @@
                         "name": "publicIpAddressType",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Public Ip Address Type",
-                        "defaultValue": "Dynamic",
+                        "defaultValue": "Static",
                         "toolTip": "",
                         "constraints": {
                             "required": true,
                             "regex": "",
-                            "validationMessage": ""
+                            "validationMessage": "",
+                            "allowedValues": [
+                                "Static",
+                                "Dynamic"
+                            ]
                         },
                         "visible": true
                     },
@@ -1283,7 +1287,11 @@
                         "constraints": {
                             "required": true,
                             "regex": "",
-                            "validationMessage": ""
+                            "validationMessage": "",
+                            "allowedValues": [
+                                "Basic",
+                                "Standard"
+                            ]
                         },
                         "visible": true
                     }
