@@ -1273,12 +1273,12 @@
                             "validationMessage": "",
                             "allowedValues": [
                                 {
-                                    "label": "Basic",
-                                    "value": "Basic"
+                                    "label": "Static",
+                                    "value": "Static"
                                 },
                                 {
-                                    "label": "Standard",
-                                    "value": "Standard"
+                                    "label": "Dynamic",
+                                    "value": "Dynamic"
                                 }
                             ]
                         },
@@ -1296,12 +1296,12 @@
                             "validationMessage": "",
                             "allowedValues": [
                                 {
-                                    "label": "Static",
-                                    "value": "Static"
+                                    "label": "Basic",
+                                    "value": "Basic"
                                 },
                                 {
-                                    "label": "Dynamic",
-                                    "value": "Dynamic"
+                                    "label": "Standard",
+                                    "value": "Standard"
                                 }
                             ]
                         },
