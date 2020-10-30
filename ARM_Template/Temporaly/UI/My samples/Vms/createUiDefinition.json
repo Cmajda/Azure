@@ -1223,19 +1223,6 @@
                         }
                     },
                     {
-                        "name": "networkSecurityGroupRules",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Network Security Group Rules",
-                        "defaultValue": "[[{\"name\":\"SSH\",\"properties\":{\"priority\":300,\"protocol\":\"TCP\",\"access\":\"Allow\",\"direction\":\"Inbound\",\"sourceAddressPrefix\":\"*\",\"sourcePortRange\":\"*\",\"destinationAddressPrefix\":\"*\",\"destinationPortRange\":\"22\"}}]",
-                        "toolTip": "",
-                        "constraints": {
-                            "required": true,
-                            "regex": "",
-                            "validationMessage": ""
-                        },
-                        "visible": true
-                    },
-                    {
                         "name": "publicIpAddressType",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Public Ip Address Type",
