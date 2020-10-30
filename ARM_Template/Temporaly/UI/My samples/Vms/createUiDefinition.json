@@ -1236,32 +1236,6 @@
                         "visible": true
                     },
                     {
-                        "name": "addressPrefixes",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Address Prefixes",
-                        "defaultValue": "[[\"10.0.1.0/24\"]",
-                        "toolTip": "",
-                        "constraints": {
-                            "required": true,
-                            "regex": "",
-                            "validationMessage": ""
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "subnets",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Subnets",
-                        "defaultValue": "[[{\"name\":\"default\",\"properties\":{\"addressPrefix\":\"10.0.1.0/24\"}}]",
-                        "toolTip": "",
-                        "constraints": {
-                            "required": true,
-                            "regex": "",
-                            "validationMessage": ""
-                        },
-                        "visible": true
-                    },
-                    {
                         "name": "publicIpAddressType",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Public Ip Address Type",
