@@ -1318,9 +1318,9 @@
                     {
                         "name": "osDiskType",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Example drop down",
+                        "label": "OS disk type",
                         "placeholder": "",
-                        "defaultValue": "Value two",
+                        "defaultValue": "Standard SSD",
                         "toolTip": "",
                         "constraints": {
                             "allowedValues": [
@@ -1334,6 +1334,41 @@
                                 }
                             ],
                             "required": true
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "DataDiskType",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Data disk type",
+                        "placeholder": "",
+                        "defaultValue": "Standard SSD",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Standard SSD",
+                                    "value": "StandardSSD_LRS"
+                                },
+                                {
+                                    "label": "Premium SSD",
+                                    "value": "Premium_LRS"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "DataDiskSize",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Data disk size GB:",
+                        "defaultValue": "1",
+                        "toolTip": "",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-1][0-0][0-0][0-0])$",
+                            "validationMessage": "1-1000"
                         },
                         "visible": true
                     },
@@ -1425,6 +1460,8 @@
             "virtualNetworkResourceGroup": "[steps('Network').virtualNetworkName.resourceGroup]",
             "subnetName": "[steps('Network').virtualNetworkName.subnets.subnet1.name]",
             "osDiskType": "[steps('VirtualMachine').osDiskType]",
+            "DataDiskType": "[steps('VirtualMachine').DataDiskType]",
+            "DataDiskSize": "[steps('VirtualMachine').DataDiskSize]",
             "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
             "adminUsername": "[steps('VirtualMachine').adminUsername]",
             "adminPassword": "[steps('VirtualMachine').password]"

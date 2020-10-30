@@ -353,6 +353,14 @@
             "type": "String",
             "defaultValue": "Standard_LRS"
         },
+        "DataDiskType": {
+            "type": "String",
+            "defaultValue": "Standard_LRS"
+        },
+        "DataDiskSize": {
+            "type": "String",
+            "defaultValue": "Standard_LRS"
+        },
         "virtualMachineSize": {
             "type": "String",
             "defaultValue": "Standard_B1ls"
@@ -663,9 +671,9 @@
             "Value": [
                 {
                     "name": "[variables('datadiskName')]",
-                    "sku": "Premium_LRS",
+                    "sku": "[parameters('DataDiskType')]",
                     "properties": {
-                        "diskSizeGB": 1024,
+                        "diskSizeGB": "[parameters('DataDiskSize')]",
                         "creationData": {
                             "createOption": "empty"
                         }
