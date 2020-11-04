@@ -399,6 +399,15 @@
             }
         },
         "adminPassword2": "[resourceId('5376dbd2-b322-46b1-935f-1b76fab2261a', 'rg-ts-vmtest1-vault', 'Microsoft.KeyVault/vaults', 'kv-ts-vmtest1-vaul')]",
+        "password": {
+            "reference": {
+                "keyVault": {
+                    "id": "[variables('adminPassword2')]"
+                },
+                "secretName": "AdminKey"
+            }
+        },
+
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
         "datadiskName": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "datadiskNameOS": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'),'-OS')]",
@@ -857,7 +866,7 @@
         },
         "dbSecretUri": {
             "type": "object",
-            "value": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', 'kv-ts-vmtest1-vaul', 'AdminKey'),'2019-04-01')]"
+            "value": "[variables('password')]"
         }
 
     }
