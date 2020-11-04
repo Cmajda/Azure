@@ -393,11 +393,12 @@
         "adminPassword": {
             "reference": {
                 "keyVault": {
-                    "id": "[resourceId('5376dbd2-b322-46b1-935f-1b76fab2261a', 'g-ts-vmtest1-vault', 'Microsoft.KeyVault/vaults', 'kv-ts-vmtest1-vaul')]"
+                    "id": "[resourceId('5376dbd2-b322-46b1-935f-1b76fab2261a', 'rg-ts-vmtest1-vault', 'Microsoft.KeyVault/vaults', 'kv-ts-vmtest1-vaul')]"
                 },
                 "secretName": "AdminKey"
             }
         },
+        "adminPassword2": "[resourceId('5376dbd2-b322-46b1-935f-1b76fab2261a', 'rg-ts-vmtest1-vault', 'Microsoft.KeyVault/vaults', 'kv-ts-vmtest1-vaul')]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
         "datadiskName": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "datadiskNameOS": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'),'-OS')]",
@@ -851,7 +852,7 @@
         },
         "Password": {
             "type": "string",
-            "value": "[variables('adminPassword').reference.keyVault.id]"
+            "value": "[variables('adminPassword2')]"
         }
     }
 }
