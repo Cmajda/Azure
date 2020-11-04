@@ -20,8 +20,8 @@
                     "allowExisting": true
                 },
                 "location": {
-                    "label": "Custom label for location",
-                    "toolTip": "provide a useful tooltip",
+                    "label": "Location",
+                    "toolTip": "Location of the Resource Groups and basic resources.",
                     "resourceTypes": [],
                     "allowedValues": [],
                     "visible": true
