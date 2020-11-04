@@ -390,14 +390,6 @@
         "virtualMachineName": "[concat('vm',variables('CountryObject').value[parameters('CountrySITSIO')],parameters('ApplicationName'),parameters('IndexSuffix'))]",
         "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
         "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'),'Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
-        "adminPassword": {
-            "reference": {
-                "keyVault": {
-                    "id": "[resourceId('5376dbd2-b322-46b1-935f-1b76fab2261a', 'rg-ts-vmtest1-vault', 'Microsoft.KeyVault/vaults', 'kv-ts-vmtest1-vaul')]"
-                },
-                "secretName": "AdminKey"
-            }
-        },
         "adminPassword2": "[resourceId('5376dbd2-b322-46b1-935f-1b76fab2261a', 'rg-ts-vmtest1-vault', 'Microsoft.KeyVault/vaults', 'kv-ts-vmtest1-vaul')]",
         "password": {
             "reference": {
@@ -771,7 +763,7 @@
             "tags": "[variables('FullTag')]"
         },
         {
-            "condition": "[equals(parameters('virtualNetworkName'),'new')]",
+
             "name": "[variables('virtualMachineName')]",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2020-06-01",
@@ -826,7 +818,7 @@
                 "osProfile": {
                     "computerName": "[variables('virtualMachineName')]",
                     "adminUsername": "[parameters('adminUsername')]",
-                    "adminPassword": "[parameters('adminPassword')]"
+                    "adminPassword": "[variables('password')]"
                 },
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
@@ -855,14 +847,6 @@
         "adminUsername": {
             "type": "string",
             "value": "[parameters('ApplicationName')]"
-        },
-        "Password222222": {
-            "type": "object",
-            "value": "[variables('adminPassword')]"
-        },
-        "Password": {
-            "type": "string",
-            "value": "[variables('adminPassword2').value]"
         },
         "dbSecretUri": {
             "type": "object",
