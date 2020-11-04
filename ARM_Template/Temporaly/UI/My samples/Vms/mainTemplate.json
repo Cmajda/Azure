@@ -845,9 +845,9 @@
             "type": "string",
             "value": "[parameters('ApplicationName')]"
         },
-        "Password": {
-            "type": "string",
-            "value": "[variables('adminPassword')]"
+        "Password222222": {
+            "type": "object",
+            "value": "[variables('adminPassword').reference.keyVault.id]"
         }
     }
 }
