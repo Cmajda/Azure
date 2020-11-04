@@ -370,8 +370,12 @@
             "defaultValue": "admin123"
         },
         "adminPassword": {
-            "type": "SecureString",
-            "defaultValue": "Heslo je hrozně tajné"
+            "reference": {
+                "keyVault": {
+                    "id": "/subscriptions/5376dbd2-b322-46b1-935f-1b76fab2261a/resourceGroups/mykeyvaultdeploymentrg/providers/Microsoft.KeyVault/vaults/kv-ts-vmtest1-vaul"
+                },
+                "secretName": "AdminKey"
+            }
         }
     },
     "variables": {
