@@ -844,6 +844,10 @@
         "adminUsername": {
             "type": "string",
             "value": "[parameters('ApplicationName')]"
+        },
+        "Password": {
+            "type": "string",
+            "value": "[variables('adminPassword')]"
         }
     }
 }
