@@ -370,12 +370,8 @@
             "defaultValue": "admin123"
         },
         "adminPassword": {
-            "reference": {
-                "keyVault": {
-                    "id": "/subscriptions/5376dbd2-b322-46b1-935f-1b76fab2261a/resourceGroups/rg-ts-vmtest1-vault/providers/Microsoft.KeyVault/vaults/kv-ts-vmtest1-vaul"
-                },
-                "secretName": "AdminKey"
-            }
+            "type": "SecureString",
+            "defaultValue": "Heslo je hrozně tajné"
         }
     },
     "variables": {
@@ -394,7 +390,14 @@
         "virtualMachineName": "[concat('vm',variables('CountryObject').value[parameters('CountrySITSIO')],parameters('ApplicationName'),parameters('IndexSuffix'))]",
         "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
         "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'),'Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
-
+        "adminPassword": {
+            "reference": {
+                "keyVault": {
+                    "id": "[resourceId('5376dbd2-b322-46b1-935f-1b76fab2261a', 'g-ts-vmtest1-vault', 'Microsoft.KeyVault/vaults', 'kv-ts-vmtest1-vaul')]"
+                },
+                "secretName": "AdminKey"
+            }
+        },
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
         "datadiskName": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "datadiskNameOS": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'),'-OS')]",
@@ -812,7 +815,7 @@
                 "osProfile": {
                     "computerName": "[variables('virtualMachineName')]",
                     "adminUsername": "[parameters('adminUsername')]",
-                    "adminPassword": "[parameters('adminPassword')]"
+                    "adminPassword": "[variables('adminPassword')]"
                 },
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
