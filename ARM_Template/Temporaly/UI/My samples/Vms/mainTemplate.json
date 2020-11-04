@@ -857,7 +857,7 @@
         },
         "dbSecretUri": {
             "type": "object",
-            "value": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', 'kv-ts-vmtest1-vaul', 'AdminKey'),'2019-04-01')]"
+            "value": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', 'kv-ts-vmtest1-vaul', 'AdminKey'),'2019-09-01')]"
         }
 
     }
