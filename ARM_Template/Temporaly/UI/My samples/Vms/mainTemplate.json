@@ -785,9 +785,9 @@
                         }
                     },
                     "imageReference": {
-                        "publisher": "Canonical",
-                        "offer": "UbuntuServer",
-                        "sku": "18.04-LTS",
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2016-Datacenter",
                         "version": "latest"
                     },
                     "copy": [
@@ -850,7 +850,11 @@
         },
         "dbSecretUri": {
             "type": "object",
+            <<<<<<< HEAD
             "value": "[variables('password')]"
+            =======
+            "value": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', 'kv-ts-vmtest1-vaul', 'AdminKey'),'2019-09-01')]"
+            >>>>>>> 5323a09bc5a080ea3ebba9b5df75a6dd8635b3fb
         }
 
     }
