@@ -853,11 +853,11 @@
         },
         "Password": {
             "type": "string",
-            "value": "[variables('adminPassword2')]"
+            "value": "[variables('adminPassword2').value]"
         },
         "dbSecretUri": {
             "type": "object",
-            "value": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', 'kv-ts-vmtest1-vaul', 'AdminKey'))]"
+            "value": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', 'kv-ts-vmtest1-vaul', 'AdminKey'),'2019-04-01')]"
         }
 
     }
