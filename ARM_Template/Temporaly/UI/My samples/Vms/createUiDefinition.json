@@ -1324,12 +1324,12 @@
                         "name": "DataDiskSize",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Data disk size GB:",
-                        "defaultValue": "1",
-                        "toolTip": "",
+                        "defaultValue": "32",
+                        "toolTip": "The minimum size is 32 GB and the maximum is 1000 GB",
                         "constraints": {
                             "required": true,
-                            "regex": "^([1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-1][0-0][0-0][0-0])$",
-                            "validationMessage": "1-1000"
+                            "regex": "^([3-3]|[3-][2-9]|[1-9][0-9][0-9]|[1-1][0-0][0-0][0-0])$",
+                            "validationMessage": "Please write a number between 32 - 1000"
                         },
                         "visible": true
                     },
@@ -1370,8 +1370,8 @@
                         "name": "adminUsername",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Admin Username",
-                        "defaultValue": "admin123",
-                        "toolTip": "",
+                        "defaultValue": "",
+                        "toolTip": "Will be replaced by a key vault",
                         "constraints": {
                             "required": true,
                             "regex": "",
