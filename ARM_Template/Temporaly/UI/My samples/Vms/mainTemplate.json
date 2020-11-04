@@ -762,6 +762,7 @@
             "tags": "[variables('FullTag')]"
         },
         {
+            "condition": "[equals(parameters('virtualNetworkName'),'new')]",
             "name": "[variables('virtualMachineName')]",
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2020-06-01",
@@ -853,6 +854,11 @@
         "Password": {
             "type": "string",
             "value": "[variables('adminPassword2')]"
+        },
+        "dbSecretUri": {
+            "type": "object",
+            "value": "[reference(resourceId('Microsoft.KeyVault/vaults/secrets', 'kv-ts-vmtest1-vaul', 'AdminKey'))]"
         }
+
     }
 }
