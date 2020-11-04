@@ -1403,8 +1403,7 @@
             "DataDiskType": "[steps('VirtualMachine').DataDiskType]",
             "DataDiskSize": "[steps('VirtualMachine').DataDiskSize]",
             "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
-            "adminUsername": "[steps('VirtualMachine').adminUsername]",
-            "adminPassword": "[steps('VirtualMachine').password]"
+            "adminUsername": "[steps('VirtualMachine').adminUsername]"
 
 
 
