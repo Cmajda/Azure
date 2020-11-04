@@ -815,7 +815,7 @@
                 "osProfile": {
                     "computerName": "[variables('virtualMachineName')]",
                     "adminUsername": "[parameters('adminUsername')]",
-                    "adminPassword": "[variables('adminPassword')]"
+                    "adminPassword": "[parameters('adminPassword')]"
                 },
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
