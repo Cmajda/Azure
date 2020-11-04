@@ -847,6 +847,10 @@
         },
         "Password222222": {
             "type": "object",
+            "value": "[variables('adminPassword')]"
+        },
+        "Password": {
+            "type": "string",
             "value": "[variables('adminPassword').reference.keyVault.id]"
         }
     }
