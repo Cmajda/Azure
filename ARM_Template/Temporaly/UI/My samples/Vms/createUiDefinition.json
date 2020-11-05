@@ -1367,6 +1367,19 @@
                         "visible": true
                     },
                     {
+                        "name": "Type of OS",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Admin Username",
+                        "defaultValue": "",
+                        "toolTip": "Will be replaced by a key vault",
+                        "constraints": {
+                            "required": true,
+                            "regex": "",
+                            "validationMessage": ""
+                        },
+                        "visible": true
+                    },
+                    {
                         "name": "adminUsername",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Admin Username",
@@ -1407,14 +1420,14 @@
                     },
                     {
                         "name": "vaultName",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "KeyVault name",
-                        "defaultValue": "kv-ts-vmtest1-vaul",
-                        "toolTip": "The name of the keyvault that contains the secret.",
-                        "constraints": {
-                            "required": true,
-                            "regex": "",
-                            "validationMessage": ""
+                        "type": "Microsoft.Solutions.ResourceSelector",
+                        "label": "Select storage accounts",
+                        "resourceType": "Microsoft.KeyVault/vaults",
+                        "options": {
+                            "filter": {
+                                "subscription": "onBasics",
+                                "location": "onBasics"
+                            }
                         },
                         "visible": true
                     },
@@ -1458,7 +1471,7 @@
             "adminUsername": "[steps('VirtualMachine').adminUsername]",
             "adminPassword": "[steps('VirtualMachine').password]",
             "vaultResourceGroupName": "[steps('VirtualMachine').vaultResourceGroupName]",
-            "vaultName": "[steps('VirtualMachine').vaultName]",
+            "vaultName": "[steps('VirtualMachine').vaultName.name]",
             "secretName": "[steps('VirtualMachine').secretName]"
 
 
