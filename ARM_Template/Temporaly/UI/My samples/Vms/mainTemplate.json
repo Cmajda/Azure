@@ -319,24 +319,6 @@
             },
             "defaultValue": "network-rg"
         },
-        "networkSecurityGroupRules": {
-            "type": "Array",
-            "defaultValue": [
-                {
-                    "name": "SSH",
-                    "properties": {
-                        "priority": 300,
-                        "protocol": "TCP",
-                        "access": "Allow",
-                        "direction": "Inbound",
-                        "sourceAddressPrefix": "*",
-                        "sourcePortRange": "*",
-                        "destinationAddressPrefix": "*",
-                        "destinationPortRange": "22"
-                    }
-                }
-            ]
-        },
         "subnetName": {
             "type": "String",
             "defaultValue": "default"
@@ -369,10 +351,6 @@
             "type": "String",
             "defaultValue": "admin123"
         },
-        "adminPassword": {
-            "type": "SecureString",
-            "defaultValue": "Heslo je hrozně tajné"
-        },
         "vaultSubscription": {
             "type": "String",
             "defaultValue": "[subscription().subscriptionId]"
@@ -382,12 +360,6 @@
         },
         "vaultName": {
             "type": "String"
-        },
-        "secretName": {
-            "type": "string",
-            "metadata": {
-                "description": "description"
-            }
         }
 
     },

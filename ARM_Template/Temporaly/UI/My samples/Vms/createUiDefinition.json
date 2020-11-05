@@ -1380,27 +1380,6 @@
                         "visible": true
                     },
                     {
-                        "name": "adminPassword",
-                        "type": "Microsoft.Compute.CredentialsCombo",
-                        "label": {
-                            "password": "Password",
-                            "confirmPassword": "Confirm password"
-                        },
-                        "toolTip": {
-                            "password": ""
-                        },
-                        "constraints": {
-                            "required": true,
-                            "customPasswordRegex": "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{12,}$",
-                            "customValidationMessage": "The password must be alphanumeric, contain at least 12 characters, and have at least 1 letter and 1 number."
-                        },
-                        "options": {
-                            "hideConfirmation": false
-                        },
-                        "osPlatform": "Windows",
-                        "visible": true
-                    },
-                    {
                         "name": "vaultSubscription",
                         "type": "Microsoft.Common.TextBox",
                         "label": "vault Subscription",
