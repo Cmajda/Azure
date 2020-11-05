@@ -1399,6 +1399,19 @@
                         },
                         "osPlatform": "Windows",
                         "visible": true
+                    },
+                    {
+                        "name": "secretName",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Secret Name",
+                        "defaultValue": "",
+                        "toolTip": "Will be replaced by a key vault",
+                        "constraints": {
+                            "required": true,
+                            "regex": "",
+                            "validationMessage": ""
+                        },
+                        "visible": true
                     }
                 ]
             }
