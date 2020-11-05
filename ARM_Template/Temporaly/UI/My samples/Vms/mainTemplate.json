@@ -825,7 +825,7 @@
                             }
                         },
                         "FullTag": {
-                            "type": "string",
+                            "type": "Object",
                             "metadata": {
                                 "description": "description"
                             }
