@@ -1404,7 +1404,7 @@
                         "name": "vaultSubscription",
                         "type": "Microsoft.Common.TextBox",
                         "label": "vault Subscription",
-                        "defaultValue": "",
+                        "defaultValue": "[subscription().subscriptionId]",
                         "toolTip": "Will be replaced by a key vault",
                         "constraints": {
                             "required": true,
@@ -1417,7 +1417,7 @@
                         "name": "vaultResourceGroupName",
                         "type": "Microsoft.Common.TextBox",
                         "label": "vault Resource GroupName",
-                        "defaultValue": "",
+                        "defaultValue": "rg-ts-vmtest1-vaul",
                         "toolTip": "Will be replaced by a key vault",
                         "constraints": {
                             "required": true,
@@ -1443,7 +1443,7 @@
                         "name": "secretName",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Secret Name",
-                        "defaultValue": "",
+                        "defaultValue": "AdminKey",
                         "toolTip": "Will be replaced by a key vault",
                         "constraints": {
                             "required": true,
