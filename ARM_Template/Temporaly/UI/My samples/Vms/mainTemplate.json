@@ -807,18 +807,6 @@
                             "metadata": {
                                 "description": "description"
                             }
-                        },
-                        "addressPrefixes": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "subnets": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
                         }
 
                     },
@@ -968,9 +956,9 @@
                             "location": "[resourceGroup().location]",
                             "properties": {
                                 "addressSpace": {
-                                    "addressPrefixes": "[parameters('addressPrefixes')]"
+                                    "addressPrefixes": [ "NotSet" ]
                                 },
-                                "subnets": "[parameters('subnets')]"
+                                "subnets": [ { "name": "NOTSET" } ]
                             },
                             "tags": "[parameters('FullTag')]"
                         }
@@ -1036,12 +1024,6 @@
                     },
                     "virtualNetworkName": {
                         "value": "[parameters('virtualNetworkName')]"
-                    },
-                    "addressPrefixes": {
-                        "value": "[parameters('addressPrefixes')]"
-                    },
-                    "subnets": {
-                        "value": "[parameters('subnets')]"
                     }
                 }
             }
