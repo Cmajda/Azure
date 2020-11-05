@@ -378,12 +378,10 @@
             "defaultValue": "[subscription().subscriptionId]"
         },
         "vaultResourceGroupName": {
-            "type": "String",
-            "defaultValue": "Heslo je hrozně tajné"
+            "type": "String"
         },
         "vaultName": {
-            "type": "String",
-            "defaultValue": "Heslo je hrozně tajné"
+            "type": "String"
         },
         "secretName": {
             "type": "string",
