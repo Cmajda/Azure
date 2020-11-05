@@ -699,21 +699,7 @@
         }
     },
     "resources": [
-        {
-            "name": "[variables('dataDiskResources').Value[copyIndex()].name]",
-            "type": "Microsoft.Compute/disks",
-            "apiVersion": "2020-05-01",
-            "location": "[resourceGroup().location]",
-            "properties": "[variables('dataDiskResources').Value[copyIndex()].properties]",
-            "sku": {
-                "name": "[variables('dataDiskResources').Value[copyIndex()].sku]"
-            },
-            "copy": {
-                "name": "managedDiskResources",
-                "count": "[length(variables('dataDiskResources').Value)]"
-            },
-            "tags": "[variables('FullTag')]"
-        },
+
         {
             "name": "[variables('networkInterfaceName')]",
             "type": "Microsoft.Network/networkInterfaces",
@@ -829,10 +815,31 @@
                             "metadata": {
                                 "description": "description"
                             }
+                        },
+                        "dataDiskResources": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
                         }
 
                     },
                     "resources": [
+                        {
+                            "name": "[parameters('dataDiskResources').Value[copyIndex()].name]",
+                            "type": "Microsoft.Compute/disks",
+                            "apiVersion": "2020-05-01",
+                            "location": "[resourceGroup().location]",
+                            "properties": "[parameters('dataDiskResources').Value[copyIndex()].properties]",
+                            "sku": {
+                                "name": "[parameters('dataDiskResources').Value[copyIndex()].sku]"
+                            },
+                            "copy": {
+                                "name": "managedDiskResources",
+                                "count": "[length(parameters('dataDiskResources').Value)]"
+                            },
+                            "tags": "[parameters('FullTag')]"
+                        },
                         {
 
                             "name": "[parameters('virtualMachineName')]",
@@ -912,7 +919,7 @@
                     "adminPassword": {
                         "reference": {
                             "keyVault": {
-                                "id": "[resourceId('5376dbd2-b322-46b1-935f-1b76fab2261a', 'rg-ts-vmtest1-vaul', 'Microsoft.KeyVault/vaults', 'kv-ts-vmtest1-vaul')]"
+                                "id": "[resourceId(parameters('vaultSubscription'), parameters('vaultResourceGroupName'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
                             },
                             "secretName": "AdminKey"
                         }
@@ -937,6 +944,9 @@
                     },
                     "osDiskType": {
                         "value": "[parameters('osDiskType')]"
+                    },
+                    "dataDiskResources": {
+                        "value": "[variables('dataDiskResources')]"
                     }
 
 
