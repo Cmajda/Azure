@@ -819,7 +819,7 @@
                             }
                         },
                         "dataDisks": {
-                            "type": "array",
+                            "type": "Object",
                             "metadata": {
                                 "description": "description"
                             }
