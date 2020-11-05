@@ -1478,7 +1478,9 @@
             "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
             "adminUsername": "[steps('VirtualMachine').adminUsername]",
             "adminPassword": "[steps('VirtualMachine').password]",
-            "vaultResourceGroupName": "[steps('VirtualMachine').vaultResourceGroupName]"
+            "vaultResourceGroupName": "[steps('VirtualMachine').vaultResourceGroupName]",
+            "vaultName": "[steps('VirtualMachine').vaultName]",
+            "secretName": "[steps('VirtualMachine').secretName]"
 
 
 
