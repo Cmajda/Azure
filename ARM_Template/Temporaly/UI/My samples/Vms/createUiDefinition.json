@@ -1342,8 +1342,8 @@
                         "label": "Vm Size",
                         "toolTip": "",
                         "recommendedSizes": [
-                            "Standard_D2",
-                            "Standard_D4"
+                            "Standard_D2as_v4",
+                            "Standard_D4as_v4"
                         ],
                         "constraints": {
                             "allowedSizes": [
@@ -1392,6 +1392,21 @@
                         },
                         "visible": true
                     },
+
+
+                    {
+                        "name": "vaultName",
+                        "type": "Microsoft.Solutions.ResourceSelector",
+                        "label": "Select storage accounts",
+                        "resourceType": "Microsoft.KeyVault/vaults",
+                        "options": {
+                            "filter": {
+                                "subscription": "onBasics",
+                                "location": "onBasics"
+                            }
+                        },
+                        "visible": true
+                    },
                     {
                         "name": "vaultSubscription",
                         "type": "Microsoft.Common.TextBox",
@@ -1415,19 +1430,6 @@
                             "required": true,
                             "regex": "",
                             "validationMessage": ""
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "vaultName",
-                        "type": "Microsoft.Solutions.ResourceSelector",
-                        "label": "Select storage accounts",
-                        "resourceType": "Microsoft.KeyVault/vaults",
-                        "options": {
-                            "filter": {
-                                "subscription": "onBasics",
-                                "location": "onBasics"
-                            }
                         },
                         "visible": true
                     },
