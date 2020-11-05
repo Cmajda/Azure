@@ -1401,6 +1401,45 @@
                         "visible": true
                     },
                     {
+                        "name": "vaultSubscription",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "vault Subscription",
+                        "defaultValue": "",
+                        "toolTip": "Will be replaced by a key vault",
+                        "constraints": {
+                            "required": true,
+                            "regex": "",
+                            "validationMessage": ""
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "vaultResourceGroupName",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "vault Resource GroupName",
+                        "defaultValue": "",
+                        "toolTip": "Will be replaced by a key vault",
+                        "constraints": {
+                            "required": true,
+                            "regex": "",
+                            "validationMessage": ""
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "vaultName",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "vaultName",
+                        "defaultValue": "kv-ts-vmtest1-vaul",
+                        "toolTip": "Will be replaced by a key vault",
+                        "constraints": {
+                            "required": true,
+                            "regex": "",
+                            "validationMessage": ""
+                        },
+                        "visible": true
+                    },
+                    {
                         "name": "secretName",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Secret Name",
