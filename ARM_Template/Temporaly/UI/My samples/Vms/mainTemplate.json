@@ -368,6 +368,10 @@
         "adminUsername": {
             "type": "String",
             "defaultValue": "admin123"
+        },
+        "adminPassword": {
+            "type": "SecureString",
+            "defaultValue": "Heslo je hrozně tajné"
         }
     },
     "variables": {
@@ -804,7 +808,7 @@
                 "osProfile": {
                     "computerName": "[variables('virtualMachineName')]",
                     "adminUsername": "[parameters('adminUsername')]",
-                    "adminPassword": "[variables('KeyVaultSecureString')]"
+                    "adminPassword": "[parameters('adminPassword')]"
                 },
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
