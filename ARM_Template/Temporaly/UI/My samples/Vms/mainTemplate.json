@@ -912,9 +912,9 @@
                     "adminPassword": {
                         "reference": {
                             "keyVault": {
-                                "id": "[resourceId(parameters('vaultSubscription'), parameters('vaultResourceGroupName'), 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+                                "id": "[resourceId('5376dbd2-b322-46b1-935f-1b76fab2261a', 'rg-ts-vmtest1-vaul', 'Microsoft.KeyVault/vaults', 'kv-ts-vmtest1-vaul')]"
                             },
-                            "secretName": "[parameters('secretName')]"
+                            "secretName": "AdminKey"
                         }
                     },
                     "virtualMachineName": {
