@@ -4,7 +4,7 @@
     "version": "0.1.2-preview",
     "parameters": {
         "config": {
-            "isWizard": true,
+            "isWizard": false,
             "basics": {
                 "description": "Customized description with **markdown**, see [more](https://www.microsoft.com).",
                 "subscription": {
@@ -1382,9 +1382,9 @@
                     {
                         "name": "vaultSubscription",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "vault Subscription",
+                        "label": "Vault Subscription",
                         "defaultValue": "[subscription().subscriptionId]",
-                        "toolTip": "Will be replaced by a key vault",
+                        "toolTip": "The ID of the subscription that contains the keyvault.",
                         "constraints": {
                             "required": true,
                             "regex": "",
@@ -1395,9 +1395,9 @@
                     {
                         "name": "vaultResourceGroupName",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "vault Resource GroupName",
-                        "defaultValue": "rg-ts-vmtest1-vaul",
-                        "toolTip": "Will be replaced by a key vault",
+                        "label": "Vault Resource GroupName",
+                        "defaultValue": "[resourceGroup().name]",
+                        "toolTip": "The name of the resource group that contains the keyvault.",
                         "constraints": {
                             "required": true,
                             "regex": "",
@@ -1408,9 +1408,9 @@
                     {
                         "name": "vaultName",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "vaultName",
+                        "label": "KeyVault name",
                         "defaultValue": "kv-ts-vmtest1-vaul",
-                        "toolTip": "Will be replaced by a key vault",
+                        "toolTip": "The name of the keyvault that contains the secret.",
                         "constraints": {
                             "required": true,
                             "regex": "",
@@ -1423,7 +1423,7 @@
                         "type": "Microsoft.Common.TextBox",
                         "label": "Secret Name",
                         "defaultValue": "AdminKey",
-                        "toolTip": "Will be replaced by a key vault",
+                        "toolTip": "The name of the secret",
                         "constraints": {
                             "required": true,
                             "regex": "",
