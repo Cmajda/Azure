@@ -938,7 +938,8 @@
                             },
                             "copy": {
                                 "name": "managedDiskResources",
-                                "count": 1
+                                "count": "[if(equals(parameters('CountDatadisk'),0),1, parameters('CountDatadisk'))]"
+
                             },
                             "tags": "[parameters('FullTag')]"
                         },
