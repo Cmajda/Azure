@@ -927,7 +927,7 @@
                             "tags": "[parameters('FullTag')]"
                         },
                         {
-                            "condition": "[greater(parameters('CountDatadisk'),0)]",
+                            "condition": "[equals(parameters('CountDatadisk'),'TEST')]",
                             "name": "[parameters('dataDiskResources').Value[copyIndex()].name]",
                             "type": "Microsoft.Compute/disks",
                             "apiVersion": "2020-05-01",
