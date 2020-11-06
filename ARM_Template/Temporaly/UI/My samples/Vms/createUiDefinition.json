@@ -1184,9 +1184,6 @@
                         },
                         "visible": true
                     }
-
-
-
                 ]
             },
             {
@@ -1274,8 +1271,6 @@
                 "name": "VirtualMachine",
                 "label": "Tab Virtual machine",
                 "elements": [
-
-
                     {
                         "name": "osDiskType",
                         "type": "Microsoft.Common.DropDown",
@@ -1345,7 +1340,6 @@
                             "required": true
                         },
                         "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 0), 'true', 'false'))]"
-
                     },
                     {
                         "name": "DataDiskSize_1",
@@ -1381,7 +1375,6 @@
                             "required": true
                         },
                         "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 1), 'true', 'false'))]"
-
                     },
                     {
                         "name": "DataDiskSize_2",
@@ -1396,8 +1389,6 @@
                         },
                         "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 1), 'true', 'false'))]"
                     },
-
-
                     {
                         "name": "virtualMachineSize",
                         "type": "Microsoft.Compute.SizeSelector",
@@ -1464,8 +1455,6 @@
                         },
                         "visible": true
                     },
-
-
                     {
                         "name": "vaultName",
                         "type": "Microsoft.Solutions.ResourceSelector",
@@ -1542,7 +1531,10 @@
             "DataDiskType_1": "[steps('VirtualMachine').DataDiskType_1]",
             "DataDiskSize_1": "[int(steps('VirtualMachine').DataDiskSize_1)]",
             "DataDiskType_2": "[steps('VirtualMachine').DataDiskType_2]",
-            "DataDiskSize_2": "[int(steps('VirtualMachine').DataDiskSize_2)]",
+            "DataDiskSize_2": {
+                "type": "int",
+                "value": "[int(steps('VirtualMachine').DataDiskSize_2)]"
+            },
             "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
             "adminUsername": "[steps('VirtualMachine').adminUsername]",
             "adminPassword": "[steps('VirtualMachine').password]",
@@ -1551,10 +1543,6 @@
             "secretName": "[steps('VirtualMachine').secretName]",
             "imageReference": "[steps('VirtualMachine').imageReference]",
             "CountDatadisk": "[steps('VirtualMachine').CountDatadisk]"
-
-
-
-
         }
     }
 }
