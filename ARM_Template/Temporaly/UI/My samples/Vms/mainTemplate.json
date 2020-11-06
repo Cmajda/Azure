@@ -926,22 +926,7 @@
                             },
                             "tags": "[parameters('FullTag')]"
                         },
-                        {
-                            "condition": "[equals(parameters('CountDatadisk'),'TEST')]",
-                            "name": "[parameters('dataDiskResources').Value[copyIndex()].name]",
-                            "type": "Microsoft.Compute/disks",
-                            "apiVersion": "2020-05-01",
-                            "location": "[resourceGroup().location]",
-                            "properties": "[parameters('dataDiskResources').Value[copyIndex()].properties]",
-                            "sku": {
-                                "name": "[parameters('dataDiskResources').Value[copyIndex()].sku]"
-                            },
-                            "copy": {
-                                "name": "managedDiskResources",
-                                "count": "[parameters('CountDatadisk')]"
-                            },
-                            "tags": "[parameters('FullTag')]"
-                        },
+
                         {
 
                             "name": "[parameters('virtualMachineName')]",
