@@ -1483,7 +1483,8 @@
             "adminPassword": "[steps('VirtualMachine').password]",
             "vaultResourceGroupName": "[steps('VirtualMachine').vaultResourceGroupName]",
             "vaultName": "[steps('VirtualMachine').vaultName.name]",
-            "secretName": "[steps('VirtualMachine').secretName]"
+            "secretName": "[steps('VirtualMachine').secretName]",
+            "imageReference": "[steps('VirtualMachine').imageReference]"
 
 
 
