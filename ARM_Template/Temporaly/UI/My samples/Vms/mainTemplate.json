@@ -337,7 +337,15 @@
             "type": "String",
             "defaultValue": "Standard_LRS"
         },
+        "DataDiskType_2": {
+            "type": "String",
+            "defaultValue": "Standard_LRS"
+        },
         "DataDiskSize_1": {
+            "type": "String",
+            "defaultValue": "Standard_LRS"
+        },
+        "DataDiskSize_2": {
             "type": "String",
             "defaultValue": "Standard_LRS"
         },
@@ -684,6 +692,16 @@
                     "sku": "[parameters('DataDiskType_1')]",
                     "properties": {
                         "diskSizeGB": "[parameters('DataDiskSize_1')]",
+                        "creationData": {
+                            "createOption": "empty"
+                        }
+                    }
+                },
+                {
+                    "name": "[variables('datadiskName_2')]",
+                    "sku": "[parameters('DataDiskType_2')]",
+                    "properties": {
+                        "diskSizeGB": "[parameters('DataDiskSize_2')]",
                         "creationData": {
                             "createOption": "empty"
                         }

@@ -1541,6 +1541,8 @@
             "osDiskType": "[steps('VirtualMachine').osDiskType]",
             "DataDiskType_1": "[steps('VirtualMachine').DataDiskType_1]",
             "DataDiskSize_1": "[steps('VirtualMachine').DataDiskSize_1]",
+            "DataDiskType_2": "[steps('VirtualMachine').DataDiskType_2]",
+            "DataDiskSize_2": "[steps('VirtualMachine').DataDiskSize_2]",
             "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
             "adminUsername": "[steps('VirtualMachine').adminUsername]",
             "adminPassword": "[steps('VirtualMachine').password]",
