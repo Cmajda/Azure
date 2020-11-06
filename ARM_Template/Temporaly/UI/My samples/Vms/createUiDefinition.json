@@ -1531,10 +1531,7 @@
             "DataDiskType_1": "[steps('VirtualMachine').DataDiskType_1]",
             "DataDiskSize_1": "[int(steps('VirtualMachine').DataDiskSize_1)]",
             "DataDiskType_2": "[steps('VirtualMachine').DataDiskType_2]",
-            "DataDiskSize_2": {
-                "type": "int",
-                "value": "[int(steps('VirtualMachine').DataDiskSize_2)]"
-            },
+            "DataDiskSize_2": "[int(steps('VirtualMachine').DataDiskSize_2)]",
             "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
             "adminUsername": "[steps('VirtualMachine').adminUsername]",
             "adminPassword": "[steps('VirtualMachine').password]",
