@@ -1384,7 +1384,7 @@
                                     "description": "The value to select for option 2.",
                                     "value": "Image02"
                                 }
-                            ],
+                            ]
                         },
                         "visible": true
                     },
