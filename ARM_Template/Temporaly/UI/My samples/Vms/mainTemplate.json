@@ -266,11 +266,9 @@
         },
         "IndexSuffix": {
             "type": "string",
-            "maxLength": 2,
-            "minLength": 2,
+            "maxLength": 3,
             "metadata": { "Description": "For cases where more instances of the same app will be necessary, for testing and other scenarios" },
-            "defaultValue": "01",
-            "allowedValues": [ "01", "02", "03", "04" ]
+            "defaultValue": "01"
 
         },
         "Tagdescription": {
@@ -666,7 +664,7 @@
                     "diskEncryptionSet": null
                 },
                 {
-                    "lun": 1,
+                    "lun": 2,
                     "createOption": "attach",
                     "caching": "None",
                     "writeAcceleratorEnabled": false,
