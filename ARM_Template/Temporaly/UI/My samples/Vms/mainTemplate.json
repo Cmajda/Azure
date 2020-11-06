@@ -366,6 +366,12 @@
             "metadata": {
                 "description": "description"
             }
+        },
+        "CountDatadisk": {
+            "type": "int",
+            "metadata": {
+                "description": "description"
+            }
         }
 
     },
