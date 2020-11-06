@@ -393,6 +393,7 @@
         "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'),'Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
         "datadiskName_1": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
+        "datadiskName_2": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'),'-02')]",
         "datadiskNameOS": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'),'-OS')]",
         "CountryObject": {
             "type": "object",
@@ -663,6 +664,17 @@
                     "storageAccountType": null,
                     "diskSizeGB": null,
                     "diskEncryptionSet": null
+                },
+                {
+                    "lun": 1,
+                    "createOption": "attach",
+                    "caching": "None",
+                    "writeAcceleratorEnabled": false,
+                    "id": null,
+                    "name": "[variables('datadiskName_2')]",
+                    "storageAccountType": null,
+                    "diskSizeGB": null,
+                    "diskEncryptionSet": null
                 }
             ]
         },
@@ -813,6 +825,12 @@
                             "metadata": {
                                 "description": "description"
                             }
+                        },
+                        "CountDatadisk": {
+                            "type": "int",
+                            "metadata": {
+                                "description": "description"
+                            }
                         }
 
                     },
@@ -913,7 +931,7 @@
                                     "copy": [
                                         {
                                             "name": "dataDisks",
-                                            "count": "[length(parameters('dataDisks').Value)]",
+                                            "count": "[parameters('CountDatadisk')]",
                                             "input": {
                                                 "lun": "[parameters('dataDisks').Value[copyIndex('dataDisks')].lun]",
                                                 "createOption": "[parameters('dataDisks').Value[copyIndex('dataDisks')].createOption]",
@@ -1028,6 +1046,9 @@
                     },
                     "ListOfImages": {
                         "value": "[variables('ListOfImages').value[parameters('imageReference')]]"
+                    },
+                    "CountDatadisk": {
+                        "value": "[parameters('CountDatadisk')]"
                     }
                 }
             }
