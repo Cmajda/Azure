@@ -867,6 +867,12 @@
                                     "writeAcceleratorEnabled": "[parameters('dataDisks').Value[copyIndex('dataDisks')].writeAcceleratorEnabled]"
                                 }
                             }
+                        ],
+                        "managedDiskResources": [
+                            {
+                                "name": "managedDiskResources",
+                                "count": "[parameters('CountDatadisk')]"
+                            }
                         ]
 
                     },
@@ -935,10 +941,7 @@
                             "sku": {
                                 "name": "[parameters('dataDiskResources').Value[copyIndex()].sku]"
                             },
-                            "copy": {
-                                "name": "managedDiskResources",
-                                "count": "[parameters('CountDatadisk')]"
-                            },
+                            "managedDiskResources": "[if(equals(parameters('CountDatadisk'),0),json('null'),variables('managedDiskResources'))]",
                             "tags": "[parameters('FullTag')]"
                         },
                         {
