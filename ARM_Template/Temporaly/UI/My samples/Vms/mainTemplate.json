@@ -342,11 +342,11 @@
             "defaultValue": "Standard_LRS"
         },
         "DataDiskSize_1": {
-            "type": "String",
+            "type": "int",
             "defaultValue": "Standard_LRS"
         },
         "DataDiskSize_2": {
-            "type": "String",
+            "type": "int",
             "defaultValue": "Standard_LRS"
         },
         "virtualMachineSize": {
