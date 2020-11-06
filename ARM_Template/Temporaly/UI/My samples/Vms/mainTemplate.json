@@ -335,11 +335,11 @@
             "type": "String",
             "defaultValue": "Standard_LRS"
         },
-        "DataDiskType": {
+        "DataDiskType_1": {
             "type": "String",
             "defaultValue": "Standard_LRS"
         },
-        "DataDiskSize": {
+        "DataDiskSize_1": {
             "type": "String",
             "defaultValue": "Standard_LRS"
         },
@@ -392,7 +392,7 @@
         "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
         "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'),'Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
-        "datadiskName": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
+        "datadiskName_1": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "datadiskNameOS": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'),'-OS')]",
         "CountryObject": {
             "type": "object",
@@ -659,7 +659,7 @@
                     "caching": "None",
                     "writeAcceleratorEnabled": false,
                     "id": null,
-                    "name": "[variables('datadiskName')]",
+                    "name": "[variables('datadiskName_1')]",
                     "storageAccountType": null,
                     "diskSizeGB": null,
                     "diskEncryptionSet": null
@@ -670,10 +670,10 @@
             "type": "Array",
             "Value": [
                 {
-                    "name": "[variables('datadiskName')]",
-                    "sku": "[parameters('DataDiskType')]",
+                    "name": "[variables('datadiskName_1')]",
+                    "sku": "[parameters('DataDiskType_1')]",
                     "properties": {
-                        "diskSizeGB": "[parameters('DataDiskSize')]",
+                        "diskSizeGB": "[parameters('DataDiskSize_1')]",
                         "creationData": {
                             "createOption": "empty"
                         }
