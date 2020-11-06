@@ -1313,7 +1313,11 @@
                                 },
                                 {
                                     "label": "1",
-                                    "value": "0"
+                                    "value": 1
+                                },
+                                {
+                                    "label": "2",
+                                    "value": 2
                                 }
                             ],
                             "required": true
@@ -1340,7 +1344,7 @@
                             ],
                             "required": true
                         },
-                        "visible": "[bool(if(equals(0, steps('VirtualMachine').CountDatadisk), 'true', 'false'))]"
+                        "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 0), 'true', 'false'))]"
 
                     },
                     {
@@ -1354,7 +1358,43 @@
                             "regex": "^([3-3]|[3-][2-9]|[1-9][0-9][0-9]|[1-1][0-0][0-0][0-0])$",
                             "validationMessage": "Please write a number between 32 - 1000"
                         },
-                        "visible": "[bool(if(equals('0', steps('VirtualMachine').CountDatadisk), 'true', 'false'))]"
+                        "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 0), 'true', 'false'))]"
+                    },
+                    {
+                        "name": "DataDiskType_2",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Data disk type",
+                        "placeholder": "",
+                        "defaultValue": "Standard SSD",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Standard SSD",
+                                    "value": "StandardSSD_LRS"
+                                },
+                                {
+                                    "label": "Premium SSD",
+                                    "value": "Premium_LRS"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 1), 'true', 'false'))]"
+
+                    },
+                    {
+                        "name": "DataDiskSize_2",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Data disk size GB:",
+                        "defaultValue": "32",
+                        "toolTip": "The minimum size is 32 GB and the maximum is 1000 GB",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^([3-3]|[3-][2-9]|[1-9][0-9][0-9]|[1-1][0-0][0-0][0-0])$",
+                            "validationMessage": "Please write a number between 32 - 1000"
+                        },
+                        "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 1), 'true', 'false'))]"
                     },
 
 
