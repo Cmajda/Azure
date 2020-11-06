@@ -1303,7 +1303,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Count of datadisks",
                         "placeholder": "",
-                        "defaultValue": "0",
+                        "defaultValue": "1",
                         "toolTip": "",
                         "constraints": {
                             "allowedValues": [
@@ -1340,7 +1340,7 @@
                             ],
                             "required": true
                         },
-                        "visible": "[bool(if(greater(0, steps('VirtualMachine').CountDatadisk), 'true', 'false'))]"
+                        "visible": "[bool(if(equals('1', steps('VirtualMachine').CountDatadisk), 'true', 'false'))]"
 
                     },
                     {
