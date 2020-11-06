@@ -1340,7 +1340,7 @@
                             ],
                             "required": true
                         },
-                        "visible": "[bool(if(greater('0', steps('VirtualMachine').CountDatadisk), 'true', 'false'))]"
+                        "visible": "[bool(if(greater(0, steps('VirtualMachine').CountDatadisk), 'true', 'false'))]"
 
                     },
                     {
