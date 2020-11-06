@@ -1299,7 +1299,29 @@
                         "visible": true
                     },
                     {
-                        "name": "DataDiskType",
+                        "name": "CountDatadisk",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Count of datadisks",
+                        "placeholder": "",
+                        "defaultValue": "0",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "0",
+                                    "value": "0"
+                                },
+                                {
+                                    "label": "1",
+                                    "value": "1"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "DataDiskType_1",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Data disk type",
                         "placeholder": "",
@@ -1318,10 +1340,11 @@
                             ],
                             "required": true
                         },
-                        "visible": true
+                        "visible": "[bool(if(greater('0', steps('VirtualMachine').DataDiskType_1), 'true', 'false'))]"
+
                     },
                     {
-                        "name": "DataDiskSize",
+                        "name": "DataDiskSize_1",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Data disk size GB:",
                         "defaultValue": "32",
@@ -1331,7 +1354,7 @@
                             "regex": "^([3-3]|[3-][2-9]|[1-9][0-9][0-9]|[1-1][0-0][0-0][0-0])$",
                             "validationMessage": "Please write a number between 32 - 1000"
                         },
-                        "visible": true
+                        "visible": "[bool(if(greater('0', steps('VirtualMachine').DataDiskType_1), 'true', 'false'))]"
                     },
 
 
@@ -1406,7 +1429,7 @@
                     {
                         "name": "vaultName",
                         "type": "Microsoft.Solutions.ResourceSelector",
-                        "label": "Select storage accounts",
+                        "label": "Select KeyVault",
                         "resourceType": "Microsoft.KeyVault/vaults",
                         "options": {
                             "filter": {
@@ -1476,8 +1499,8 @@
             "virtualNetworkResourceGroup": "[steps('Network').virtualNetworkName.resourceGroup]",
             "subnetName": "[steps('Network').virtualNetworkName.subnets.subnet1.name]",
             "osDiskType": "[steps('VirtualMachine').osDiskType]",
-            "DataDiskType": "[steps('VirtualMachine').DataDiskType]",
-            "DataDiskSize": "[steps('VirtualMachine').DataDiskSize]",
+            "DataDiskType_1": "[steps('VirtualMachine').DataDiskType_1]",
+            "DataDiskSize_1": "[steps('VirtualMachine').DataDiskSize_1]",
             "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
             "adminUsername": "[steps('VirtualMachine').adminUsername]",
             "adminPassword": "[steps('VirtualMachine').password]",
