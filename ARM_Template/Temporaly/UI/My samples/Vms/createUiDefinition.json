@@ -1367,15 +1367,24 @@
                         "visible": true
                     },
                     {
-                        "name": "Type of OS",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Admin Username",
-                        "defaultValue": "",
-                        "toolTip": "Will be replaced by a key vault",
+                        "name": "imageReference",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "OS image",
+                        "defaultValue": "Windows Server 2016 Datacenter latest (Gen2)",
+                        "toolTip": "Select OS version",
                         "constraints": {
-                            "required": true,
-                            "regex": "",
-                            "validationMessage": ""
+                            "allowedValues": [
+                                {
+                                    "label": "Windows Server 2016 Datacenter latest (Gen2)",
+                                    "description": "The value to select for option 1.",
+                                    "value": "Image01"
+                                },
+                                {
+                                    "label": "Windows 10 Enterprise lates (Gen2)",
+                                    "description": "The value to select for option 2.",
+                                    "value": "Image02"
+                                }
+                            ],
                         },
                         "visible": true
                     },

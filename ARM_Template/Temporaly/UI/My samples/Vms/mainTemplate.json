@@ -360,6 +360,12 @@
         },
         "vaultName": {
             "type": "String"
+        },
+        "imageReference": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
         }
 
     },
@@ -668,6 +674,22 @@
                     }
                 }
             ]
+        },
+        "ListOfImages": {
+            "value": {
+                "Image01": {
+                    "publisher": "MicrosoftWindowsServer",
+                    "offer": "WindowsServer",
+                    "sku": "2016-Datacenter",
+                    "version": "latest"
+                },
+                "Image02": {
+                    "publisher": "MicrosoftWindowsDesktop",
+                    "offer": "Windows-10",
+                    "sku": "20h1-ent-g2",
+                    "version": "latest"
+                }
+            }
         }
     },
     "resources": [
@@ -779,6 +801,12 @@
                             "metadata": {
                                 "description": "description"
                             }
+                        },
+                        "ListOfImages": {
+                            "type": "Object",
+                            "metadata": {
+                                "description": "description"
+                            }
                         }
 
                     },
@@ -875,12 +903,7 @@
                                             "storageAccountType": "[parameters('osDiskType')]"
                                         }
                                     },
-                                    "imageReference": {
-                                        "publisher": "MicrosoftWindowsServer",
-                                        "offer": "WindowsServer",
-                                        "sku": "2016-Datacenter",
-                                        "version": "latest"
-                                    },
+                                    "imageReference": "[parameters('ListOfImages')]",
                                     "copy": [
                                         {
                                             "name": "dataDisks",
@@ -996,6 +1019,9 @@
                     },
                     "virtualNetworkName": {
                         "value": "[parameters('virtualNetworkName')]"
+                    },
+                    "ListOfImages": {
+                        "value": "[variables('ListOfImages').value[parameters('imageReference')]]"
                     }
                 }
             }
