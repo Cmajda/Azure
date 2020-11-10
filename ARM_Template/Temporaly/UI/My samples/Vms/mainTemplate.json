@@ -88,6 +88,13 @@
             "metadata": {
                 "description": "description"
             }
+        },
+        "virtualNetworkNewOrExisting": {
+            "type": "string",
+            "defaultValue": "new",
+            "metadata": {
+                "description": "description"
+            }
         }
 
     },
@@ -182,7 +189,7 @@
     },
     "resources": [
         {
-            "condition": "[equals(parameters('virtualNetworkName'),'existing')]",
+            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'existing')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "name": "VirtulaMachineKeyVault",
@@ -299,6 +306,12 @@
                         },
                         "CountDatadisk": {
                             "type": "int",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "virtualNetworkNewOrExisting": {
+                            "type": "string",
                             "metadata": {
                                 "description": "description"
                             }
@@ -446,7 +459,7 @@
                         },
                         {
 
-                            "condition": "[equals(parameters('virtualNetworkName'),'new')]",
+                            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'new')]",
                             "name": "[parameters('virtualNetworkName')]",
                             "type": "Microsoft.Network/virtualNetworks",
                             "apiVersion": "2019-09-01",
@@ -527,6 +540,9 @@
                     },
                     "CountDatadisk": {
                         "value": "[parameters('CountDatadisk')]"
+                    },
+                    "virtualNetworkNewOrExisting": {
+                        "value": "[parameters('virtualNetworkNewOrExisting')]"
                     }
                 }
             }
