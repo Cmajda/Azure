@@ -97,7 +97,7 @@
     "variables": {
         "ApplicationName": "[split(resourceGroup().name,'-')[2]]",
         "CountrySITSIO": "[split(resourceGroup().name,'-')[1]]",
-        "KeyVaultName": "[substring(resourceGroup().name, 2,sub(length(parameters('subnetName')), 2))]",
+        "KeyVaultName": "[substring(resourceGroup().name, 2,sub(length(resourceGroup().name), 2))]",
         "networkInterfaceName": "[concat('nic-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "networkSecurityGroupName": "[concat('nsg-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "publicIpAddressName": "[concat('pip-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
