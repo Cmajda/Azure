@@ -1091,15 +1091,15 @@
             "value": "[variables('RgNameSplit')]"
         },
         "rg1": {
-            "type": "array",
+            "type": "string",
             "value": "[split(resourceGroup().name,'-')[0]]"
         },
         "rg2": {
-            "type": "array",
+            "type": "string",
             "value": "[split(resourceGroup().name,'-')[1]]"
         },
         "rg3": {
-            "type": "array",
+            "type": "string",
             "value": "[split(resourceGroup().name,'-')[2]]"
         }
     }
