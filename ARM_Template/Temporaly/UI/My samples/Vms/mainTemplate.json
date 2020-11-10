@@ -186,9 +186,6 @@
             "apiVersion": "2019-09-01",
             "name": "[concat(variables('vaultName'), '/', variables('secretName'))]",
             "location": "[resourceGroup().location]",
-            "dependsOn": [
-                "[concat('Microsoft.KeyVault/vaults/', variables('vaultName'))]"
-            ],
             "properties": {
                 "value": "[variables('secretValue')]"
             }
