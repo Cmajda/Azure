@@ -181,6 +181,20 @@
     },
     "resources": [
         {
+
+            "type": "Microsoft.KeyVault/vaults/secrets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(variables('vaultName'), '/', variables('secretName'))]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat('Microsoft.KeyVault/vaults/', variables('vaultName'))]"
+            ],
+            "properties": {
+                "value": "[variables('secretValue')]"
+            }
+
+        },
+        {
             "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'existing')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
@@ -307,24 +321,6 @@
                             "metadata": {
                                 "description": "description"
                             }
-                        },
-                        "vaultName": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "secretName": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "secretValue": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
                         }
 
                     },
@@ -421,19 +417,6 @@
                             },
                             "tags": "[parameters('FullTag')]"
                         },
-                        {
-                            "type": "Microsoft.KeyVault/vaults/secrets",
-                            "apiVersion": "2019-09-01",
-                            "name": "[concat(parameters('vaultName'), '/', parameters('secretName'))]",
-                            "location": "[parameters('location')]",
-                            "dependsOn": [
-                                "[concat('Microsoft.KeyVault/vaults/', parameters('vaultName'))]"
-                            ],
-                            "properties": {
-                                "value": "[parameters('secretValue')]"
-                            }
-                        },
-
                         {
 
                             "name": "[parameters('virtualMachineName')]",
@@ -566,15 +549,6 @@
                     },
                     "virtualNetworkNewOrExisting": {
                         "value": "[parameters('virtualNetworkNewOrExisting')]"
-                    },
-                    "vaultName": {
-                        "value": "[variables('vaultName')]"
-                    },
-                    "secretName": {
-                        "value": "[variables('Secretname')]"
-                    },
-                    "secretValue": {
-                        "value": "[variables('secretValue')]"
                     }
 
                 }
