@@ -1092,15 +1092,15 @@
         },
         "rg1": {
             "type": "array",
-            "value": "[split(resourceGroup(),'-')[0]]"
+            "value": "[split(resourceGroup().name,'-')[0]]"
         },
         "rg2": {
             "type": "array",
-            "value": "[split(resourceGroup(),'-')[1]]"
+            "value": "[split(resourceGroup().name,'-')[1]]"
         },
         "rg3": {
             "type": "array",
-            "value": "[split(resourceGroup(),'-')[2]]"
+            "value": "[split(resourceGroup().name,'-')[2]]"
         }
     }
 }
