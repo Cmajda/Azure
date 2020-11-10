@@ -1343,14 +1343,38 @@
                     },
                     {
                         "name": "DataDiskSize_1",
-                        "type": "Microsoft.Common.TextBox",
+                        "type": "Microsoft.Common.DropDown",
                         "label": "Data disk size GB:",
-                        "defaultValue": "32",
-                        "toolTip": "The minimum size is 32 GB and the maximum is 1000 GB",
+                        "defaultValue": "32 GiB",
+                        "toolTip": "The minimum size is 32 GB and the maximum is 1024 GB",
                         "constraints": {
-                            "required": true,
-                            "regex": "^([3-3]|[3-][2-9]|[1-9][0-9][0-9]|[1-1][0-0][0-0][0-0])$",
-                            "validationMessage": "Please write a number between 32 - 1000"
+                            "allowedValues": [
+                                {
+                                    "label": "32 GiB",
+                                    "value": 32
+                                },
+                                {
+                                    "label": "64 GiB",
+                                    "value": 64
+                                },
+                                {
+                                    "label": "128 GiB",
+                                    "value": 128
+                                },
+                                {
+                                    "label": "256 GiB",
+                                    "value": 256
+                                },
+                                {
+                                    "label": "512 GiB",
+                                    "value": 512
+                                },
+                                {
+                                    "label": "1024 GiB",
+                                    "value": 1024
+                                }
+                            ],
+                            "required": true
                         },
                         "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 0), 'true', 'false'))]"
                     },
@@ -1378,14 +1402,38 @@
                     },
                     {
                         "name": "DataDiskSize_2",
-                        "type": "Microsoft.Common.TextBox",
+                        "type": "Microsoft.Common.DropDown",
                         "label": "Data disk size GB:",
-                        "defaultValue": "32",
-                        "toolTip": "The minimum size is 32 GB and the maximum is 1000 GB",
+                        "defaultValue": "32 GiB",
+                        "toolTip": "The minimum size is 32 GB and the maximum is 1024 GB",
                         "constraints": {
-                            "required": true,
-                            "regex": "^([3-3]|[3-][2-9]|[1-9][0-9][0-9]|[1-1][0-0][0-0][0-0])$",
-                            "validationMessage": "Please write a number between 32 - 1000"
+                            "allowedValues": [
+                                {
+                                    "label": "32 GiB",
+                                    "value": 32
+                                },
+                                {
+                                    "label": "64 GiB",
+                                    "value": 64
+                                },
+                                {
+                                    "label": "128 GiB",
+                                    "value": 128
+                                },
+                                {
+                                    "label": "256 GiB",
+                                    "value": 256
+                                },
+                                {
+                                    "label": "512 GiB",
+                                    "value": 512
+                                },
+                                {
+                                    "label": "1024 GiB",
+                                    "value": 1024
+                                }
+                            ],
+                            "required": true
                         },
                         "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 1), 'true', 'false'))]"
                     },
@@ -1424,19 +1472,19 @@
                         "name": "imageReference",
                         "type": "Microsoft.Common.DropDown",
                         "label": "OS image",
-                        "defaultValue": "Windows Server 2016 Datacenter latest (Gen2)",
+                        "defaultValue": "Windows Server 2019 Datacenter - Gen2 (Latest)",
                         "toolTip": "Select OS version",
                         "constraints": {
                             "allowedValues": [
                                 {
-                                    "label": "Windows Server 2016 Datacenter latest (Gen2)",
+                                    "label": "Windows Server 2019 Datacenter - Gen2 (Latest)",
                                     "description": "The value to select for option 1.",
-                                    "value": "Image01"
+                                    "value": "Server2019"
                                 },
                                 {
-                                    "label": "Windows 10 Enterprise lates (Gen2)",
+                                    "label": "Windows Server 2016 Datacenter - Gen2 (Latest)",
                                     "description": "The value to select for option 2.",
-                                    "value": "Image02"
+                                    "value": "Server2016"
                                 }
                             ]
                         },
