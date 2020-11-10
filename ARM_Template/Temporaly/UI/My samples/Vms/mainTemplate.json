@@ -730,6 +730,7 @@
     },
     "resources": [
         {
+            "condition": "[equals(parameters('virtualNetworkName'),'new')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "name": "VirtulaMachineKeyVault",
