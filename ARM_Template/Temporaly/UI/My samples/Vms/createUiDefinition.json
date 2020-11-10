@@ -375,19 +375,6 @@
                             ]
                         },
                         "visible": true
-                    },
-                    {
-                        "name": "secretName",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Secret Name",
-                        "defaultValue": "AdminKey",
-                        "toolTip": "The name of the secret",
-                        "constraints": {
-                            "required": true,
-                            "regex": "",
-                            "validationMessage": ""
-                        },
-                        "visible": true
                     }
                 ]
             }
@@ -411,7 +398,6 @@
             "DataDiskSize_2": "[int(steps('VirtualMachine').DataDiskSize_2)]",
             "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
             "adminPassword": "[steps('VirtualMachine').password]",
-            "secretName": "[steps('VirtualMachine').secretName]",
             "imageReference": "[steps('VirtualMachine').imageReference]",
             "CountDatadisk": "[steps('VirtualMachine').CountDatadisk]"
         }
