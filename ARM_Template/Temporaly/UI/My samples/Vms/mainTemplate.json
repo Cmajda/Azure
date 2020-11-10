@@ -582,11 +582,7 @@
                     }
 
                 }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.KeyVault/vaults/secrets', variables('vaultName'), '/', variables('secretName'))]"
-
-            ]
+            }
         }
 
     ],
