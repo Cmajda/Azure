@@ -48,7 +48,7 @@
                         "name": "ApplicationName",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Application Name",
-                        "defaultValue": "",
+                        "defaultValue": "[split(resourceGroup().name,'-')[2]]",
                         "toolTip": "Please enter the application name. It has to be between 4 and 8 letters.",
                         "constraints": {
                             "required": true,
