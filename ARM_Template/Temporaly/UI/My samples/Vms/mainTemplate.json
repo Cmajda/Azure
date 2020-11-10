@@ -445,7 +445,7 @@
                             "dependsOn": [
                                 "managedDiskResources",
                                 "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]",
-                                "[resourceId('Microsoft.KeyVault/vaults/secrets', parameters('vaultName'), '/', parameters('secretName'))]"
+                                "[concat('Microsoft.KeyVault/vaults/secrets', parameters('vaultName'), '/', parameters('secretName'))]"
 
                             ],
                             "properties": {
