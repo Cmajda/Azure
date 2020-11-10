@@ -726,7 +726,7 @@
                 }
             }
         },
-        "RgNameSplit": "[split(resourceGroup(),'-')]"
+        "RgNameSplit": "[split(resourceGroup().name,'-')]"
     },
     "resources": [
         {
