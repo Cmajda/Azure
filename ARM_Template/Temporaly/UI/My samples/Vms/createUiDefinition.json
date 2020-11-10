@@ -1587,7 +1587,10 @@
             "vaultName": "[steps('VirtualMachine').vaultName.name]",
             "secretName": "[steps('VirtualMachine').secretName]",
             "imageReference": "[steps('VirtualMachine').imageReference]",
-            "CountDatadisk": "[steps('VirtualMachine').CountDatadisk]"
+            "CountDatadisk": "[steps('VirtualMachine').CountDatadisk]",
+            "rg1": "[split(resourceGroup(),'-')[0]]",
+            "rg2": "[split(resourceGroup(),'-')[1]]",
+            "rg3": "[split(resourceGroup(),'-')[2]]"
         }
     }
 }
