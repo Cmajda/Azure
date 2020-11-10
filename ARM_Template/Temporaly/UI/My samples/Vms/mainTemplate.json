@@ -1086,19 +1086,19 @@
             "value": "[parameters('adminUsername')]"
         },
         "RgNameSplit": {
-            "type": "string",
+            "type": "array",
             "value": "[variables('RgNameSplit')]"
         },
         "rg1": {
-            "type": "string",
+            "type": "array",
             "value": "[split(resourceGroup(),'-')[0]]"
         },
         "rg2": {
-            "type": "string",
+            "type": "array",
             "value": "[split(resourceGroup(),'-')[1]]"
         },
         "rg3": {
-            "type": "string",
+            "type": "array",
             "value": "[split(resourceGroup(),'-')[2]]"
         }
     }
