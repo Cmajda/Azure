@@ -377,19 +377,6 @@
                         "visible": true
                     },
                     {
-                        "name": "adminUsername",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Admin Username",
-                        "defaultValue": "",
-                        "toolTip": "Will be replaced by a key vault",
-                        "constraints": {
-                            "required": true,
-                            "regex": "",
-                            "validationMessage": ""
-                        },
-                        "visible": true
-                    },
-                    {
                         "name": "vaultSubscription",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Vault Subscription",
@@ -449,7 +436,6 @@
             "DataDiskType_2": "[steps('VirtualMachine').DataDiskType_2]",
             "DataDiskSize_2": "[int(steps('VirtualMachine').DataDiskSize_2)]",
             "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
-            "adminUsername": "[steps('VirtualMachine').adminUsername]",
             "adminPassword": "[steps('VirtualMachine').password]",
             "vaultResourceGroupName": "[steps('VirtualMachine').vaultResourceGroupName]",
             "secretName": "[steps('VirtualMachine').secretName]",

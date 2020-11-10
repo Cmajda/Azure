@@ -66,10 +66,6 @@
             "type": "String",
             "defaultValue": "Standard_B1ls"
         },
-        "adminUsername": {
-            "type": "String",
-            "defaultValue": "admin123"
-        },
         "vaultSubscription": {
             "type": "String",
             "defaultValue": "[subscription().subscriptionId]"
@@ -102,6 +98,8 @@
         "ApplicationName": "[split(resourceGroup().name,'-')[2]]",
         "CountrySITSIO": "[split(resourceGroup().name,'-')[1]]",
         "vaultName": "[concat('kv',substring(resourceGroup().name, 2,sub(length(resourceGroup().name), 2)))]",
+        "AdminUserName": "[concat(variables('ApplicationName'),parameters('IndexSuffix'),'vmadm')]",
+        "Secretname": "[variables('AdminUserName')]",
         "networkInterfaceName": "[concat('nic-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "networkSecurityGroupName": "[concat('nsg-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "publicIpAddressName": "[concat('pip-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
@@ -202,7 +200,7 @@
                     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
                     "contentVersion": "1.0.0.0",
                     "parameters": {
-                        "adminUsername": {
+                        "AdminUserName": {
                             "type": "string"
                         },
                         "adminPassword": {
@@ -446,7 +444,7 @@
                                 },
                                 "osProfile": {
                                     "computerName": "[parameters('virtualMachineName')]",
-                                    "adminUsername": "[parameters('adminUsername')]",
+                                    "AdminUserName": "[parameters('AdminUserName')]",
                                     "adminPassword": "[parameters('adminPassword')]"
                                 },
                                 "diagnosticsProfile": {
@@ -479,8 +477,8 @@
                     "location": {
                         "value": "[resourceGroup().location]"
                     },
-                    "adminUsername": {
-                        "value": "[parameters('adminUsername')]"
+                    "AdminUserName": {
+                        "value": "[variables('AdminUserName')]"
                     },
                     "adminPassword": {
                         "reference": {
@@ -550,9 +548,9 @@
 
     ],
     "outputs": {
-        "adminUsername": {
+        "AdminUserName": {
             "type": "string",
-            "value": "[parameters('adminUsername')]"
+            "value": "[variables('AdminUserName')]"
         },
         "ApplicationName": {
             "type": "string",
