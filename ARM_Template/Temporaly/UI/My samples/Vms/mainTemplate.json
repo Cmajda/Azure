@@ -422,20 +422,37 @@
                             "tags": "[parameters('FullTag')]"
                         },
                         {
-
-                            "type": "Microsoft.KeyVault/vaults/secrets",
-                            "apiVersion": "2019-09-01",
-                            "name": "[toLower(concat(parameters('vaultName'), '/', parameters('secretName')))]",
-                            "location": "[resourceGroup().location]",
-                            "properties": {
-                                "value": "[parameters('secretValue')]"
-                            },
+                            "type": "Microsoft.Resources/deployments",
+                            "apiVersion": "2018-05-01",
+                            "name": "SecretsDeployment",
+                            "resourceGroup": "[resourceGroup().name]",
                             "dependsOn": [
-                                "[resourceId('Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+                                "[resourceId('Microsoft.Resources/resourceGroups/', resourceGroup().name)]"
+                            ],
+                            "properties": {
+                                "mode": "Incremental",
+                                "template": {
+                                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                                    "contentVersion": "1.0.0.0",
+                                    "parameters": {},
+                                    "variables": {},
+                                    "resources": [
+                                        {
 
-                            ]
+                                            "type": "Microsoft.KeyVault/vaults/secrets",
+                                            "apiVersion": "2019-09-01",
+                                            "name": "[toLower(concat(parameters('vaultName'), '/', parameters('secretName')))]",
+                                            "location": "[resourceGroup().location]",
+                                            "properties": {
+                                                "value": "[parameters('secretValue')]"
+                                            }
 
+                                        }
+                                    ]
+                                }
+                            }
                         },
+
                         {
 
                             "name": "[toLower(parameters('virtualMachineName'))]",
