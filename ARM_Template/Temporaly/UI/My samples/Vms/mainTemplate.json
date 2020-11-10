@@ -266,7 +266,8 @@
         },
         "IndexSuffix": {
             "type": "string",
-            "maxLength": 3,
+            "minLength": 2,
+            "maxLength": 4,
             "metadata": { "Description": "For cases where more instances of the same app will be necessary, for testing and other scenarios" },
             "defaultValue": "01"
 
