@@ -41,14 +41,15 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "Enter all necessary details about the application."
+                            "text": "1. Název aplikace generován z názvu RG
+                            2. tagy Propsány pomocí policy (country,customer,Stage,Administrator,Deploymnet)"
                         }
                     },
                     {
                         "name": "ApplicationName",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Application Name",
-                        "defaultValue": "[split(resourceGroup().name,'-')[2]]",
+                        "defaultValue": "",
                         "toolTip": "Please enter the application name. It has to be between 4 and 8 letters.",
                         "constraints": {
                             "required": true,
