@@ -497,9 +497,14 @@
                                     "bootDiagnostics": {
                                         "enabled": true
                                     }
-                                }
+                                },
+                                "dependsOn": [
+                                    "[concat('Microsoft.KeyVault/vaults/secrets', parameters('vaultName'), '/', parameters('secretName'))]"
+
+                                ]
                             },
                             "tags": "[parameters('FullTag')]"
+
                         },
                         {
 
