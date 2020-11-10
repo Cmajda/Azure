@@ -184,7 +184,7 @@
 
             "type": "Microsoft.KeyVault/vaults/secrets",
             "apiVersion": "2019-09-01",
-            "name": "[concat(variables('vaultName'), '/', variables('secretName'))]",
+            "name": "[toLower(concat(variables('vaultName'), '/', variables('secretName')))]",
             "location": "[resourceGroup().location]",
             "properties": {
                 "value": "[variables('secretValue')]"
@@ -343,7 +343,7 @@
                     },
                     "resources": [
                         {
-                            "name": "[parameters('networkSecurityGroupName')]",
+                            "name": "[toLower(parameters('networkSecurityGroupName'))]",
                             "type": "Microsoft.Network/networkSecurityGroups",
                             "apiVersion": "2019-02-01",
                             "location": "[resourceGroup().location]",
@@ -351,7 +351,7 @@
                             "tags": "[parameters('FullTag')]"
                         },
                         {
-                            "name": "[parameters('publicIpAddressName')]",
+                            "name": "[toLower(parameters('publicIpAddressName'))]",
                             "type": "Microsoft.Network/publicIpAddresses",
                             "apiVersion": "2019-02-01",
                             "location": "[resourceGroup().location]",
@@ -364,7 +364,7 @@
                             "tags": "[parameters('FullTag')]"
                         },
                         {
-                            "name": "[parameters('networkInterfaceName')]",
+                            "name": "[toLower(parameters('networkInterfaceName'))]",
                             "type": "Microsoft.Network/networkInterfaces",
                             "apiVersion": "2018-10-01",
                             "location": "[resourceGroup().location]",
@@ -399,7 +399,7 @@
                         },
                         {
                             "condition": "[greater(parameters('CountDatadisk'),0)]",
-                            "name": "[parameters('dataDiskResources').Value[copyIndex()].name]",
+                            "name": "[toLower(parameters('dataDiskResources').Value[copyIndex()].name)]",
                             "type": "Microsoft.Compute/disks",
                             "apiVersion": "2020-05-01",
                             "location": "[resourceGroup().location]",
@@ -416,7 +416,7 @@
                         },
                         {
 
-                            "name": "[parameters('virtualMachineName')]",
+                            "name": "[toLower(parameters('virtualMachineName'))]",
                             "type": "Microsoft.Compute/virtualMachines",
                             "apiVersion": "2020-06-01",
                             "location": "[parameters('location')]",
@@ -463,7 +463,7 @@
                         {
 
                             "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'new')]",
-                            "name": "[parameters('virtualNetworkName')]",
+                            "name": "[toLower(parameters('virtualNetworkName'))]",
                             "type": "Microsoft.Network/virtualNetworks",
                             "apiVersion": "2019-09-01",
                             "location": "[resourceGroup().location]",
