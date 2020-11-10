@@ -318,12 +318,6 @@
                             "metadata": {
                                 "description": "description"
                             }
-                        },
-                        "vaultName": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
                         }
 
                     },
@@ -428,8 +422,7 @@
                             "location": "[parameters('location')]",
                             "dependsOn": [
                                 "managedDiskResources",
-                                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]",
-                                "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.KeyVault/vaults', parameters('vaultName'))]"
+                                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]"
                             ],
                             "properties": {
                                 "hardwareProfile": {
@@ -553,13 +546,13 @@
                     },
                     "virtualNetworkNewOrExisting": {
                         "value": "[parameters('virtualNetworkNewOrExisting')]"
-                    },
-                    "vaultName": {
-                        "value": "[variables('vaultName')]"
                     }
 
                 }
-            }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.KeyVault/vaults/secrets', toLower(concat(variables('vaultName'), '/', variables('secretName'))))]"
+            ]
         }
 
     ],
