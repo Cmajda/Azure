@@ -93,7 +93,7 @@
         "vaultName": "[concat('kv',substring(resourceGroup().name, 2,sub(length(resourceGroup().name), 2)))]",
         "AdminUserName": "[concat(variables('ApplicationName'),parameters('IndexSuffix'),'vmadm')]",
         "Secretname": "[variables('AdminUserName')]",
-        "secretValue": "[concat('P*', uniqueString(resourceGroup().id, utcNow()), 'x4', '!')]",
+        "secretValue": "[concat('P*', uniqueString(resourceGroup().id), 'x4', '!')]",
         "networkInterfaceName": "[concat('nic-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "networkSecurityGroupName": "[concat('nsg-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "publicIpAddressName": "[concat('pip-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
