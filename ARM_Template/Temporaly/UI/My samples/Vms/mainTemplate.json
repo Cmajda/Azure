@@ -712,16 +712,16 @@
         },
         "ListOfImages": {
             "value": {
-                "Image01": {
-                    "publisher": "MicrosoftWindowsServer",
-                    "offer": "WindowsServer",
-                    "sku": "2016-Datacenter",
+                "Server2019": {
+                    "publisher": "microsoftwindowsserver",
+                    "offer": "windowsserver-gen2preview",
+                    "sku": "2019-datacenter-gen2",
                     "version": "latest"
                 },
-                "Image02": {
-                    "publisher": "MicrosoftWindowsDesktop",
-                    "offer": "Windows-10",
-                    "sku": "20h1-ent-g2",
+                "Server2016": {
+                    "publisher": "microsoftwindowsserver",
+                    "offer": "windowsserver-gen2preview",
+                    "sku": "2016-datacenter-gen2",
                     "version": "latest"
                 }
             }
