@@ -2,13 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "ApplicationName": {
-            "type": "string",
-            "minLength": 4,
-            "maxLength": 8,
-            "metadata": { "Description": "Give it some reasonable application name. Try to be between 4 - 8 characters in length. This is important especially for Windows VMs as the name has 15 characters limit." },
-            "defaultValue": "ARMTemp"
-        },
         "CountrySITSIO": {
             "type": "string",
             "allowedValues": [
@@ -383,8 +376,9 @@
 
     },
     "variables": {
+        "ApplicationName": "[split(resourceGroup().name,'-')[2]]",
         "FullTag": {
-            "Application": "[parameters('ApplicationName')]",
+            "Application": "[variables('ApplicationName')]",
             "Country": "[parameters('CountrySITSIO')]",
             "Customer": "[parameters('TagCustomer')]",
             "Administrator": "[parameters('TagAdministrator')]",
@@ -392,16 +386,16 @@
             "Description": "[parameters('Tagdescription')]",
             "Stage": "[parameters('TagStage')]"
         },
-        "networkInterfaceName": "[concat('nic-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
-        "networkSecurityGroupName": "[concat('nsg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
-        "publicIpAddressName": "[concat('pip-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
-        "virtualMachineName": "[concat('vm',variables('CountryObject').value[parameters('CountrySITSIO')],parameters('ApplicationName'),parameters('IndexSuffix'))]",
+        "networkInterfaceName": "[concat('nic-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
+        "networkSecurityGroupName": "[concat('nsg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
+        "publicIpAddressName": "[concat('pip-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
+        "virtualMachineName": "[concat('vm',variables('CountryObject').value[parameters('CountrySITSIO')],variables('ApplicationName'),parameters('IndexSuffix'))]",
         "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
         "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'),'Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
-        "datadiskName_1": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'),'-01')]",
-        "datadiskName_2": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'),'-02')]",
-        "datadiskNameOS": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'),'-OS')]",
+        "datadiskName_1": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-01')]",
+        "datadiskName_2": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-02')]",
+        "datadiskNameOS": "[concat('dsk-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-OS')]",
         "CountryObject": {
             "type": "object",
             "value": {
@@ -730,7 +724,7 @@
     },
     "resources": [
         {
-            "condition": "[equals(parameters('virtualNetworkName'),'new')]",
+
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "name": "VirtulaMachineKeyVault",
@@ -1085,6 +1079,10 @@
         "adminUsername": {
             "type": "string",
             "value": "[parameters('adminUsername')]"
+        },
+        "ApplicationName": {
+            "type": "string",
+            "value": "[variables('ApplicationName')]"
         },
         "RgNameSplit": {
             "type": "array",

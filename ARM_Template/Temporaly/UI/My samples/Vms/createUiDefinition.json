@@ -46,19 +46,6 @@
                         }
                     },
                     {
-                        "name": "ApplicationName",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Application Name",
-                        "defaultValue": "",
-                        "toolTip": "Please enter the application name. It has to be between 4 and 8 letters.",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^.[A-Za-z0-9]{3,7}$",
-                            "validationMessage": "Name must be between 4-8 characters in length. Special characters are not allowed."
-                        },
-                        "visible": true
-                    },
-                    {
                         "name": "IndexSuffix",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Index/Suffix",
@@ -1561,7 +1548,6 @@
         ],
         "outputs": {
             "location": "[location()]",
-            "ApplicationName": "[steps('TabNameTags').ApplicationName]",
             "IndexSuffix": "[steps('TabNameTags').IndexSuffix]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
             "TagCustomer": "[steps('TabNameTags').TagCustomer]",
