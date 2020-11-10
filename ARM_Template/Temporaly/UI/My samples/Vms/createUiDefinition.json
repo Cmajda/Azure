@@ -41,8 +41,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "1. Název aplikace generován z názvu RG
-                            2. tagy Propsány pomocí policy (country,customer,Stage,Administrator,Deploymnet)"
+                            "text": "1. Název aplikace generován z názvu RG 2.\n tagy: Propsány pomocí policy (country,customer,Stage,Administrator,Deploymnet)"
                         }
                     },
                     {
