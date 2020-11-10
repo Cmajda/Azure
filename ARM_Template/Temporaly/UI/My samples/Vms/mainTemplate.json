@@ -66,13 +66,6 @@
             "type": "String",
             "defaultValue": "Standard_B1ls"
         },
-        "vaultSubscription": {
-            "type": "String",
-            "defaultValue": "[subscription().subscriptionId]"
-        },
-        "vaultResourceGroupName": {
-            "type": "String"
-        },
         "imageReference": {
             "type": "string",
             "metadata": {
@@ -100,6 +93,7 @@
         "vaultName": "[concat('kv',substring(resourceGroup().name, 2,sub(length(resourceGroup().name), 2)))]",
         "AdminUserName": "[concat(variables('ApplicationName'),parameters('IndexSuffix'),'vmadm')]",
         "Secretname": "[variables('AdminUserName')]",
+        "secretValue": "[concat('P*', uniqueString(resourceGroup().id, utcNow()), 'x4', '!')]",
         "networkInterfaceName": "[concat('nic-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "networkSecurityGroupName": "[concat('nsg-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "publicIpAddressName": "[concat('pip-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
@@ -313,6 +307,24 @@
                             "metadata": {
                                 "description": "description"
                             }
+                        },
+                        "vaultName": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "secretName": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "secretValue": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
                         }
 
                     },
@@ -410,6 +422,19 @@
                             "tags": "[parameters('FullTag')]"
                         },
                         {
+                            "type": "Microsoft.KeyVault/vaults/secrets",
+                            "apiVersion": "2019-09-01",
+                            "name": "[concat(parameters('vaultName'), '/', parameters('secretName'))]",
+                            "location": "[parameters('location')]",
+                            "dependsOn": [
+                                "[concat('Microsoft.KeyVault/vaults/', parameters('vaultName'))]"
+                            ],
+                            "properties": {
+                                "value": "[parameters('secretValue')]"
+                            }
+                        },
+
+                        {
 
                             "name": "[parameters('virtualMachineName')]",
                             "type": "Microsoft.Compute/virtualMachines",
@@ -483,9 +508,9 @@
                     "adminPassword": {
                         "reference": {
                             "keyVault": {
-                                "id": "[resourceId(parameters('vaultSubscription'), parameters('vaultResourceGroupName'), 'Microsoft.KeyVault/vaults', variables('vaultName'))]"
+                                "id": "[resourceId(subscription().id, resourceGroup().name, 'Microsoft.KeyVault/vaults', variables('vaultName'))]"
                             },
-                            "secretName": "AdminKey"
+                            "secretName": "[variables('Secretname')]"
                         }
                     },
                     "virtualMachineName": {
@@ -541,7 +566,17 @@
                     },
                     "virtualNetworkNewOrExisting": {
                         "value": "[parameters('virtualNetworkNewOrExisting')]"
+                    },
+                    "vaultName": {
+                        "value": "[variables('vaultName')]"
+                    },
+                    "secretName": {
+                        "value": "[variables('Secretname')]"
+                    },
+                    "secretValue": {
+                        "value": "[variables('secretValue')]"
                     }
+
                 }
             }
         }

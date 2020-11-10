@@ -377,32 +377,6 @@
                         "visible": true
                     },
                     {
-                        "name": "vaultSubscription",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Vault Subscription",
-                        "defaultValue": "[subscription().subscriptionId]",
-                        "toolTip": "The ID of the subscription that contains the keyvault.",
-                        "constraints": {
-                            "required": true,
-                            "regex": "",
-                            "validationMessage": ""
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "vaultResourceGroupName",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Vault Resource GroupName",
-                        "defaultValue": "[resourceGroup().name]",
-                        "toolTip": "The name of the resource group that contains the keyvault.",
-                        "constraints": {
-                            "required": true,
-                            "regex": "",
-                            "validationMessage": ""
-                        },
-                        "visible": true
-                    },
-                    {
                         "name": "secretName",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Secret Name",
@@ -437,7 +411,6 @@
             "DataDiskSize_2": "[int(steps('VirtualMachine').DataDiskSize_2)]",
             "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
             "adminPassword": "[steps('VirtualMachine').password]",
-            "vaultResourceGroupName": "[steps('VirtualMachine').vaultResourceGroupName]",
             "secretName": "[steps('VirtualMachine').secretName]",
             "imageReference": "[steps('VirtualMachine').imageReference]",
             "CountDatadisk": "[steps('VirtualMachine').CountDatadisk]"
