@@ -491,7 +491,11 @@
                                 "osProfile": {
                                     "computerName": "[parameters('virtualMachineName')]",
                                     "AdminUserName": "[parameters('AdminUserName')]",
-                                    "adminPassword": "[parameters('adminPassword')]"
+                                    "adminPassword": "[parameters('adminPassword')]",
+                                    "dependsOn": [
+                                        "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
+
+                                    ]
                                 },
                                 "diagnosticsProfile": {
                                     "bootDiagnostics": {
@@ -499,7 +503,7 @@
                                     }
                                 },
                                 "dependsOn": [
-                                    "[concat('Microsoft.KeyVault/vaults/secrets', parameters('vaultName'), '/', parameters('secretName'))]"
+                                    "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
 
                                 ]
                             },
