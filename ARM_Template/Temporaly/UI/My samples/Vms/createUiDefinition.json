@@ -390,19 +390,6 @@
                         "visible": true
                     },
                     {
-                        "name": "vaultName",
-                        "type": "Microsoft.Solutions.ResourceSelector",
-                        "label": "Select KeyVault",
-                        "resourceType": "Microsoft.KeyVault/vaults",
-                        "options": {
-                            "filter": {
-                                "subscription": "onBasics",
-                                "location": "onBasics"
-                            }
-                        },
-                        "visible": true
-                    },
-                    {
                         "name": "vaultSubscription",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Vault Subscription",
@@ -465,7 +452,6 @@
             "adminUsername": "[steps('VirtualMachine').adminUsername]",
             "adminPassword": "[steps('VirtualMachine').password]",
             "vaultResourceGroupName": "[steps('VirtualMachine').vaultResourceGroupName]",
-            "vaultName": "[steps('VirtualMachine').vaultName.name]",
             "secretName": "[steps('VirtualMachine').secretName]",
             "imageReference": "[steps('VirtualMachine').imageReference]",
             "CountDatadisk": "[steps('VirtualMachine').CountDatadisk]"
