@@ -549,10 +549,7 @@
                     }
 
                 }
-            },
-            "dependsOn": [
-                "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.KeyVault/vaults/secrets', variables('vaultName'), '/', variables('secretName'))]"
-            ]
+            }
         }
 
     ],
