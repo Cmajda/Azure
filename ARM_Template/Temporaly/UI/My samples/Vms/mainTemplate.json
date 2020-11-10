@@ -508,7 +508,7 @@
                     "adminPassword": {
                         "reference": {
                             "keyVault": {
-                                "id": "[resourceId(subscription().id, resourceGroup().name, 'Microsoft.KeyVault/vaults', variables('vaultName'))]"
+                                "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.KeyVault/vaults', variables('vaultName'))]"
                             },
                             "secretName": "[variables('Secretname')]"
                         }
