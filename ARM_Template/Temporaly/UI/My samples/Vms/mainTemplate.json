@@ -609,17 +609,13 @@
                         "value": "[parameters('virtualNetworkNewOrExisting')]"
                     },
                     "secretName": {
-                        "value": "[variables('Secretname')]"
+                        "value": "[reference('SecretsDeploymentXXXXXX').outputs.outSecureName.value]"
                     },
                     "secretValue": {
                         "value": "[variables('secretValue')]"
                     },
                     "vaultName": {
                         "value": "[variables('vaultName')]"
-                    },
-                    "outSecureName": {
-                        "value": "[reference('SecretsDeploymentXXXXXX').outputs.outSecureName.value]"
-
                     }
 
                 }
