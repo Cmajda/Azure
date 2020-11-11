@@ -313,7 +313,7 @@
             "apiVersion": "2018-05-01",
             "name": "VirtulaMachineKeyVault",
             "dependsOn": [
-                "[reference('SecretsDeployment').outputs.outSecureName.value]"
+                "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
             ],
             "properties": {
                 "mode": "Incremental",
