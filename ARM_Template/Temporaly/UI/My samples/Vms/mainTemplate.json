@@ -540,7 +540,11 @@
                             "keyVault": {
                                 "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.KeyVault/vaults', variables('vaultName'))]"
                             },
-                            "secretName": "[variables('Secretname')]"
+                            "secretName": "[variables('Secretname')]",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
+
+                            ]
                         }
                     },
                     "virtualMachineName": {
