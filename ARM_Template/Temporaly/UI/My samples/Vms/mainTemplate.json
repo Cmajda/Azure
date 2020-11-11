@@ -226,7 +226,15 @@
                             }
 
                         }
-                    ]
+                    ],
+                    "outputs": {
+
+                        "outSecureName": {
+                            "type": "string",
+                            "value": "[toLower(concat(parameters('vaultName'), '/', parameters('secretName')))]"
+                        }
+
+                    }
                 },
                 "parameters": {
                     "secretName": {
@@ -609,8 +617,9 @@
                     "vaultName": {
                         "value": "[variables('vaultName')]"
                     },
-                    "planName": {
-                        "value": "[reference('SecretsDeploymentXXXXXX').outputs.planName.value]"
+                    "outSecureName": {
+                        "value": "[reference('SecretsDeploymentXXXXXX').outputs.outSecureName.value]"
+
                     }
 
                 }
