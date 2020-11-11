@@ -356,10 +356,7 @@
                             }
                         },
                         "ListOfImages": {
-                            "type": "Object",
-                            "metadata": {
-                                "description": "description"
-                            }
+                            "type": "Object"
                         },
                         "CountDatadisk": {
                             "type": "int",
@@ -375,6 +372,12 @@
                         },
                         "dataDiskResources": {
                             "type": "Object",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "imageReference": {
+                            "type": "string",
                             "metadata": {
                                 "description": "description"
                             }
@@ -441,7 +444,7 @@
                                             "storageAccountType": "[parameters('osDiskType')]"
                                         }
                                     },
-                                    "imageReference": "[parameters('ListOfImages')]",
+                                    "imageReference": "[parameters('ListOfImages').value[parameters('imageReference')]]",
                                     "dataDisks": "[if(equals(parameters('CountDatadisk'),0),json('null'),variables('dataDisks'))]"
 
                                 },
@@ -522,6 +525,9 @@
                     },
                     "dataDiskResources": {
                         "value": "[variables('dataDiskResources')]"
+                    },
+                    "imageReference": {
+                        "value": "[parameters('imageReference')]"
                     }
 
 
