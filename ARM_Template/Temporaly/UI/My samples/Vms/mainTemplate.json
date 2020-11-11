@@ -546,12 +546,21 @@
                     "AdminUserName": {
                         "value": "[variables('AdminUserName')]"
                     },
+                    "secretName": {
+                        "value": "[reference('SecretsDeploymentXXXXXX').outputs.outSecureName.value]"
+                    },
+                    "secretValue": {
+                        "value": "[variables('vaultName')]"
+                    },
+                    "vaultName": {
+                        "value": "value"
+                    },
                     "adminPassword": {
                         "reference": {
                             "keyVault": {
                                 "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.KeyVault/vaults', variables('vaultName'))]"
                             },
-                            "secretName": "[variables('Secretname')]"
+                            "secretName": "[variables('secretName')]"
                         }
                     },
                     "virtualMachineName": {
@@ -607,15 +616,6 @@
                     },
                     "virtualNetworkNewOrExisting": {
                         "value": "[parameters('virtualNetworkNewOrExisting')]"
-                    },
-                    "secretName": {
-                        "value": "[reference('SecretsDeploymentXXXXXX').outputs.outSecureName.value]"
-                    },
-                    "secretValue": {
-                        "value": "[variables('secretValue')]"
-                    },
-                    "vaultName": {
-                        "value": "[variables('vaultName')]"
                     }
 
                 }
