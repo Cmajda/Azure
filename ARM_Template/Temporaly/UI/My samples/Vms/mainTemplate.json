@@ -491,7 +491,6 @@
                                 "osProfile": {
                                     "computerName": "[parameters('virtualMachineName')]",
                                     "AdminUserName": "[parameters('AdminUserName')]",
-                                    "adminPassword": "[if(equals(parameters('adminPassword'),parameters('adminPassword')), 'null','null')]",
 
                                     "dependsOn": [
                                         "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
