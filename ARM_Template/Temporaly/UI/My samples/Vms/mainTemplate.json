@@ -383,6 +383,12 @@
                             "metadata": {
                                 "description": "description"
                             }
+                        },
+                        "TESTJENTAK": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
                         }
 
                     },
@@ -456,7 +462,12 @@
 
                         }
                     ],
-                    "outputs": {}
+                    "outputs": {
+                        "output1": {
+                            "type": "string",
+                            "value": "[parameters('TESTJENTAK')]"
+                        }
+                    }
                 },
                 "parameters": {
                     "location": {
@@ -499,6 +510,9 @@
                     },
                     "virtualMachineSize": {
                         "value": "[parameters('virtualMachineSize')]"
+                    },
+                    "TESTJENTAK": {
+                        "value": "[reference('SecretsDeployment').outputs.outSecureName.value]"
                     }
 
 
