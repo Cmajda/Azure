@@ -185,9 +185,6 @@
             "apiVersion": "2018-05-01",
             "name": "SecretsDeploymentXXXXXX",
             "resourceGroup": "[resourceGroup().name]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Resources/resourceGroups/', resourceGroup().name)]"
-            ],
             "properties": {
                 "mode": "Incremental",
                 "template": {
@@ -227,6 +224,9 @@
                     "contentVersion": "1.0.0.0",
                     "parameters": {
                         "AdminUserName": {
+                            "type": "string"
+                        },
+                        "adminPassword": {
                             "type": "string"
                         },
                         "location": {
@@ -451,38 +451,6 @@
                             "tags": "[parameters('FullTag')]"
                         },
                         {
-                            "type": "Microsoft.Resources/deployments",
-                            "apiVersion": "2018-05-01",
-                            "name": "SecretsDeployment",
-                            "resourceGroup": "[resourceGroup().name]",
-                            "dependsOn": [
-                                "[resourceId('Microsoft.Resources/resourceGroups/', resourceGroup().name)]"
-                            ],
-                            "properties": {
-                                "mode": "Incremental",
-                                "template": {
-                                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-                                    "contentVersion": "1.0.0.0",
-                                    "parameters": {},
-                                    "variables": {},
-                                    "resources": [
-                                        {
-
-                                            "type": "Microsoft.KeyVault/vaults/secrets",
-                                            "apiVersion": "2019-09-01",
-                                            "name": "[toLower(concat(parameters('vaultName'), '/', parameters('secretName')))]",
-                                            "location": "[resourceGroup().location]",
-                                            "properties": {
-                                                "value": "[parameters('secretValue')]"
-                                            }
-
-                                        }
-                                    ]
-                                }
-                            }
-                        },
-
-                        {
 
                             "name": "[toLower(parameters('virtualMachineName'))]",
                             "type": "Microsoft.Compute/virtualMachines",
@@ -490,8 +458,7 @@
                             "location": "[parameters('location')]",
                             "dependsOn": [
                                 "managedDiskResources",
-                                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]",
-                                "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
+                                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]"
 
                             ],
                             "properties": {
@@ -519,22 +486,14 @@
                                 },
                                 "osProfile": {
                                     "computerName": "[parameters('virtualMachineName')]",
-                                    "AdminUserName": "[parameters('AdminUserName')]",
-
-                                    "dependsOn": [
-                                        "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
-
-                                    ]
+                                    "AdminUserName": "[parameters('AdminUserName')]"
+                                    "adminPassword": "[parameters('adminPassword')]"
                                 },
                                 "diagnosticsProfile": {
                                     "bootDiagnostics": {
                                         "enabled": true
                                     }
-                                },
-                                "dependsOn": [
-                                    "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
-
-                                ]
+                                }
                             },
                             "tags": "[parameters('FullTag')]"
 
@@ -571,14 +530,10 @@
                             },
                             "secretName": "[variables('Secretname')]",
                             "dependsOn": [
-                                "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
+                                "[resourceId('Microsoft.Resources/deployments', 'SecretsDeploymentXXXXXX')]"
 
                             ]
-                        },
-                        "dependsOn": [
-                            "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
-
-                        ]
+                        }
                     },
                     "virtualMachineName": {
                         "value": "[variables('virtualMachineName')]"
