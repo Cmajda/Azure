@@ -294,7 +294,7 @@
             "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'existing')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
-            "name": "VirtulaMachineKeyVault",
+            "name": "[variables('virtualMachineName')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
             ],
