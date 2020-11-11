@@ -197,9 +197,6 @@
                         "AdminUserName": {
                             "type": "string"
                         },
-                        "adminPassword": {
-                            "type": "securestring"
-                        },
                         "location": {
                             "type": "string"
                         },
