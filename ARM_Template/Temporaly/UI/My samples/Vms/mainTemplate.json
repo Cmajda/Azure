@@ -183,7 +183,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
-            "name": "SecretsDeploymentXXXXXX",
+            "name": "SecretsDeployment",
             "resourceGroup": "[resourceGroup().name]",
             "properties": {
                 "mode": "Incremental",
@@ -312,7 +312,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "name": "VirtulaMachineKeyVault",
-            "dependsOn": [ "[resourceId('Microsoft.Resources/deployments', 'SecretsDeploymentXXXXXX')]" ],
+            "dependsOn": [
+                "[reference('SecretsDeployment').outputs.outSecureName.value]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "expressionEvaluationOptions": {
@@ -462,15 +464,6 @@
                     },
                     "AdminUserName": {
                         "value": "[variables('AdminUserName')]"
-                    },
-                    "secretName": {
-                        "value": "[reference('SecretsDeploymentXXXXXX').outputs.outSecureName.value]"
-                    },
-                    "secretValue": {
-                        "value": "[variables('vaultName')]"
-                    },
-                    "vaultName": {
-                        "value": "value"
                     },
                     "adminPassword": {
                         "reference": {
