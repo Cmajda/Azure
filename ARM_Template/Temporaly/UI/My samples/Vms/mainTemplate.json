@@ -486,7 +486,7 @@
                                 },
                                 "osProfile": {
                                     "computerName": "[parameters('virtualMachineName')]",
-                                    "AdminUserName": "[parameters('AdminUserName')]"
+                                    "AdminUserName": "[parameters('AdminUserName')]",
                                     "adminPassword": "[parameters('adminPassword')]"
                                 },
                                 "diagnosticsProfile": {
