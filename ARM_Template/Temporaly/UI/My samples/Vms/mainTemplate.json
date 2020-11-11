@@ -216,6 +216,97 @@
                 }
             }
         },
+
+
+        {
+            "name": "[toLower(variables('networkSecurityGroupName'))]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-02-01",
+            "location": "[resourceGroup().location]",
+            "properties": {},
+            "tags": "[variables('FullTag')]"
+        },
+        {
+            "name": "[toLower(variables('publicIpAddressName'))]",
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2019-02-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
+            },
+            "sku": {
+                "name": "[parameters('publicIpAddressSku')]"
+            },
+            "tags": "[variables('FullTag')]"
+        },
+        {
+            "name": "[toLower(variables('networkInterfaceName'))]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2018-10-01",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+                "[concat('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]",
+                "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]"
+
+
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIpAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', variables('publicIpAddressName'))]"
+
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[variables('nsgId')]"
+                }
+            },
+            "tags": "[variables('FullTag')]"
+        },
+        {
+            "condition": "[greater(parameters('CountDatadisk'),0)]",
+            "name": "[toLower(variables('dataDiskResources').Value[copyIndex()].name)]",
+            "type": "Microsoft.Compute/disks",
+            "apiVersion": "2020-05-01",
+            "location": "[resourceGroup().location]",
+            "properties": "[variables('dataDiskResources').Value[copyIndex()].properties]",
+            "sku": {
+                "name": "[variables('dataDiskResources').Value[copyIndex()].sku]"
+            },
+            "copy": {
+                "name": "managedDiskResources",
+                "count": "[if(equals(parameters('CountDatadisk'),0),1, parameters('CountDatadisk'))]"
+
+            },
+            "tags": "[variables('FullTag')]"
+        },
+        {
+
+            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'new')]",
+            "name": "[toLower(parameters('virtualNetworkName'))]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2019-09-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [ "NotSet" ]
+                },
+                "subnets": [ { "name": "NOTSET" } ]
+            },
+            "tags": "[variables('FullTag')]"
+        },
+
+
         {
             "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'existing')]",
             "type": "Microsoft.Resources/deployments",
@@ -279,54 +370,6 @@
                                 "description": "description"
                             }
                         },
-                        "dataDiskResources": {
-                            "type": "Object",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "networkSecurityGroupName": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "publicIpAddressName": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "publicIpAddressType": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "publicIpAddressSku": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "virtualNetworkName": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "subnetRef": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "nsgId": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
                         "ListOfImages": {
                             "type": "Object",
                             "metadata": {
@@ -335,12 +378,6 @@
                         },
                         "CountDatadisk": {
                             "type": "int",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "virtualNetworkNewOrExisting": {
-                            "type": "string",
                             "metadata": {
                                 "description": "description"
                             }
@@ -368,78 +405,6 @@
 
                     },
                     "resources": [
-                        {
-                            "name": "[toLower(parameters('networkSecurityGroupName'))]",
-                            "type": "Microsoft.Network/networkSecurityGroups",
-                            "apiVersion": "2019-02-01",
-                            "location": "[resourceGroup().location]",
-                            "properties": {},
-                            "tags": "[parameters('FullTag')]"
-                        },
-                        {
-                            "name": "[toLower(parameters('publicIpAddressName'))]",
-                            "type": "Microsoft.Network/publicIpAddresses",
-                            "apiVersion": "2019-02-01",
-                            "location": "[resourceGroup().location]",
-                            "properties": {
-                                "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
-                            },
-                            "sku": {
-                                "name": "[parameters('publicIpAddressSku')]"
-                            },
-                            "tags": "[parameters('FullTag')]"
-                        },
-                        {
-                            "name": "[toLower(parameters('networkInterfaceName'))]",
-                            "type": "Microsoft.Network/networkInterfaces",
-                            "apiVersion": "2018-10-01",
-                            "location": "[resourceGroup().location]",
-                            "dependsOn": [
-                                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
-                                "[concat('Microsoft.Network/publicIpAddresses/', parameters('publicIpAddressName'))]",
-                                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName'))]"
-
-
-                            ],
-                            "properties": {
-                                "ipConfigurations": [
-                                    {
-                                        "name": "ipconfig1",
-                                        "properties": {
-                                            "subnet": {
-                                                "id": "[parameters('subnetRef')]"
-                                            },
-                                            "privateIPAllocationMethod": "Dynamic",
-                                            "publicIpAddress": {
-                                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('publicIpAddressName'))]"
-
-                                            }
-                                        }
-                                    }
-                                ],
-                                "networkSecurityGroup": {
-                                    "id": "[parameters('nsgId')]"
-                                }
-                            },
-                            "tags": "[parameters('FullTag')]"
-                        },
-                        {
-                            "condition": "[greater(parameters('CountDatadisk'),0)]",
-                            "name": "[toLower(parameters('dataDiskResources').Value[copyIndex()].name)]",
-                            "type": "Microsoft.Compute/disks",
-                            "apiVersion": "2020-05-01",
-                            "location": "[resourceGroup().location]",
-                            "properties": "[parameters('dataDiskResources').Value[copyIndex()].properties]",
-                            "sku": {
-                                "name": "[parameters('dataDiskResources').Value[copyIndex()].sku]"
-                            },
-                            "copy": {
-                                "name": "managedDiskResources",
-                                "count": "[if(equals(parameters('CountDatadisk'),0),1, parameters('CountDatadisk'))]"
-
-                            },
-                            "tags": "[parameters('FullTag')]"
-                        },
                         {
 
                             "name": "[toLower(parameters('virtualMachineName'))]",
@@ -487,21 +452,6 @@
                             },
                             "tags": "[parameters('FullTag')]"
 
-                        },
-                        {
-
-                            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'new')]",
-                            "name": "[toLower(parameters('virtualNetworkName'))]",
-                            "type": "Microsoft.Network/virtualNetworks",
-                            "apiVersion": "2019-09-01",
-                            "location": "[resourceGroup().location]",
-                            "properties": {
-                                "addressSpace": {
-                                    "addressPrefixes": [ "NotSet" ]
-                                },
-                                "subnets": [ { "name": "NOTSET" } ]
-                            },
-                            "tags": "[parameters('FullTag')]"
                         }
                     ],
                     "outputs": {}
@@ -530,14 +480,8 @@
                             "secretName": "[variables('secretName')]"
                         }
                     },
-                    "virtualMachineName": {
-                        "value": "[variables('virtualMachineName')]"
-                    },
-                    "networkInterfaceName": {
-                        "value": "[variables('networkInterfaceName')]"
-                    },
-                    "virtualMachineSize": {
-                        "value": "[parameters('virtualMachineSize')]"
+                    "CountDatadisk": {
+                        "value": "[parameters('CountDatadisk')]"
                     },
                     "datadiskNameOS": {
                         "value": "[variables('datadiskNameOS')]"
@@ -548,42 +492,22 @@
                     "FullTag": {
                         "value": "[variables('FullTag')]"
                     },
+                    "ListOfImages": {
+                        "value": "[variables('ListOfImages')]"
+                    },
+                    "networkInterfaceName": {
+                        "value": "[variables('networkInterfaceName')]"
+                    },
                     "osDiskType": {
                         "value": "[parameters('osDiskType')]"
                     },
-                    "dataDiskResources": {
-                        "value": "[variables('dataDiskResources')]"
+                    "virtualMachineName": {
+                        "value": "[variables('virtualMachineName')]"
                     },
-                    "networkSecurityGroupName": {
-                        "value": "[variables('networkSecurityGroupName')]"
-                    },
-                    "nsgId": {
-                        "value": "[variables('nsgId')]"
-                    },
-                    "publicIpAddressName": {
-                        "value": "[variables('publicIpAddressName')]"
-                    },
-                    "publicIpAddressSku": {
-                        "value": "[parameters('publicIpAddressSku')]"
-                    },
-                    "publicIpAddressType": {
-                        "value": "[parameters('publicIpAddressType')]"
-                    },
-                    "subnetRef": {
-                        "value": "[variables('subnetRef')]"
-                    },
-                    "virtualNetworkName": {
-                        "value": "[parameters('virtualNetworkName')]"
-                    },
-                    "ListOfImages": {
-                        "value": "[variables('ListOfImages').value[parameters('imageReference')]]"
-                    },
-                    "CountDatadisk": {
-                        "value": "[parameters('CountDatadisk')]"
-                    },
-                    "virtualNetworkNewOrExisting": {
-                        "value": "[parameters('virtualNetworkNewOrExisting')]"
+                    "virtualMachineSize": {
+                        "value": "[parameters('virtualMachineSize')]"
                     }
+
 
                 }
             }
