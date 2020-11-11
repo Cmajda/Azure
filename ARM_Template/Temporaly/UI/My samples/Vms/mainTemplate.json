@@ -193,21 +193,51 @@
                 "template": {
                     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
                     "contentVersion": "1.0.0.0",
-                    "parameters": {},
+                    "parameters": {
+                        "vaultName": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "secretName": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "secretValue": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        }
+                    },
                     "variables": {},
                     "resources": [
                         {
 
                             "type": "Microsoft.KeyVault/vaults/secrets",
                             "apiVersion": "2019-09-01",
-                            "name": "[toLower(concat(variables('vaultName'), '/', variables('secretName')))]",
+                            "name": "[toLower(concat(parameters('vaultName'), '/', parameters('secretName')))]",
                             "location": "[resourceGroup().location]",
                             "properties": {
-                                "value": "[variables('secretValue')]"
+                                "value": "[parameters('secretValue')]"
                             }
 
                         }
                     ]
+                },
+                "parameters": {
+                    "secretName": {
+                        "value": "[variables('Secretname')]"
+                    },
+                    "secretValue": {
+                        "value": "[variables('secretValue')]"
+                    },
+                    "vaultName": {
+                        "value": "[variables('vaultName')]"
+                    }
                 }
             }
         },
