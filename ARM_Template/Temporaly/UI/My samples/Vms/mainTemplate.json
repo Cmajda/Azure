@@ -374,7 +374,7 @@
                             }
                         },
                         "dataDiskResources": {
-                            "type": "Array",
+                            "type": "Object",
                             "metadata": {
                                 "description": "description"
                             }
