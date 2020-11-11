@@ -274,23 +274,6 @@
             "tags": "[variables('FullTag')]"
         },
         {
-            "condition": "[greater(parameters('CountDatadisk'),0)]",
-            "name": "[toLower(variables('dataDiskResources').Value[copyIndex()].name)]",
-            "type": "Microsoft.Compute/disks",
-            "apiVersion": "2020-05-01",
-            "location": "[resourceGroup().location]",
-            "properties": "[variables('dataDiskResources').Value[copyIndex()].properties]",
-            "sku": {
-                "name": "[variables('dataDiskResources').Value[copyIndex()].sku]"
-            },
-            "copy": {
-                "name": "managedDiskResources",
-                "count": "[if(equals(parameters('CountDatadisk'),0),1, parameters('CountDatadisk'))]"
-
-            },
-            "tags": "[variables('FullTag')]"
-        },
-        {
 
             "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'new')]",
             "name": "[toLower(parameters('virtualNetworkName'))]",
@@ -389,6 +372,12 @@
                             "metadata": {
                                 "description": "description"
                             }
+                        },
+                        "dataDiskResources": {
+                            "type": "Array",
+                            "metadata": {
+                                "description": "description"
+                            }
                         }
 
                     },
@@ -413,6 +402,23 @@
 
                     },
                     "resources": [
+                        {
+                            "condition": "[greater(parameters('CountDatadisk'),0)]",
+                            "name": "[toLower(parameters('dataDiskResources').Value[copyIndex()].name)]",
+                            "type": "Microsoft.Compute/disks",
+                            "apiVersion": "2020-05-01",
+                            "location": "[resourceGroup().location]",
+                            "properties": "[parameters('dataDiskResources').Value[copyIndex()].properties]",
+                            "sku": {
+                                "name": "[parameters('dataDiskResources').Value[copyIndex()].sku]"
+                            },
+                            "copy": {
+                                "name": "managedDiskResources",
+                                "count": "[if(equals(parameters('CountDatadisk'),0),1, parameters('CountDatadisk'))]"
+
+                            },
+                            "tags": "[parameters('FullTag')]"
+                        },
                         {
 
                             "name": "[toLower(parameters('virtualMachineName'))]",
@@ -513,6 +519,9 @@
                     },
                     "TESTJENTAK": {
                         "value": "[reference('SecretsDeployment').outputs.outSecureName.value]"
+                    },
+                    "dataDiskResources": {
+                        "value": "[variables('dataDiskResources')]"
                     }
 
 
