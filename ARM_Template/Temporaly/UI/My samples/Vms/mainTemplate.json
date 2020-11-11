@@ -545,7 +545,11 @@
                                 "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
 
                             ]
-                        }
+                        },
+                        "dependsOn": [
+                            "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
+
+                        ]
                     },
                     "virtualMachineName": {
                         "value": "[variables('virtualMachineName')]"
