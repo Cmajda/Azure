@@ -427,7 +427,7 @@
                             "location": "[parameters('location')]",
                             "dependsOn": [
                                 "managedDiskResources",
-                                "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]"
+                                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]"
 
                             ],
                             "properties": {
