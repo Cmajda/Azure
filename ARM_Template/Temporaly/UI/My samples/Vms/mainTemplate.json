@@ -187,6 +187,9 @@
             "resourceGroup": "[resourceGroup().name]",
             "properties": {
                 "mode": "Incremental",
+                "expressionEvaluationOptions": {
+                    "scope": "inner"
+                },
                 "template": {
                     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
                     "contentVersion": "1.0.0.0",
@@ -332,24 +335,6 @@
                             }
                         },
                         "virtualNetworkNewOrExisting": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "vaultName": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "secretName": {
-                            "type": "string",
-                            "metadata": {
-                                "description": "description"
-                            }
-                        },
-                        "secretValue": {
                             "type": "string",
                             "metadata": {
                                 "description": "description"
