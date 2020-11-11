@@ -181,10 +181,42 @@
     },
     "resources": [
         {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "name": "SecretsDeploymentXXXXXX",
+            "resourceGroup": "[resourceGroup().name]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', resourceGroup().name)]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
+                        {
+
+                            "type": "Microsoft.KeyVault/vaults/secrets",
+                            "apiVersion": "2019-09-01",
+                            "name": "[toLower(concat(variables('vaultName'), '/', variables('secretName')))]",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "value": "[variables('secretValue')]"
+                            }
+
+                        }
+                    ]
+                }
+            }
+        },
+        {
             "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'existing')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "name": "VirtulaMachineKeyVault",
+            "dependsOn": [ "[resourceId('Microsoft.Resources/deployments', 'SecretsDeploymentXXXXXX')]" ],
             "properties": {
                 "mode": "Incremental",
                 "expressionEvaluationOptions": {
