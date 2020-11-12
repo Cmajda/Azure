@@ -85,6 +85,7 @@
                 "description": "description"
             }
         }
+
     },
     "variables": {
         "ApplicationName": "[split(resourceGroup().name,'-')[2]]",
@@ -180,7 +181,6 @@
     },
     "resources": [
         {
-            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'new')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "name": "SecretsDeployment",
@@ -216,8 +216,9 @@
                 }
             }
         },
+
+
         {
-            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'new')]",
             "name": "[toLower(variables('networkSecurityGroupName'))]",
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-02-01",
@@ -226,7 +227,6 @@
             "tags": "[variables('FullTag')]"
         },
         {
-            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'new')]",
             "name": "[toLower(variables('publicIpAddressName'))]",
             "type": "Microsoft.Network/publicIpAddresses",
             "apiVersion": "2019-02-01",
@@ -240,7 +240,6 @@
             "tags": "[variables('FullTag')]"
         },
         {
-            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'new')]",
             "name": "[toLower(variables('networkInterfaceName'))]",
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2018-10-01",
@@ -289,6 +288,8 @@
             },
             "tags": "[variables('FullTag')]"
         },
+
+
         {
             "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'existing')]",
             "type": "Microsoft.Resources/deployments",
