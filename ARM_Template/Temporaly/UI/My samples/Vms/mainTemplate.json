@@ -101,9 +101,9 @@
         "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
         "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'),'Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
         "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
-        "datadiskName_1": "[concat('dsk-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-01')]",
-        "datadiskName_2": "[concat('dsk-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-02')]",
-        "datadiskNameOS": "[concat('dsk-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-OS')]",
+        "datadiskName_1": "[concat('dsk-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-data-01')]",
+        "datadiskName_2": "[concat('dsk-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-data-02')]",
+        "datadiskNameOS": "[concat('dsk-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-os')]",
         "dataDisks": {
             "type": "Array",
             "Value": [
