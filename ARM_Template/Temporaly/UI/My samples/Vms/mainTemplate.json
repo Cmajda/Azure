@@ -180,7 +180,7 @@
     },
     "resources": [
         {
-            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'never')]",
+            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'existing')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "name": "SecretsDeployment",
@@ -276,7 +276,7 @@
         },
         {
 
-            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'existing')]",
+            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'never')]",
             "name": "[toLower(parameters('virtualNetworkName'))]",
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2019-09-01",
