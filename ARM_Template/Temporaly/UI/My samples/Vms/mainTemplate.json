@@ -84,6 +84,13 @@
             "metadata": {
                 "description": "description"
             }
+        },
+        "TimeStamp": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            },
+            "defaultValue": "[utcNow()]"
         }
 
     },
