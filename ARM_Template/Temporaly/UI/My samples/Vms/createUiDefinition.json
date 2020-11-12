@@ -6,7 +6,7 @@
         "config": {
             "isWizard": false,
             "basics": {
-                "description": "Customized description with **markdown**, see [more](https://www.microsoft.com).",
+                "description": "<img src=https://d15l9woddkztht.cloudfront.net/logos/msf---mdecins-sans-frontires-doctors-without-borders-4b30fcdc-8c7c-4a62-940f-793443f5f6aa.svg width=\"100\"><br>Template for creating an Virtual machine for hosting a solution. It creates Virtual machine with following resources:<br>- Public IP address<br>- Network security group<br>- Network interface<br>- Disks<br>- Secret password into KeyVault<br>It also generates all the required tags and names.<br>More information the template here ***(link to document)***",
                 "subscription": {
                     "constraints": {
                         "validations": []
@@ -41,7 +41,7 @@
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "1. Název aplikace generován z názvu RG.\n 2.tagy: Propsány pomocí policy (country,customer,Stage,Administrator,Deploymnet)"
+                            "text": "Others tags are enforced by policy from Resource Group"
                         }
                     },
                     {
@@ -77,15 +77,21 @@
                 "label": "Tab network",
                 "elements": [
                     {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Warning",
+                            "text": "Not allowed create new virtual network!",
+                            "uri": "https://www.microsoft.com"
+                        }
+                    },
+                    {
                         "name": "virtualNetworkName",
                         "type": "Microsoft.Network.VirtualNetworkCombo",
                         "label": {
                             "virtualNetwork": "Virtual Network",
                             "subnets": "Subnets"
-                        },
-                        "defaultValue": {
-                            "name": "vmx-vnet",
-                            "addressPrefixSize": "/16"
                         },
                         "constraints": {
                             "minAddressPrefixSize": "/24"
@@ -93,10 +99,6 @@
                         "subnets": {
                             "subnet1": {
                                 "label": "Subnet",
-                                "defaultValue": {
-                                    "name": "vmx-subnet",
-                                    "addressPrefixSize": "/24"
-                                },
                                 "constraints": {
                                     "minAddressPrefixSize": "/29",
                                     "minAddressCount": 8,
@@ -110,7 +112,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Public Ip Address Type",
                         "defaultValue": "Static",
-                        "toolTip": "",
+                        "toolTip": "Select Public Ip Address Type",
                         "constraints": {
                             "required": true,
                             "regex": "",
@@ -133,7 +135,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Public Ip Address Sku",
                         "defaultValue": "Basic",
-                        "toolTip": "",
+                        "toolTip": "Select Public Ip Address Sku",
                         "constraints": {
                             "required": true,
                             "regex": "",
@@ -163,7 +165,7 @@
                         "label": "OS disk type",
                         "placeholder": "",
                         "defaultValue": "Standard SSD",
-                        "toolTip": "",
+                        "toolTip": "Select a disk type",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -183,7 +185,7 @@
                         "name": "CountDatadisk",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Count of datadisks",
-                        "placeholder": "",
+                        "placeholder": "Select count of data disks",
                         "defaultValue": "0",
                         "toolTip": "",
                         "constraints": {
@@ -211,7 +213,7 @@
                         "label": "Data disk type",
                         "placeholder": "",
                         "defaultValue": "Standard SSD",
-                        "toolTip": "",
+                        "toolTip": "Select a disk type",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -270,7 +272,7 @@
                         "label": "Data disk type",
                         "placeholder": "",
                         "defaultValue": "Standard SSD",
-                        "toolTip": "",
+                        "toolTip": "Select a disk type",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -328,7 +330,7 @@
                         "type": "Microsoft.Compute.SizeSelector",
                         "defaultValue": "Standard_D2as_v4",
                         "label": "Vm Size",
-                        "toolTip": "",
+                        "toolTip": "Select a Vm Size from the list",
                         "recommendedSizes": [
                             "Standard_D2as_v4",
                             "Standard_D4as_v4"
