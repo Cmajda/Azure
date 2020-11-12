@@ -302,8 +302,8 @@
         },
         "StorageSku": {
             "type": "string",
-            "allowedValues": [ "Premium_LRS" ],
-            "defaultValue": "Premium_LRS"
+            "allowedValues": [ "Standard_LRS" ],
+            "defaultValue": "Standard_LRS"
         }
     },
     "variables": {
