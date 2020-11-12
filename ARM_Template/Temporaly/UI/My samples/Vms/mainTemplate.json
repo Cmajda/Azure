@@ -544,22 +544,6 @@
         "ApplicationName": {
             "type": "string",
             "value": "[variables('ApplicationName')]"
-        },
-        "RgNameSplit": {
-            "type": "array",
-            "value": "[variables('RgNameSplit')]"
-        },
-        "KeyVaultName": {
-            "type": "string",
-            "value": "[variables('VaultName')]"
-        },
-        "rg2": {
-            "type": "string",
-            "value": "[split(resourceGroup().name,'-')[1]]"
-        },
-        "rg3": {
-            "type": "string",
-            "value": "[split(resourceGroup().name,'-')[2]]"
         }
     }
 }
