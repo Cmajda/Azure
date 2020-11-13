@@ -587,7 +587,7 @@
         },
         "OutputString": {
             "type": "object",
-            "value": "[parameters('CountrySITSIO').value.label]"
+            "value": "[variables('CountryObject').value[parameters('CountrySITSIO')]]"
         }
 
     },
@@ -712,7 +712,7 @@
     "outputs": {
         "OutputString": {
             "type": "string",
-            "value": "[variables('CountryObject').value[parameters('CountrySITSIO')]]"
+            "value": "[variables('OutputString').value]"
         },
         "Location": {
             "type": "string",
