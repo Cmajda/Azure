@@ -268,7 +268,8 @@
             ]
         },
         "location": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "northeurope"
         },
         "Tagdescription": {
             "type": "string"
