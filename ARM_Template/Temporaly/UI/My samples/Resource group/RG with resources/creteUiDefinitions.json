@@ -1214,7 +1214,7 @@
             "ApplicationName": "[toLower(steps('TabNameTags').ApplicationName)]",
             "IndexSuffix": "[toLower(steps('TabNameTags').IndexSuffix)]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
-            "TagStage": "[toLower(steps('TabNameTags').TagStage)]",
+            "TagStage": "[steps('TabNameTags').TagStage]",
             "TagCustomer": "[steps('TabNameTags').TagCustomer]",
             "TagAdministrator": "[steps('TabNameTags').TagAdministrator]",
             "TagDeployment": "[steps('TabNameTags').TagDeployment]",
