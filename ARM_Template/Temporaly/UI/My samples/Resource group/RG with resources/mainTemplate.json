@@ -290,27 +290,7 @@
         },
         "TagDeployment": {
             "type": "string"
-        },
-        "StorageKind": {
-            "type": "string",
-            "defaultValue": "StorageV2",
-            "allowedValues": [ "StorageV2" ]
-        },
-        "StorageSku": {
-            "type": "string",
-            "defaultValue": "Standard_LRS",
-            "allowedValues": [ "Standard_LRS" ]
-        },
-        "YesNoNewStorageAccount": {
-            "type": "string"
-        },
-        "YesNoNewKeyVault": {
-            "type": "string"
         }
-
-
-
-
     },
     "variables": {
         "rgName": "[concat('rg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
@@ -320,7 +300,8 @@
         "subscriptionId": "[subscription().subscriptionId]",
         "tenantId": "[subscription().tenantId]",
         "displayName": "[subscription().displayName]",
-
+        "StorageKind": "StorageV2",
+        "StorageSku": "Standard_LRS",
         "FullTag": {
             "Application": "[parameters('ApplicationName')]",
             "Country": "[variables('CountryObject').value[parameters('CountrySITSIO')]]",
@@ -622,14 +603,13 @@
                     "variables": {},
                     "resources": [
                         {
-                            "condition": "[equals(parameters('YesNoNewStorageAccount'),'Yes')]",
                             "type": "Microsoft.Storage/storageAccounts",
                             "apiVersion": "2017-10-01",
                             "name": "[variables('storageName')]",
                             "location": "[parameters('location')]",
-                            "kind": "[parameters('StorageKind')]",
+                            "kind": "[variables('StorageKind')]",
                             "sku": {
-                                "name": "[parameters('StorageSku')]"
+                                "name": "[variables('StorageSku')]"
                             },
                             "tags": "[variables('FullTag')]"
                         }
@@ -654,7 +634,6 @@
                     "variables": {},
                     "resources": [
                         {
-                            "condition": "[equals(parameters('YesNoNewKeyVault'),'Yes')]",
                             "type": "Microsoft.KeyVault/vaults",
                             "name": "[variables('keyValueName')]",
                             "location": "[parameters('location')]",

@@ -1207,103 +1207,18 @@
                         "visible": true
                     }
                 ]
-            },
-            {
-                "name": "TabStorageAccount",
-                "label": "Settings Storage account",
-                "elements": [
-                    {
-                        "name": "InfoBox2",
-                        "type": "Microsoft.Common.InfoBox",
-                        "visible": true,
-                        "options": {
-                            "icon": "Info",
-                            "text": "A Storage Account for storing diagnostics and log data will provisioned for you. This account is not intended for application data. Create additional Storage Accounts as needed later."
-                        }
-                    },
-                    {
-                        "name": "YesNoNewStorageAccount",
-                        "type": "Microsoft.Common.OptionsGroup",
-                        "label": "Create storage account",
-                        "defaultValue": "Yes",
-                        "toolTip": "",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "Yes",
-                                    "value": "Yes"
-                                }
-                            ],
-                            "required": true
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "StorageKind",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Storage Kind",
-                        "defaultValue": "StorageV2",
-                        "toolTip": "The default are just fine. Change it only in case you need some special features.",
-                        "constraints": {
-                            "required": true,
-                            "allowedValues": [
-                                {
-                                    "label": "StorageV2",
-                                    "value": "StorageV2"
-                                }
-                            ]
-                        },
-                        "visible": "[bool(if(equals('Yes', steps('TabStorageAccount').YesNoNewStorageAccount), 'true', 'false'))]"
-                    },
-                    {
-                        "name": "StorageSku",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Storage Sku",
-                        "defaultValue": "Standard_LRS",
-                        "toolTip": "The default are just fine. Change it only in case you need some special features.",
-                        "constraints": {
-                            "required": true,
-                            "allowedValues": [
-                                {
-                                    "label": "Standard_LRS",
-                                    "value": "Standard_LRS"
-                                }
-                            ]
-                        },
-                        "visible": "[bool(if(equals('Yes', steps('TabStorageAccount').YesNoNewStorageAccount), 'true', 'false'))]"
-                    },
-                    {
-                        "name": "storageSelector",
-                        "type": "Microsoft.Solutions.ResourceSelector",
-                        "label": "Select storage accounts",
-                        "resourceType": "Microsoft.Storage/storageAccounts",
-                        "options": {
-                            "filter": {
-                                "subscription": "onBasics",
-                                "location": "onBasics"
-                            }
-                        },
-                        "visible": "[bool(if(equals('exist', steps('TabStorageAccount').YesNoNewStorageAccount), 'true', 'false'))]"
-                    }
-                ],
-                "visible": false
             }
         ],
         "outputs": {
             "location": "[location()]",
             "ApplicationName": "[toLower(steps('TabNameTags').ApplicationName)]",
-            "IndexSuffix": "[steps('TabNameTags').IndexSuffix]",
+            "IndexSuffix": "[toLower(steps('TabNameTags').IndexSuffix)]",
             "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
-            "TagStage": "[steps('TabNameTags').TagStage]",
+            "TagStage": "[toLower(steps('TabNameTags').TagStage)]",
             "TagCustomer": "[steps('TabNameTags').TagCustomer]",
             "TagAdministrator": "[steps('TabNameTags').TagAdministrator]",
             "TagDeployment": "[steps('TabNameTags').TagDeployment]",
-            "Tagdescription": "[steps('TabNameTags').Tagdescription]",
-            "StorageKind": "[steps('TabStorageAccount').StorageKind]",
-            "StorageSku": "[steps('TabStorageAccount').StorageSku]",
-            "YesNoNewStorageAccount": "[steps('TabStorageAccount').YesNoNewStorageAccount]",
-            "SelectedaccountStorage": "[steps('TabStorageAccount').storageSelector]",
-            "YesNoNewKeyVault": "Yes"
+            "Tagdescription": "[steps('TabNameTags').Tagdescription]"
         }
     }
 }
