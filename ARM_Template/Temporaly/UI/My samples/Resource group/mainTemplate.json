@@ -1,14 +1,19 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2018-05-01/subscriptionDeploymentTemplate.json#",
     "contentVersion": "1.0.0.1",
+
     "parameters": {
         "ApplicationName": {
+            "type": "string"
+        },
+        "IndexSuffix": {
             "type": "string",
-            "defaultValue": "armtemplate"
+            "metadata": {
+                "description": "description"
+            }
         },
         "CountrySITSIO": {
             "type": "string",
-            "defaultValue": "Czech Republic",
             "allowedValues": [
                 "Afghanistan",
                 "Albania",
@@ -262,54 +267,56 @@
                 "Zimbabwe"
             ]
         },
-        "RGLocation": {
-            "type": "string",
-            "defaultValue": "North Europe",
-            "allowedValues": [ "North Europe", "West Europe" ]
+        "location": {
+            "type": "string"
         },
         "Tagdescription": {
-            "type": "string",
-            "minLength": 21,
-            "maxLength": 512,
-            "defaultValue": "Testovací skupina pro arm template - obsah může být kdykoliv vymazán"
+            "type": "string"
         },
         "TagStage": {
             "type": "string",
-            "defaultValue": "Test",
             "allowedValues": [ "Live", "Test", "Dev", "Sandbox" ]
         },
         "TagCustomer": {
             "type": "string",
             "minLength": 3,
-            "maxLength": 512,
-            "defaultValue": "Cmajda"
+            "maxLength": 512
         },
         "TagAdministrator": {
             "type": "string",
             "minLength": 3,
-            "maxLength": 512,
-            "defaultValue": "Cmajda"
+            "maxLength": 512
         },
         "TagDeployment": {
-            "type": "string",
-            "allowedValues": [ "Manual", "Arm", "Tf", "Ps", "Cli" ],
-            "defaultValue": "Arm"
+            "type": "string"
         },
         "StorageKind": {
             "type": "string",
-            "allowedValues": [ "StorageV2" ],
-            "defaultValue": "StorageV2"
+            "allowedValues": [ "StorageV2" ]
         },
         "StorageSku": {
             "type": "string",
-            "allowedValues": [ "Standard_LRS" ],
-            "defaultValue": "Standard_LRS"
+            "allowedValues": [ "Standard_LRS" ]
+        },
+        "YesNoNewStorageAccount": {
+            "type": "string"
+        },
+        "YesNoNewKeyVault": {
+            "type": "string"
         }
+
+
+
+
     },
     "variables": {
-        "rgName": "[concat('rg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'))]",
-        "storageName": "[concat('st',variables('CountryObject').value[parameters('CountrySITSIO')], parameters('ApplicationName'), 'logs')]",
-        "keyValueName": "kvtest12577s1f451d",
+        "rgName": "[concat('rg-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
+        "storageName": "[concat('st',variables('CountryObject').value[parameters('CountrySITSIO')], parameters('ApplicationName'),parameters('IndexSuffix'),'logs')]",
+        "keyValueName": "[concat('kv-',variables('CountryObject').value[parameters('CountrySITSIO')], '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
+        "id": "[subscription().id]",
+        "subscriptionId": "[subscription().subscriptionId]",
+        "tenantId": "[subscription().tenantId]",
+        "displayName": "[subscription().displayName]",
 
         "FullTag": {
             "Application": "[parameters('ApplicationName')]",
@@ -585,10 +592,12 @@
     },
 
     "resources": [
+
+
         {
             "type": "Microsoft.Resources/resourceGroups",
             "apiVersion": "2019-08-01",
-            "location": "[parameters('RGLocation')]",
+            "location": "[parameters('location')]",
             "name": "[variables('rgName')]",
             "properties": {},
             "tags": "[variables('FullTag')]"
@@ -610,29 +619,50 @@
                     "variables": {},
                     "resources": [
                         {
+                            "condition": "[equals(parameters('YesNoNewStorageAccount'),'Yes')]",
                             "type": "Microsoft.Storage/storageAccounts",
                             "apiVersion": "2017-10-01",
                             "name": "[variables('storageName')]",
-                            "location": "[parameters('rgLocation')]",
+                            "location": "[parameters('location')]",
                             "kind": "[parameters('StorageKind')]",
                             "sku": {
                                 "name": "[parameters('StorageSku')]"
                             },
                             "tags": "[variables('FullTag')]"
-                        },
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "name": "KeyVaultDeployment",
+            "resourceGroup": "[variables('rgName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', variables('rgName'))]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "variables": {},
+                    "resources": [
                         {
+                            "condition": "[equals(parameters('YesNoNewKeyVault'),'Yes')]",
                             "type": "Microsoft.KeyVault/vaults",
                             "name": "[variables('keyValueName')]",
-                            "location": "[parameters('RGLocation')]",
+                            "location": "[parameters('location')]",
                             "apiVersion": "2019-09-01",
-                            "tags": {
-                                "displayName": "KeyVault"
-                            },
+                            "tags": "[variables('FullTag')]",
                             "properties": {
-                                "enabledForDeployment": false,
-                                "enabledForTemplateDeployment": false,
-                                "enabledForDiskEncryption": false,
-                                "tenantId": "f447d363-0a98-4b77-9742-580636496cc6",
+                                "enabledForDeployment": true,
+                                "enabledForTemplateDeployment": true,
+                                "enabledForDiskEncryption": true,
+                                "enableSoftDelete": false,
+                                "tenantId": "[subscription().tenantId]",
                                 "accessPolicies": [],
                                 "sku": {
                                     "name": "Standard",
@@ -647,6 +677,34 @@
                     ]
                 }
             }
+        },
+        {
+            "condition": "[equals(parameters('TagStage'),'Live')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2019-10-01",
+            "name": "ApplyLockRgDeployment",
+            "resourceGroup": "[variables('rgName')]",
+            "dependsOn": [
+                "[variables('rgName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "resources": [
+                        {
+                            "type": "Microsoft.Authorization/locks",
+                            "apiVersion": "2017-04-01",
+                            "name": "DontDelete",
+                            "properties": {
+                                "level": "CanNotDelete",
+                                "notes": "Prevent deletion of the resourceGroup"
+                            }
+                        }
+                    ]
+                }
+            }
         }
 
     ],
@@ -654,6 +712,31 @@
         "OutputString": {
             "type": "string",
             "value": "[variables('OutputString').value]"
+        },
+        "Location": {
+            "type": "string",
+            "value": "[parameters('location')]"
+        },
+        "YesNoNewStorageAccount": {
+            "type": "string",
+            "value": "[parameters('YesNoNewStorageAccount')]"
+        },
+        "id": {
+            "type": "string",
+            "value": "[variables('id')]"
+        },
+        "subscriptionId": {
+            "type": "string",
+            "value": "[variables('subscriptionId')]"
+        },
+        "tenantId": {
+            "type": "string",
+            "value": "[variables('tenantId')]"
+        },
+        "displayName": {
+            "type": "string",
+            "value": "[variables('displayName')]"
         }
+
     }
 }
