@@ -59,9 +59,9 @@
 
     },
     "variables": {
-        "rgName": "[concat('rg-',parameters('CountrySITSIO').value, '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
-        "storageName": "[concat('st',parameters('CountrySITSIO').value, parameters('ApplicationName'),parameters('IndexSuffix'),'logs')]",
-        "keyValueName": "[concat('kv-',parameters('CountrySITSIO').value, '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
+        "rgName": "[concat('rg-',parameters('CountrySITSIO').value.value, '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
+        "storageName": "[concat('st',parameters('CountrySITSIO').value.value, parameters('ApplicationName'),parameters('IndexSuffix'),'logs')]",
+        "keyValueName": "[concat('kv-',parameters('CountrySITSIO').value.value, '-', parameters('ApplicationName'),'-',parameters('IndexSuffix'))]",
         "id": "[subscription().id]",
         "subscriptionId": "[subscription().subscriptionId]",
         "tenantId": "[subscription().tenantId]",
@@ -69,7 +69,7 @@
 
         "FullTag": {
             "Application": "[parameters('ApplicationName')]",
-            "Country": "[parameters('CountrySITSIO').label]",
+            "Country": "[parameters('CountrySITSIO').value.label]",
             "description": "[parameters('Tagdescription')]",
             "Stage": "[parameters('TagStage')]",
             "customer": "[parameters('TagCustomer')]",
@@ -79,7 +79,7 @@
         },
         "OutputString": {
             "type": "object",
-            "value": "[parameters('CountrySITSIO').value]"
+            "value": "[parameters('CountrySITSIO').value.label]"
         }
 
     },
