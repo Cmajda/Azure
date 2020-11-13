@@ -52,6 +52,16 @@
                         "type": "Microsoft.Common.InfoBox",
                         "visible": true,
                         "options": {
+                            "icon": "None",
+                            "text": "<img src=https://d15l9woddkztht.cloudfront.net/logos/msf---mdecins-sans-frontires-doctors-without-borders-4b30fcdc-8c7c-4a62-940f-793443f5f6aa.svg width=\"100\">",
+                            "uri": "https://www.microsoft.com"
+                        }
+                    },
+                    {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
                             "icon": "Info",
                             "text": "Enter all necessary details about the application."
                         }
