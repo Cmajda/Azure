@@ -29,7 +29,8 @@
                         "Microsoft.KeyVault/vaults"
                     ],
                     "allowedValues": [
-                        "northeurope"
+                        "northeurope",
+                        "westeurope"
                     ],
                     "visible": true
                 }
