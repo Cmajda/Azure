@@ -48,22 +48,13 @@
                 "label": "Names and Tags",
                 "elements": [
                     {
-                        "name": "infoBoxobe",
-                        "type": "Microsoft.Common.InfoBox",
-                        "visible": true,
-                        "options": {
-                            "icon": "None",
-                            "text": "<img src=\"https://app.lucidchart.com/publicSegments/view/2bac3c5a-85b3-4b0b-9d4a-afaa4801aa8a/image.png\">",
-                            "uri": "https://stazdevops01.z16.web.core.windows.net/"
-                        }
-                    },
-                    {
-                        "name": "infoBox1",
+                        "name": "infoBoxNameTags",
                         "type": "Microsoft.Common.InfoBox",
                         "visible": true,
                         "options": {
                             "icon": "Info",
-                            "text": "Enter all necessary details about the application."
+                            "text": "<img src=\"https://app.lucidchart.com/publicSegments/view/2bac3c5a-85b3-4b0b-9d4a-afaa4801aa8a/image.png\">",
+                            "uri": "https://stazdevops01.z16.web.core.windows.net/"
                         }
                     },
                     {

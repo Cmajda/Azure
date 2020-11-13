@@ -23,7 +23,11 @@
                     "label": "Location",
                     "toolTip": "Location of the Resource Groups and basic resources.",
                     "resourceTypes": [],
-                    "allowedValues": [],
+                    "defaultValue": "northeurope",
+                    "allowedValues": [
+                        "westeurope",
+                        "northeurope"
+                    ],
                     "visible": true
                 }
             }
