@@ -22,15 +22,13 @@
                 "location": {
                     "label": "Location",
                     "toolTip": "Location of the Resource Groups and basic resources.",
-                    "defaultValue": "North Europe",
+                    "defaultValue": "",
                     "resourceTypes": [
                         "Microsoft.Compute/virtualMachines",
                         "Microsoft.Storage/storageAccounts",
                         "Microsoft.KeyVault/vaults"
                     ],
-                    "allowedValues": [
-                        "North Europe"
-                    ],
+                    "allowedValues": [],
                     "visible": true
                 }
             }
@@ -40,29 +38,7 @@
             "Microsoft.Storage/storageAccounts",
             "Microsoft.KeyVault/vaults"
         ],
-        "basics": [
-            {
-                "name": "location",
-                "type": "Microsoft.Common.DropDown",
-                "label": "Location",
-                "defaultValue": "North Europe",
-                "toolTip": "",
-                "constraints": {
-                    "required": false,
-                    "allowedValues": [
-                        {
-                            "label": "North Europe",
-                            "value": "North Europe"
-                        },
-                        {
-                            "label": "West Europe",
-                            "value": "West Europe"
-                        }
-                    ]
-                },
-                "visible": false
-            }
-        ],
+        "basics": [],
         "steps": [
             {
                 "name": "TabNameTags",
