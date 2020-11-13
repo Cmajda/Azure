@@ -48,7 +48,7 @@
                 "label": "Names and Tags",
                 "elements": [
                     {
-                        "name": "infoBox1",
+                        "name": "infoBoxobe",
                         "type": "Microsoft.Common.InfoBox",
                         "visible": true,
                         "options": {
