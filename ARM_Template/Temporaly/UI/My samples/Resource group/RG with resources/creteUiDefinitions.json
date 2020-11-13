@@ -1285,7 +1285,8 @@
                         },
                         "visible": "[bool(if(equals('exist', steps('TabStorageAccount').YesNoNewStorageAccount), 'true', 'false'))]"
                     }
-                ]
+                ],
+                "visible": false
             }
         ],
         "outputs": {
