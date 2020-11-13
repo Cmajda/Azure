@@ -53,7 +53,7 @@
                         "visible": true,
                         "options": {
                             "icon": "None",
-                            "text": "<img src=\"https://app.lucidchart.com/publicSegments/view/faec343e-5365-46a6-ac8c-9d800ef55744/image.png\">",
+                            "text": "<img src=\"https://app.lucidchart.com/publicSegments/view/2bac3c5a-85b3-4b0b-9d4a-afaa4801aa8a/image.png\">",
                             "uri": "https://stazdevops01.z16.web.core.windows.net/"
                         }
                     },
@@ -1292,7 +1292,10 @@
             "location": "[location()]",
             "ApplicationName": "[toLower(steps('TabNameTags').ApplicationName)]",
             "IndexSuffix": "[steps('TabNameTags').IndexSuffix]",
-            "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
+            "CountrySITSIO": {
+                "type": "Object",
+                "value": "[steps('TabNameTags').CountrySITSIO]"
+            },
             "TagStage": "[steps('TabNameTags').TagStage]",
             "TagCustomer": "[steps('TabNameTags').TagCustomer]",
             "TagAdministrator": "[steps('TabNameTags').TagAdministrator]",
