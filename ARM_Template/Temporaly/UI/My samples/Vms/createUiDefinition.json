@@ -4,7 +4,7 @@
     "version": "0.1.2-preview",
     "parameters": {
         "config": {
-            "isWizard": false,
+            "isWizard": true,
             "basics": {
                 "description": "<img src=https://d15l9woddkztht.cloudfront.net/logos/msf---mdecins-sans-frontires-doctors-without-borders-4b30fcdc-8c7c-4a62-940f-793443f5f6aa.svg width=\"100\"><br>Template for creating an Virtual machine for hosting a solution. It creates Virtual machine with following resources:<br>- Public IP address<br>- Network security group<br>- Network interface<br>- Disks<br>- Secret password into KeyVault<br>It also generates all the required tags and names.<br>More information the template here ***(link to document)***",
                 "subscription": {
