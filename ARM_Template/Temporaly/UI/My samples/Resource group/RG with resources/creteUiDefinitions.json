@@ -3,8 +3,6 @@
     "handler": "Microsoft.Azure.CreateUIDef",
     "version": "0.1.2-preview",
     "parameters": {
-
-
         "config": {
             "isWizard": true,
             "basics": {
@@ -24,15 +22,15 @@
                 "location": {
                     "label": "Location",
                     "toolTip": "Location of the Resource Groups and basic resources.",
-                    "defaultValue": "northeurope",
+                    "defaultValue": "North Europe",
                     "resourceTypes": [
                         "Microsoft.Compute/virtualMachines",
                         "Microsoft.Storage/storageAccounts",
                         "Microsoft.KeyVault/vaults"
                     ],
                     "allowedValues": [
-                        "northeurope",
-                        "westeurope"
+                        "North Europe",
+                        "West Europe"
                     ],
                     "visible": true
                 }
@@ -1220,9 +1218,6 @@
                         },
                         "visible": true
                     }
-
-
-
                 ]
             },
             {
@@ -1250,13 +1245,11 @@
                                     "label": "Yes",
                                     "value": "Yes"
                                 }
-
                             ],
                             "required": true
                         },
                         "visible": true
                     },
-
                     {
                         "name": "StorageKind",
                         "type": "Microsoft.Common.DropDown",
@@ -1284,8 +1277,8 @@
                             "required": true,
                             "allowedValues": [
                                 {
-                                    "label": "Premium_LRS",
-                                    "value": "Premium_LRS"
+                                    "label": "Standard_LRS",
+                                    "value": "Standard_LRS"
                                 }
                             ]
                         },
@@ -1322,8 +1315,6 @@
             "YesNoNewStorageAccount": "[steps('TabStorageAccount').YesNoNewStorageAccount]",
             "SelectedaccountStorage": "[steps('TabStorageAccount').storageSelector]",
             "YesNoNewKeyVault": "Yes"
-
-
         }
     }
 }
