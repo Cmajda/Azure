@@ -293,10 +293,12 @@
         },
         "StorageKind": {
             "type": "string",
+            "defaultValue": "StorageV2",
             "allowedValues": [ "StorageV2" ]
         },
         "StorageSku": {
             "type": "string",
+            "defaultValue": "Standard_LRS",
             "allowedValues": [ "Standard_LRS" ]
         },
         "YesNoNewStorageAccount": {
