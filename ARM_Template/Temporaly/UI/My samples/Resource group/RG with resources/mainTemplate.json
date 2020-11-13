@@ -69,7 +69,7 @@
 
         "FullTag": {
             "Application": "[parameters('ApplicationName')]",
-            "Country": "[parameters('CountrySITSIO')]",
+            "Country": "[parameters('CountrySITSIO').label]",
             "description": "[parameters('Tagdescription')]",
             "Stage": "[parameters('TagStage')]",
             "customer": "[parameters('TagCustomer')]",
