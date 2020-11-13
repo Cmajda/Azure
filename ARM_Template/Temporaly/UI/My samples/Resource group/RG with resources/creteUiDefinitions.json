@@ -83,7 +83,7 @@
                         "name": "IndexSuffix",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Index/Suffix",
-                        "defaultValue": "",
+                        "defaultValue": "01",
                         "toolTip": "Please enter the Index or Suffix. It has to be between 2 and 4 letters.",
                         "constraints": {
                             "required": true,
@@ -1122,7 +1122,7 @@
                         "name": "TagStage",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Tag Stage",
-                        "defaultValue": "Select stage",
+                        "defaultValue": "Live",
                         "toolTip": "The stage of the solution.",
                         "constraints": {
                             "required": true,
@@ -1164,7 +1164,7 @@
                         "name": "TagDeployment",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Tag Deployment",
-                        "defaultValue": "NOTSET",
+                        "defaultValue": "Manual",
                         "toolTip": "The method used for deployment",
                         "constraints": {
                             "required": true,
