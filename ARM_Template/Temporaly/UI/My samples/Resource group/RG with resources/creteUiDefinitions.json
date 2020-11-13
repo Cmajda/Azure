@@ -1292,11 +1292,7 @@
             "location": "[location()]",
             "ApplicationName": "[toLower(steps('TabNameTags').ApplicationName)]",
             "IndexSuffix": "[steps('TabNameTags').IndexSuffix]",
-            "CountrySITSIO": {
-                "type": "Object",
-                "value": "[steps('TabNameTags').CountrySITSIO.value]",
-                "label": "[steps('TabNameTags').CountrySITSIO.label]"
-            },
+            "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
             "TagStage": "[steps('TabNameTags').TagStage]",
             "TagCustomer": "[steps('TabNameTags').TagCustomer]",
             "TagAdministrator": "[steps('TabNameTags').TagAdministrator]",
