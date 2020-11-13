@@ -1246,7 +1246,7 @@
                         "name": "StorageSku",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Storage Sku",
-                        "defaultValue": "Premium_LRS",
+                        "defaultValue": "Standard_LRS",
                         "toolTip": "The default are just fine. Change it only in case you need some special features.",
                         "constraints": {
                             "required": true,

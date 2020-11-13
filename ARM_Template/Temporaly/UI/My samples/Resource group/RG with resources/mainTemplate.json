@@ -296,7 +296,7 @@
         },
         "StorageSku": {
             "type": "string",
-            "allowedValues": [ "Premium_LRS" ]
+            "allowedValues": [ "Standard_LRS" ]
         },
         "YesNoNewStorageAccount": {
             "type": "string"
