@@ -1294,7 +1294,8 @@
             "IndexSuffix": "[steps('TabNameTags').IndexSuffix]",
             "CountrySITSIO": {
                 "type": "Object",
-                "value": "[steps('TabNameTags').CountrySITSIO]"
+                "value": "[steps('TabNameTags').CountrySITSIO.value]",
+                "label": "[steps('TabNameTags').CountrySITSIO.label]"
             },
             "TagStage": "[steps('TabNameTags').TagStage]",
             "TagCustomer": "[steps('TabNameTags').TagCustomer]",
