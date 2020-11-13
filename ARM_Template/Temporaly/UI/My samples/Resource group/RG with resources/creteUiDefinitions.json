@@ -22,14 +22,14 @@
                 "location": {
                     "label": "Location",
                     "toolTip": "Location of the Resource Groups and basic resources.",
-                    "defaultValue": "northeurope",
+                    "defaultValue": "North Europe",
                     "resourceTypes": [
                         "Microsoft.Compute/virtualMachines",
                         "Microsoft.Storage/storageAccounts",
                         "Microsoft.KeyVault/vaults"
                     ],
                     "allowedValues": [
-                        "northeurope"
+                        "North Europe"
                     ],
                     "visible": true
                 }
