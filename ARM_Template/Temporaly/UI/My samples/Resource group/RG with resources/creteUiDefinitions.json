@@ -53,7 +53,7 @@
                         "visible": true,
                         "options": {
                             "icon": "None",
-                            "text": "<img src=https://app.lucidchart.com/publicSegments/view/faec343e-5365-46a6-ac8c-9d800ef55744/image.png width=\"100\">",
+                            "text": "<img src=\"https://app.lucidchart.com/publicSegments/view/faec343e-5365-46a6-ac8c-9d800ef55744/image.png\">",
                             "uri": "https://stazdevops01.z16.web.core.windows.net/"
                         }
                     },
