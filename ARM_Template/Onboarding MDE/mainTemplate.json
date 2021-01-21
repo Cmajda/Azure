@@ -111,7 +111,6 @@
         "datadiskName_1": "[toLower(concat('dsk-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-data-01'))]",
         "datadiskName_2": "[toLower(concat('dsk-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-data-02'))]",
         "datadiskNameOS": "[toLower(concat('dsk-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-os'))]",
-        "urlscript": "TEST",
         "dataDisks": {
             "type": "Array",
             "Value": [
@@ -391,12 +390,6 @@
                             "metadata": {
                                 "description": "description"
                             }
-                        },
-                        "urlscript": {
-                            "type": "Object",
-                            "metadata": {
-                                "description": "description"
-                            }
                         }
 
                     },
@@ -566,10 +559,6 @@
                     },
                     "imageReference": {
                         "value": "[parameters('imageReference')]"
-                    },
-
-                    "urlscript": {
-                        "value": "[variables('urlscript')]"
                     }
 
 
