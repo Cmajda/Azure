@@ -1,0 +1,593 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "IndexSuffix": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 4,
+            "metadata": { "Description": "For cases where more instances of the same app will be necessary, for testing and other scenarios" },
+            "defaultValue": "01"
+
+        },
+        "Tagdescription": {
+            "type": "string",
+            "minLength": 21,
+            "maxLength": 512,
+            "metadata": { "Description": "Short description of resource group. For example \"In order to test the new site.\"" },
+            "defaultValue": "Testování v rámci arm template pro vytvoření VMs"
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "metadata": {
+                "description": "vnet"
+            }
+        },
+        "virtualNetworkResourceGroup": {
+            "type": "string",
+            "metadata": {
+                "description": "Resource group of the VNet"
+            },
+            "defaultValue": "network-rg"
+        },
+        "subnetName": {
+            "type": "String",
+            "defaultValue": "default"
+        },
+        "publicIpAddressType": {
+            "type": "String",
+            "defaultValue": "Dynamic"
+        },
+        "publicIpAddressSku": {
+            "type": "String",
+            "defaultValue": "Basic"
+        },
+        "osDiskType": {
+            "type": "String",
+            "defaultValue": "Standard_LRS"
+        },
+        "DataDiskType_1": {
+            "type": "String",
+            "defaultValue": "Standard_LRS"
+        },
+        "DataDiskType_2": {
+            "type": "String",
+            "defaultValue": "Standard_LRS"
+        },
+        "DataDiskSize_1": {
+            "type": "int",
+            "defaultValue": 32
+        },
+        "DataDiskSize_2": {
+            "type": "int",
+            "defaultValue": 32
+        },
+        "virtualMachineSize": {
+            "type": "String",
+            "defaultValue": "Standard_B1ls"
+        },
+        "imageReference": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "CountDatadisk": {
+            "type": "int",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "virtualNetworkNewOrExisting": {
+            "type": "string",
+            "defaultValue": "new",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "TimeStamp": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            },
+            "defaultValue": "[utcNow()]"
+        }
+
+    },
+    "variables": {
+        "ApplicationName": "[split(resourceGroup().name,'-')[2]]",
+        "CountrySITSIO": "[split(resourceGroup().name,'-')[1]]",
+        "vaultName": "[concat('kv',substring(resourceGroup().name, 2,sub(length(resourceGroup().name), 2)))]",
+        "AdminUserName": "[concat(variables('ApplicationName'),parameters('IndexSuffix'),'vmadm')]",
+        "Secretname": "[variables('AdminUserName')]",
+        "secretValue": "[concat('P*', uniqueString(resourceGroup().id), 'x4', '!')]",
+        "networkInterfaceName": "[concat('nic-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
+        "networkSecurityGroupName": "[concat('nsg-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
+        "publicIpAddressName": "[concat('pip-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'))]",
+        "virtualMachineName": "[concat('vm',variables('CountrySITSIO'),variables('ApplicationName'),parameters('IndexSuffix'))]",
+        "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroupName'))]",
+        "vnetId": "[resourceId(parameters('virtualNetworkResourceGroup'),'Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]",
+        "subnetRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName'))]",
+        "datadiskName_1": "[toLower(concat('dsk-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-data-01'))]",
+        "datadiskName_2": "[toLower(concat('dsk-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-data-02'))]",
+        "datadiskNameOS": "[toLower(concat('dsk-',variables('CountrySITSIO'), '-', variables('ApplicationName'),'-',parameters('IndexSuffix'),'-os'))]",
+        "urlscript": "TEST",
+        "dataDisks": {
+            "type": "Array",
+            "Value": [
+                {
+                    "lun": 1,
+                    "createOption": "attach",
+                    "caching": "None",
+                    "writeAcceleratorEnabled": false,
+                    "id": null,
+                    "name": "[variables('datadiskName_1')]",
+                    "storageAccountType": null,
+                    "diskSizeGB": null,
+                    "diskEncryptionSet": null
+                },
+                {
+                    "lun": 2,
+                    "createOption": "attach",
+                    "caching": "None",
+                    "writeAcceleratorEnabled": false,
+                    "id": null,
+                    "name": "[variables('datadiskName_2')]",
+                    "storageAccountType": null,
+                    "diskSizeGB": null,
+                    "diskEncryptionSet": null
+                }
+            ]
+        },
+        "dataDiskResources": {
+            "type": "Array",
+            "Value": [
+                {
+                    "name": "[variables('datadiskName_1')]",
+                    "sku": "[parameters('DataDiskType_1')]",
+                    "properties": {
+                        "diskSizeGB": "[parameters('DataDiskSize_1')]",
+                        "creationData": {
+                            "createOption": "empty"
+                        }
+                    }
+                },
+                {
+                    "name": "[variables('datadiskName_2')]",
+                    "sku": "[parameters('DataDiskType_2')]",
+                    "properties": {
+                        "diskSizeGB": "[parameters('DataDiskSize_2')]",
+                        "creationData": {
+                            "createOption": "empty"
+                        }
+                    }
+                }
+            ]
+        },
+        "ListOfImages": {
+            "value": {
+                "Server2019": {
+                    "publisher": "microsoftwindowsserver",
+                    "offer": "windowsserver-gen2preview",
+                    "sku": "2019-datacenter-gen2",
+                    "version": "latest"
+                },
+                "Server2016": {
+                    "publisher": "microsoftwindowsserver",
+                    "offer": "windowsserver-gen2preview",
+                    "sku": "2016-datacenter-gen2",
+                    "version": "latest"
+                }
+            }
+        },
+        "FullTag": {
+            "Application": "[variables('ApplicationName')]",
+            "Deployment": "Arm",
+            "Description": "[parameters('Tagdescription')]"
+        },
+        "RgNameSplit": "[split(resourceGroup().name,'-')]"
+
+
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "name": "SecretsDeployment",
+            "resourceGroup": "[resourceGroup().name]",
+            "properties": {
+                "mode": "Incremental",
+
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "variables": {},
+                    "resources": [
+                        {
+
+                            "type": "Microsoft.KeyVault/vaults/secrets",
+                            "apiVersion": "2019-09-01",
+                            "name": "[toLower(concat(variables('vaultName'), '/', variables('secretName')))]",
+                            "location": "[resourceGroup().location]",
+                            "properties": {
+                                "value": "[variables('secretValue')]"
+                            }
+
+                        }
+                    ],
+                    "outputs": {
+
+                        "outSecureName": {
+                            "type": "string",
+                            "value": "[toLower(concat(variables('vaultName'), '/', variables('secretName')))]"
+                        }
+
+                    }
+                }
+            }
+        },
+
+
+        {
+            "name": "[toLower(variables('networkSecurityGroupName'))]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-02-01",
+            "location": "[resourceGroup().location]",
+            "properties": {},
+            "tags": "[variables('FullTag')]"
+        },
+        {
+            "name": "[toLower(variables('publicIpAddressName'))]",
+            "type": "Microsoft.Network/publicIpAddresses",
+            "apiVersion": "2019-02-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIpAllocationMethod": "[parameters('publicIpAddressType')]"
+            },
+            "sku": {
+                "name": "[parameters('publicIpAddressSku')]"
+            },
+            "tags": "[variables('FullTag')]"
+        },
+        {
+            "name": "[toLower(variables('networkInterfaceName'))]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2018-10-01",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+                "[concat('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]",
+                "[concat('Microsoft.Network/networkSecurityGroups/', variables('networkSecurityGroupName'))]"
+
+
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetRef')]"
+                            },
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIpAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', variables('publicIpAddressName'))]"
+
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[variables('nsgId')]"
+                }
+            },
+            "tags": "[variables('FullTag')]"
+        },
+        {
+
+            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'new')]",
+            "name": "[toLower(parameters('virtualNetworkName'))]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2019-09-01",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [ "NotSet" ]
+                },
+                "subnets": [ { "name": "NOTSET" } ]
+            },
+            "tags": "[variables('FullTag')]"
+        },
+
+
+        {
+            "condition": "[equals(parameters('virtualNetworkNewOrExisting'),'existing')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "name": "[variables('virtualMachineName')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'SecretsDeployment')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "expressionEvaluationOptions": {
+                    "scope": "inner"
+                },
+                "template": {
+                    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {
+                        "AdminUserName": {
+                            "type": "string"
+                        },
+                        "adminPassword": {
+                            "type": "string"
+                        },
+                        "location": {
+                            "type": "string"
+                        },
+                        "virtualMachineName": {
+                            "type": "string"
+                        },
+                        "networkInterfaceName": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "virtualMachineSize": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "datadiskNameOS": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "osDiskType": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "dataDisks": {
+                            "type": "Object",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "FullTag": {
+                            "type": "Object",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "ListOfImages": {
+                            "type": "Object"
+                        },
+                        "CountDatadisk": {
+                            "type": "int",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "TESTJENTAK": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "dataDiskResources": {
+                            "type": "Object",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "imageReference": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        },
+                        "urlscript": {
+                            "type": "Object",
+                            "metadata": {
+                                "description": "description"
+                            }
+                        }
+
+                    },
+                    "variables": {
+                        "copy": [
+                            {
+                                "name": "dataDisks",
+                                "count": "[if(equals(parameters('CountDatadisk'),0),1, parameters('CountDatadisk'))]",
+                                "input": {
+                                    "lun": "[parameters('dataDisks').Value[copyIndex('dataDisks')].lun]",
+                                    "createOption": "[parameters('dataDisks').Value[copyIndex('dataDisks')].createOption]",
+                                    "caching": "[parameters('dataDisks').Value[copyIndex('dataDisks')].caching]",
+                                    "diskSizeGB": "[parameters('dataDisks').Value[copyIndex('dataDisks')].diskSizeGB]",
+                                    "managedDisk": {
+                                        "id": "[coalesce(parameters('dataDisks').Value[copyIndex('dataDisks')].id, if(equals(parameters('dataDisks').Value[copyIndex('dataDisks')].name, json('null')), json('null'), resourceId('Microsoft.Compute/disks', parameters('dataDisks').Value[copyIndex('dataDisks')].name)))]",
+                                        "storageAccountType": "[parameters('dataDisks').Value[copyIndex('dataDisks')].storageAccountType]"
+                                    },
+                                    "writeAcceleratorEnabled": "[parameters('dataDisks').Value[copyIndex('dataDisks')].writeAcceleratorEnabled]"
+                                }
+                            }
+                        ]
+
+                    },
+                    "resources": [
+                        {
+                            "condition": "[greater(parameters('CountDatadisk'),0)]",
+                            "name": "[toLower(parameters('dataDiskResources').Value[copyIndex()].name)]",
+                            "type": "Microsoft.Compute/disks",
+                            "apiVersion": "2020-05-01",
+                            "location": "[resourceGroup().location]",
+                            "properties": "[parameters('dataDiskResources').Value[copyIndex()].properties]",
+                            "sku": {
+                                "name": "[parameters('dataDiskResources').Value[copyIndex()].sku]"
+                            },
+                            "copy": {
+                                "name": "managedDiskResources",
+                                "count": "[if(equals(parameters('CountDatadisk'),0),1, parameters('CountDatadisk'))]"
+
+                            },
+                            "tags": "[parameters('FullTag')]"
+                        },
+                        {
+
+                            "name": "[toLower(parameters('virtualMachineName'))]",
+                            "type": "Microsoft.Compute/virtualMachines",
+                            "apiVersion": "2020-06-01",
+                            "location": "[parameters('location')]",
+                            "dependsOn": [
+                                "managedDiskResources"
+
+                            ],
+                            "properties": {
+                                "hardwareProfile": {
+                                    "vmSize": "[parameters('virtualMachineSize')]"
+                                },
+                                "storageProfile": {
+                                    "osDisk": {
+                                        "name": "[parameters('datadiskNameOS')]",
+                                        "createOption": "fromImage",
+                                        "managedDisk": {
+                                            "storageAccountType": "[parameters('osDiskType')]"
+                                        }
+                                    },
+                                    "imageReference": "[parameters('ListOfImages').value[parameters('imageReference')]]",
+                                    "dataDisks": "[if(equals(parameters('CountDatadisk'),0),json('null'),variables('dataDisks'))]"
+
+                                },
+                                "networkProfile": {
+                                    "networkInterfaces": [
+                                        {
+                                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]"
+
+                                        }
+                                    ]
+                                },
+                                "osProfile": {
+                                    "computerName": "[parameters('virtualMachineName')]",
+                                    "AdminUserName": "[parameters('AdminUserName')]",
+                                    "adminPassword": "[parameters('adminPassword')]"
+                                },
+                                "diagnosticsProfile": {
+                                    "bootDiagnostics": {
+                                        "enabled": true
+                                    }
+                                }
+                            },
+                            "tags": "[parameters('FullTag')]"
+
+                        },
+                        {
+                            "name": "Onboarding",
+                            "type": "extensions",
+                            "location": "[resourceGroup().location]",
+                            "apiVersion": "2016-03-30",
+                            "dependsOn": [
+                                "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachineName'))]"
+                            ],
+                            "tags": {
+                                "displayName": "Onboarding MDE"
+                            },
+                            "properties": {
+                                "publisher": "Microsoft.Compute",
+                                "type": "CustomScriptExtension",
+                                "typeHandlerVersion": "1.4",
+                                "autoUpgradeMinorVersion": true,
+                                "settings": {
+                                    "fileUris": [
+                                        "[concat(parameters('_artifactsLocation'), '/', variables('BuildWebServerScriptFolder'), '/', variables('BuildWebServerScriptFileName'), parameters('_artifactsLocationSasToken'))]"
+                                    ],
+                                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('BuildWebServerScriptFolder'), '/', variables('BuildWebServerScriptFileName'))]"
+                                }
+                            }
+                        }
+                    ],
+                    "outputs": {
+                        "output1": {
+                            "type": "string",
+                            "value": "[parameters('TESTJENTAK')]"
+                        }
+                    }
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[resourceGroup().location]"
+                    },
+                    "AdminUserName": {
+                        "value": "[variables('AdminUserName')]"
+                    },
+                    "adminPassword": {
+                        "reference": {
+                            "keyVault": {
+                                "id": "[resourceId(subscription().subscriptionId, resourceGroup().name, 'Microsoft.KeyVault/vaults', variables('vaultName'))]"
+                            },
+                            "secretName": "[variables('secretName')]"
+                        }
+                    },
+                    "CountDatadisk": {
+                        "value": "[parameters('CountDatadisk')]"
+                    },
+                    "datadiskNameOS": {
+                        "value": "[variables('datadiskNameOS')]"
+                    },
+                    "dataDisks": {
+                        "value": "[variables('dataDisks')]"
+                    },
+                    "FullTag": {
+                        "value": "[variables('FullTag')]"
+                    },
+                    "ListOfImages": {
+                        "value": "[variables('ListOfImages')]"
+                    },
+                    "networkInterfaceName": {
+                        "value": "[variables('networkInterfaceName')]"
+                    },
+                    "osDiskType": {
+                        "value": "[parameters('osDiskType')]"
+                    },
+                    "virtualMachineName": {
+                        "value": "[variables('virtualMachineName')]"
+                    },
+                    "virtualMachineSize": {
+                        "value": "[parameters('virtualMachineSize')]"
+                    },
+                    "TESTJENTAK": {
+                        "value": "[reference('SecretsDeployment').outputs.outSecureName.value]"
+                    },
+                    "dataDiskResources": {
+                        "value": "[variables('dataDiskResources')]"
+                    },
+                    "imageReference": {
+                        "value": "[parameters('imageReference')]"
+                    },
+
+                    "urlscript": {
+                        "value": "[variables('urlscript')]"
+                    }
+
+
+                }
+            }
+        }
+
+    ],
+    "outputs": {
+        "AdminUserName": {
+            "type": "string",
+            "value": "[variables('AdminUserName')]"
+        },
+        "ApplicationName": {
+            "type": "string",
+            "value": "[variables('ApplicationName')]"
+        }
+    }
+}

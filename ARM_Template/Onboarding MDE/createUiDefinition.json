@@ -1,0 +1,411 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+    "handler": "Microsoft.Azure.CreateUIDef",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "config": {
+            "isWizard": true,
+            "basics": {
+                "description": "<img src=https://d15l9woddkztht.cloudfront.net/logos/msf---mdecins-sans-frontires-doctors-without-borders-4b30fcdc-8c7c-4a62-940f-793443f5f6aa.svg width=\"100\"><br>Template for creating an Virtual machine for hosting a solution. It creates Virtual machine with following resources:<br>- Public IP address<br>- Network security group<br>- Network interface<br>- Disks<br>- Secret password into KeyVault<br>It also generates all the required tags and names.<br>More information the template here ***(link to document)***",
+                "subscription": {
+                    "constraints": {
+                        "validations": []
+                    },
+                    "resourceProviders": []
+                },
+                "resourceGroup": {
+                    "constraints": {
+                        "validations": []
+                    },
+                    "allowExisting": true
+                },
+                "location": {
+                    "label": "Location",
+                    "toolTip": "Location of the Resource Groups and basic resources.",
+                    "resourceTypes": [],
+                    "defaultValue": "northeurope",
+                    "allowedValues": [
+                        "westeurope",
+                        "northeurope"
+                    ],
+                    "visible": true
+                }
+            }
+        },
+        "resourceTypes": [],
+        "basics": [],
+        "steps": [
+            {
+                "name": "TabNameTags",
+                "label": "Names and Tags",
+                "elements": [
+                    {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Info",
+                            "text": "Others tags are enforced by policy from Resource Group"
+                        }
+                    },
+                    {
+                        "name": "IndexSuffix",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Index/Suffix",
+                        "defaultValue": "",
+                        "toolTip": "Please enter the Index or Suffix. It has to be between 2 and 4 letters.",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^.[A-Za-z0-9]{1,3}$",
+                            "validationMessage": "Value must be between 2-4 characters in length. Special characters are not allowed."
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "Tagdescription",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Tag Description",
+                        "defaultValue": "",
+                        "toolTip": "A description of the application, what is for and how it is used.",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^.{20,511}$",
+                            "validationMessage": "The description must be between 21-512 characters in length."
+                        },
+                        "visible": true
+                    }
+                ]
+            },
+            {
+                "name": "Network",
+                "label": "Tab network",
+                "elements": [
+                    {
+                        "name": "infoBox1",
+                        "type": "Microsoft.Common.InfoBox",
+                        "visible": true,
+                        "options": {
+                            "icon": "Warning",
+                            "text": "Not allowed create new virtual network!",
+                            "uri": "https://www.microsoft.com"
+                        }
+                    },
+                    {
+                        "name": "virtualNetworkName",
+                        "type": "Microsoft.Network.VirtualNetworkCombo",
+                        "label": {
+                            "virtualNetwork": "Virtual Network",
+                            "subnets": "Subnets"
+                        },
+                        "constraints": {
+                            "minAddressPrefixSize": "/24"
+                        },
+                        "subnets": {
+                            "subnet1": {
+                                "label": "Subnet",
+                                "constraints": {
+                                    "minAddressPrefixSize": "/29",
+                                    "minAddressCount": 8,
+                                    "requireContiguousAddresses": true
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "publicIpAddressType",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Public Ip Address Type",
+                        "defaultValue": "Static",
+                        "toolTip": "Select Public Ip Address Type",
+                        "constraints": {
+                            "required": true,
+                            "regex": "",
+                            "validationMessage": "",
+                            "allowedValues": [
+                                {
+                                    "label": "Static",
+                                    "value": "Static"
+                                },
+                                {
+                                    "label": "Dynamic",
+                                    "value": "Dynamic"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "publicIpAddressSku",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Public Ip Address Sku",
+                        "defaultValue": "Basic",
+                        "toolTip": "Select Public Ip Address Sku",
+                        "constraints": {
+                            "required": true,
+                            "regex": "",
+                            "validationMessage": "",
+                            "allowedValues": [
+                                {
+                                    "label": "Basic",
+                                    "value": "Basic"
+                                },
+                                {
+                                    "label": "Standard",
+                                    "value": "Standard"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    }
+                ]
+            },
+            {
+                "name": "VirtualMachine",
+                "label": "Tab Virtual machine",
+                "elements": [
+                    {
+                        "name": "osDiskType",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "OS disk type",
+                        "placeholder": "",
+                        "defaultValue": "Standard SSD",
+                        "toolTip": "Select a disk type",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Standard SSD",
+                                    "value": "StandardSSD_LRS"
+                                },
+                                {
+                                    "label": "Premium SSD",
+                                    "value": "Premium_LRS"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "CountDatadisk",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Count of datadisks",
+                        "placeholder": "Select count of data disks",
+                        "defaultValue": "0",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "0",
+                                    "value": 0
+                                },
+                                {
+                                    "label": "1",
+                                    "value": 1
+                                },
+                                {
+                                    "label": "2",
+                                    "value": 2
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "DataDiskType_1",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Data disk type",
+                        "placeholder": "",
+                        "defaultValue": "Standard SSD",
+                        "toolTip": "Select a disk type",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Standard SSD",
+                                    "value": "StandardSSD_LRS"
+                                },
+                                {
+                                    "label": "Premium SSD",
+                                    "value": "Premium_LRS"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 0), 'true', 'false'))]"
+                    },
+                    {
+                        "name": "DataDiskSize_1",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Data disk size GB:",
+                        "defaultValue": "32 GiB",
+                        "toolTip": "The minimum size is 32 GB and the maximum is 1024 GB",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "32 GiB",
+                                    "value": 32
+                                },
+                                {
+                                    "label": "64 GiB",
+                                    "value": 64
+                                },
+                                {
+                                    "label": "128 GiB",
+                                    "value": 128
+                                },
+                                {
+                                    "label": "256 GiB",
+                                    "value": 256
+                                },
+                                {
+                                    "label": "512 GiB",
+                                    "value": 512
+                                },
+                                {
+                                    "label": "1024 GiB",
+                                    "value": 1024
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 0), 'true', 'false'))]"
+                    },
+                    {
+                        "name": "DataDiskType_2",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Data disk type",
+                        "placeholder": "",
+                        "defaultValue": "Standard SSD",
+                        "toolTip": "Select a disk type",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Standard SSD",
+                                    "value": "StandardSSD_LRS"
+                                },
+                                {
+                                    "label": "Premium SSD",
+                                    "value": "Premium_LRS"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 1), 'true', 'false'))]"
+                    },
+                    {
+                        "name": "DataDiskSize_2",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Data disk size GB:",
+                        "defaultValue": "32 GiB",
+                        "toolTip": "The minimum size is 32 GB and the maximum is 1024 GB",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "32 GiB",
+                                    "value": 32
+                                },
+                                {
+                                    "label": "64 GiB",
+                                    "value": 64
+                                },
+                                {
+                                    "label": "128 GiB",
+                                    "value": 128
+                                },
+                                {
+                                    "label": "256 GiB",
+                                    "value": 256
+                                },
+                                {
+                                    "label": "512 GiB",
+                                    "value": 512
+                                },
+                                {
+                                    "label": "1024 GiB",
+                                    "value": 1024
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": "[bool(if(greater(steps('VirtualMachine').CountDatadisk, 1), 'true', 'false'))]"
+                    },
+                    {
+                        "name": "virtualMachineSize",
+                        "type": "Microsoft.Compute.SizeSelector",
+                        "defaultValue": "Standard_D2as_v4",
+                        "label": "Vm Size",
+                        "toolTip": "Select a Vm Size from the list",
+                        "recommendedSizes": [
+                            "Standard_D2as_v4",
+                            "Standard_D4as_v4"
+                        ],
+                        "constraints": {
+                            "allowedSizes": [
+                                "Standard_D4as_v4",
+                                "Standard_D2as_v4"
+                            ],
+                            "excludedSizes": [],
+                            "numAvailabilityZonesRequired": 3,
+                            "zone": "3"
+                        },
+                        "options": {
+                            "hideDiskTypeFilter": false
+                        },
+                        "osPlatform": "Windows",
+                        "imageReference": {
+                            "publisher": "MicrosoftWindowsServer",
+                            "offer": "WindowsServer",
+                            "sku": "2012-R2-Datacenter"
+                        },
+                        "count": 2,
+                        "visible": true
+                    },
+                    {
+                        "name": "imageReference",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "OS image",
+                        "defaultValue": "Windows Server 2019 Datacenter - Gen2 (Latest)",
+                        "toolTip": "Select OS version",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Windows Server 2019 Datacenter - Gen2 (Latest)",
+                                    "description": "The value to select for option 1.",
+                                    "value": "Server2019"
+                                },
+                                {
+                                    "label": "Windows Server 2016 Datacenter - Gen2 (Latest)",
+                                    "description": "The value to select for option 2.",
+                                    "value": "Server2016"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    }
+                ]
+            }
+        ],
+        "outputs": {
+            "location": "[location()]",
+            "IndexSuffix": "[steps('TabNameTags').IndexSuffix]",
+            "CountrySITSIO": "[steps('TabNameTags').CountrySITSIO]",
+            "Tagdescription": "[steps('TabNameTags').Tagdescription]",
+            "virtualNetworkName": "[steps('Network').virtualNetworkName.name]",
+            "publicIpAddressType": "[steps('Network').publicIpAddressType]",
+            "publicIpAddressSku": "[steps('Network').publicIpAddressSku]",
+            "virtualNetworkNewOrExisting": "[steps('Network').virtualNetworkName.newOrExisting]",
+            "virtualNetworkAddressPrefix": "[first(steps('Network').virtualNetworkName.addressPrefixes)]",
+            "virtualNetworkResourceGroup": "[steps('Network').virtualNetworkName.resourceGroup]",
+            "subnetName": "[steps('Network').virtualNetworkName.subnets.subnet1.name]",
+            "osDiskType": "[steps('VirtualMachine').osDiskType]",
+            "DataDiskType_1": "[steps('VirtualMachine').DataDiskType_1]",
+            "DataDiskSize_1": "[int(steps('VirtualMachine').DataDiskSize_1)]",
+            "DataDiskType_2": "[steps('VirtualMachine').DataDiskType_2]",
+            "DataDiskSize_2": "[int(steps('VirtualMachine').DataDiskSize_2)]",
+            "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
+            "adminPassword": "[steps('VirtualMachine').password]",
+            "imageReference": "[steps('VirtualMachine').imageReference]",
+            "CountDatadisk": "[steps('VirtualMachine').CountDatadisk]"
+        }
+    }
+}
