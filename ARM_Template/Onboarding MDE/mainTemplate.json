@@ -503,10 +503,8 @@
                                 "typeHandlerVersion": "1.4",
                                 "autoUpgradeMinorVersion": true,
                                 "settings": {
-                                    "fileUris": [
-                                        "[concat(parameters('_artifactsLocation'), '/', variables('BuildWebServerScriptFolder'), '/', variables('BuildWebServerScriptFileName'), parameters('_artifactsLocationSasToken'))]"
-                                    ],
-                                    "commandToExecute": "[concat('powershell -ExecutionPolicy Unrestricted -File ', variables('BuildWebServerScriptFolder'), '/', variables('BuildWebServerScriptFileName'))]"
+                                    "fileUris": [ "https://raw.githubusercontent.com/Cmajda/Azure/master/ARM_Template/Onboarding%20MDE/Scripts/postinstall.ps1" ],
+                                    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File configure-music-app.ps1"
                                 }
                             }
                         }
