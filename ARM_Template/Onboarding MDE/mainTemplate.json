@@ -480,24 +480,28 @@
 
                         },
                         {
-                            "name": "Onboarding",
-                            "type": "extensions",
+                            "apiVersion": "2018-06-01",
+                            "type": "Microsoft.Compute/virtualMachines/extensions",
+                            "name": "virtualMachineName/config-app",
                             "location": "[resourceGroup().location]",
-                            "apiVersion": "2016-03-30",
                             "dependsOn": [
                                 "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachineName'))]"
                             ],
                             "tags": {
-                                "displayName": "Onboarding MDE"
+                                "displayName": "PostInstall"
                             },
                             "properties": {
                                 "publisher": "Microsoft.Compute",
                                 "type": "CustomScriptExtension",
-                                "typeHandlerVersion": "1.4",
+                                "typeHandlerVersion": "1.10",
                                 "autoUpgradeMinorVersion": true,
                                 "settings": {
-                                    "fileUris": [ "https://raw.githubusercontent.com/Cmajda/Azure/master/ARM_Template/Onboarding%20MDE/Scripts/postinstall.ps1" ],
-                                    "commandToExecute": "powershell -ExecutionPolicy Unrestricted -File configure-music-app.ps1"
+                                    "fileUris": [
+                                        "https://raw.githubusercontent.com/Cmajda/Azure/master/ARM_Template/Onboarding%20MDE/Scripts/postinstall.ps1"
+                                    ],
+                                    "commandToExecute": "powershell.exe postinstall.ps1",
+                                    "managedIdentity": {}
+
                                 }
                             }
                         }
