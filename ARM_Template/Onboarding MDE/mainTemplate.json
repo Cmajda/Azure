@@ -480,28 +480,23 @@
 
                         },
                         {
-                            "apiVersion": "2018-06-01",
                             "type": "Microsoft.Compute/virtualMachines/extensions",
-                            "name": "virtualMachineName/config-app",
-                            "location": "[resourceGroup().location]",
+                            "apiVersion": "2019-12-01",
+                            "name": "onboarding",
+                            "location": "[parameters('location')]",
                             "dependsOn": [
                                 "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachineName'))]"
                             ],
-                            "tags": {
-                                "displayName": "PostInstall"
-                            },
                             "properties": {
                                 "publisher": "Microsoft.Compute",
                                 "type": "CustomScriptExtension",
-                                "typeHandlerVersion": "1.10",
+                                "typeHandlerVersion": "1.7",
                                 "autoUpgradeMinorVersion": true,
                                 "settings": {
                                     "fileUris": [
                                         "https://raw.githubusercontent.com/Cmajda/Azure/master/ARM_Template/Onboarding%20MDE/Scripts/postinstall.ps1"
                                     ],
-                                    "commandToExecute": "powershell.exe postinstall.ps1",
-                                    "managedIdentity": {}
-
+                                    "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File postinstall.ps1"
                                 }
                             }
                         }
