@@ -485,7 +485,7 @@
                             "name": "onboarding",
                             "location": "[parameters('location')]",
                             "dependsOn": [
-                                "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachineName'))]"
+                                "[concat('Microsoft.Compute/virtualMachines/',parameters('virtualMachineName'))]"
                             ],
                             "properties": {
                                 "publisher": "Microsoft.Compute",
@@ -494,7 +494,7 @@
                                 "autoUpgradeMinorVersion": true,
                                 "settings": {
                                     "fileUris": [
-                                        "https://raw.githubusercontent.com/Cmajda/Azure/master/ARM_Template/Onboarding%20MDE/Scripts/postinstall.ps1"
+                                        "https://raw.githubusercontent.com/Cmajda/Azure/master/ARM_Template/OnboardingMDE/Scripts/postinstall.ps1"
                                     ],
                                     "commandToExecute": "powershell.exe -ExecutionPolicy Unrestricted -File postinstall.ps1"
                                 }
