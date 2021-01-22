@@ -482,7 +482,7 @@
                         {
                             "type": "Microsoft.Compute/virtualMachines/extensions",
                             "apiVersion": "2019-12-01",
-                            "name": "onboarding",
+                            "name": "[concat(parameters('virtualMachineName'),'/', 'postinstall')]",
                             "location": "[parameters('location')]",
                             "dependsOn": [
                                 "[concat('Microsoft.Compute/virtualMachines/',parameters('virtualMachineName'))]"
