@@ -381,6 +381,27 @@
                             ]
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "EnableMDE",
+                        "type": "Microsoft.Common.OptionsGroup",
+                        "label": "Enable MDE",
+                        "defaultValue": "",
+                        "toolTip": "",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "Yes",
+                                    "value": "Yes"
+                                },
+                                {
+                                    "label": "No",
+                                    "value": "No"
+                                }
+                            ],
+                            "required": true
+                        },
+                        "visible": true
                     }
                 ]
             }
@@ -405,7 +426,8 @@
             "virtualMachineSize": "[steps('VirtualMachine').virtualMachineSize]",
             "adminPassword": "[steps('VirtualMachine').password]",
             "imageReference": "[steps('VirtualMachine').imageReference]",
-            "CountDatadisk": "[steps('VirtualMachine').CountDatadisk]"
+            "CountDatadisk": "[steps('VirtualMachine').CountDatadisk]",
+            "EnableMDE": "[steps('VirtualMachine').EnableMDE]"
         }
     }
 }

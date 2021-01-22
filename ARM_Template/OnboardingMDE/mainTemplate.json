@@ -91,6 +91,13 @@
                 "description": "description"
             },
             "defaultValue": "[utcNow()]"
+        },
+        "EnableMDE": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            },
+            "defaultValue": "No"
         }
 
     },
@@ -390,6 +397,12 @@
                             "metadata": {
                                 "description": "description"
                             }
+                        },
+                        "EnableMDE": {
+                            "type": "string",
+                            "metadata": {
+                                "description": "Enable Microsoft Defender fot Endpoint"
+                            }
                         }
 
                     },
@@ -480,6 +493,7 @@
 
                         },
                         {
+                            "condition": "[equals(parameters('EnableMDE'),'Yes')]",
                             "type": "Microsoft.Compute/virtualMachines/extensions",
                             "apiVersion": "2019-12-01",
                             "name": "[concat(parameters('virtualMachineName'),'/', 'postinstall')]",
@@ -558,6 +572,9 @@
                     },
                     "imageReference": {
                         "value": "[parameters('imageReference')]"
+                    },
+                    "EnableMDE": {
+                        "value": "[parameters('EnableMDE')]"
                     }
 
 
